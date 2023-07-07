@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "../pawhub-logo-text.png";
 import "./components.css";
+import { Link } from "react-router-dom";
 
 class Navigation extends Component  {
     state = {clicked: false};
@@ -16,10 +17,11 @@ class Navigation extends Component  {
                 </a>
                 <div>
                     <ul id="NavBar" className={this.state.clicked ? "#NavBar active" : "#NavBar"}>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html">Profile</a></li>
-                        <li><a href="index.html">Group Chat</a></li>
-                        <li><a href="index.html">Contact Us</a></li>
+                        <li><Link to="/home">Home</Link></li>
+                        <li><Link to="/home">Profile</Link></li>
+                        <li><Link to="/chat">Group Chat</Link></li>
+                        <li><Link to="/about">About</Link></li>
+                        <li><Link to="/contact">Contact</Link></li>
                     </ul>
                 </div>
 

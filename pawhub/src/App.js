@@ -1,26 +1,27 @@
-// import React, { Component } from 'react';
-// import './App.css';
-
-// class App extends Component {
-//   render() {
-//     <div className='App-Background'>
-//       <h1>hello world</h1>
-
-//     </div>
-//   }
-// }
-
-// export default App;
-
-
 import React from "react";
-import Navigation from "./components/Navigation";
-import "./App.css";
+import HomePage from "./pages/HomePage";
+import NoPage from "./pages/NoPage";
+import AboutPage from "./pages/AboutPage";
+import Contact from "./pages/Contact";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import GroupChat from "./pages/GroupChat";
 
 function App() {
   return (
-  <div className="App">
-    <Navigation />
+  <div>
+  <BrowserRouter>
+    <Routes>
+      <Route index element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/landingPage" element={<LandingPage />} />
+      <Route path="*" element={<NoPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/chat" element={<GroupChat />} />
+    </Routes>
+  </BrowserRouter>
+
 
   </div> )
   

@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-import LandingPage from './components/LandingPage';
+import LandingPage from './pages/LandingPage';
 import "./components/components.css";
 
 ReactDOM.render(
-<LandingPage />
+<App />
     , document.getElementById("root")
 );

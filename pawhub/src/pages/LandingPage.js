@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import HomePic from "../LandingPagePic.jpg";
 import Logo from "../pawhub-logo-text.png";
-import "./components.css";
+import "../components/components.css";
 
 class LandingPage extends Component {
   state = { clicked: false };
@@ -32,7 +32,6 @@ class LandingPage extends Component {
     return (
       <div
         style={{
-        //   backgroundImage: `url(${HomePic})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
