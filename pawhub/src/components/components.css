@@ -3,7 +3,9 @@
     height: 95px;
 }
 
-
+.LandingPageBackground {
+    background-color: #025464;
+}
 
 nav {
     display: flex;
