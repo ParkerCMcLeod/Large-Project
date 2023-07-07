@@ -6,7 +6,7 @@ function AboutPage() {
     return (
         <div>
             <Navigation />
-            <h1>welcome to about page!</h1>
+            <h1 style={{ paddingTop: "100px" }}>welcome to about page!</h1>
         </div>
 
     )

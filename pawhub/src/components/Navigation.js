@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "../pawhub-logo-text.png";
+import logo from "../images/pawhub-logo-text.png";
 import "./components.css";
 import { Link } from "react-router-dom";
 
