@@ -7,9 +7,12 @@
     justify-content: center;
 }
 
-.Title
+.TitleHolder h1
 {
+    font-family: Sans-serif; font-size: 40px;
+    font-weight: 600;
     margin-top: 3%;
+    color: #025464;
 }
 
 .ParagraphHolder
