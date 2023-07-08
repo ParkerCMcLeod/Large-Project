@@ -1,0 +1,89 @@
+.TitleHolder
+{
+    /* border: 2px solid #f700da ; */
+
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.Title
+{
+    margin-top: 3%;
+}
+
+.ParagraphHolder
+{
+    justify-content: center;
+    display: flex;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.0rem;
+
+    min-width: 700px;
+    width: 40%;
+    padding: 50px;  
+    margin: auto;
+
+    background-color: #025464;
+    border: 2px solid  ;
+    box-shadow: 5px 5px rgb(0, 0, 0, 0.25);
+}
+
+.ParagraphHolder h1
+{
+    font-family: Sans-serif; font-size: 20px;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+    margin-bottom: 5%;
+    color: #fff;
+
+}
+
+.Paragraph
+{
+    color: #fff;
+    font-family: Sans-serif; 
+    text-align: center;
+    width: 700px;
+    font-weight: 400px;
+    padding: 10px;
+    margin: auto;
+}
+
+.PicContainer
+{
+    /* border: 3px solid #040404; */
+    padding: 10px;
+}
+
+.Pics li 
+{
+    float: none;
+    display: inline-block;
+    display: inline;
+
+    /* border: 2px solid red; */
+}
+
+.Pics ul 
+{
+    text-align: center;
+    /* border: 2px solid #0e7967 ; */
+}
+
+.Pics li img
+{
+    width: 300px; /* you can use % */
+    height: auto;
+    box-shadow: 5px 5px rgb(0, 0, 0, 0.1);
+    /* border: 2px solid #353412 ; */
+
+}
+
+.footer
+{
+    /* border: 2px solid #08fa24 ; */
+    height: 50px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import HomePic from "../LandingPagePic.jpg";
-import Logo from "../pawhub-logo-text.png";
+import HomePic from "../images/LandingPagePic.jpg";
+import Logo from "../images/pawhub-logo-text.png";
 import "../components/components.css";
 
 class LandingPage extends Component {
