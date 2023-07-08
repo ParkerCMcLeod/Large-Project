@@ -6,7 +6,7 @@ function GroupChat()  {
     return (
         <div>
             <Navigation />
-            <h1 class ="Title">Group chat Page!</h1>
+            <h1 style={{ paddingTop: "100px" }} >Group chat Page!</h1>
         </div>
     )
 }
