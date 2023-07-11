@@ -37,6 +37,7 @@ nav h1 {
     position: relative;
 }
 
+
 #NavBar li a {
     text-decoration: none;
     font-size: 1.3rem;
@@ -45,9 +46,33 @@ nav h1 {
     transition: 0.3s ease-in-out;
 }
 
+.Login-SignUp-btn-styles {
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.Login-SignUp-btn-styles:hover {
+    color: #e57c23;
+}
+
+.Login-SignUp-btn-styles:hover::after{
+    content: "";
+    width: 75%;
+    height: 2px;
+    background-color: #e57c23;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+}
+
 #NavBar li a:hover {
     color: #e57c23;
-
 }
 
 #NavBar li a:hover::after{
@@ -103,4 +128,129 @@ nav h1 {
         font-size: 24px;
         cursor: pointer;
     }
+}
+
+.close-btn {
+    width: 20px;
+    background: none;
+    border: none;
+    color: white;
+    text-align: right;
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    font-size: 30px;
+}
+
+.close-btn:hover {
+    color: #e57c23;
+    transition: 0.3s ease-in-out;
+}
+
+
+.auth-form-container {
+    background-image: linear-gradient(180deg, #025464, #e57c23);
+    border-radius: 20px;
+    box-shadow: 0 2px 5px #ccc;
+    padding: 100px;
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .auth-form-container label {
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: #fff;
+    color: #fff;
+  }
+
+
+  .LoginCard label {
+    text-align: left;
+    padding: 0.25rem 0;
+  }
+
+  .LoginCard input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .SignUpCard input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+  }
+
+
+ .LoginSignUp-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+ }
+
+ .Login-SignUp-btn-styles-background {
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+    border:  10px solid #e57c23;
+    border-radius: 5px;
+    background: #e57c23;
+    cursor: pointer;
+ }
+
+ .Login-SignUp-btn-styles-background:hover {
+    background: #fff;
+    border: 10px solid #fff;
+    color: #025464;
+ }
+
+  .register-btn {
+    background: none;
+    color: white;
+    text-decoration: underline;
+    border: none;
+    font-size: medium;
+    cursor: pointer;
+  }
+
+.LoginSignUp-btn:hover {
+    background-color: #025464;
+    color: white;
+  }
+
+
+  .LoginSignUp-btn{
+    border: none;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+    width: 100%;
+    cursor: pointer;
+    color: #e57c23;
+    font-weight: 600px;
+    transition: 0.3s ease-in-out;
+    font-size: 20px;
+    
 }

@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import HomePic from "../images/LandingPagePic.jpg";
-import Logo from "../images/pawhub-logo-text.png";
 import "../components/components.css";
+import LoginNavigation from "../components/LoginNavigation";
+import LoginCard from "../components/LoginCard";
+import SignUpCard from "../components/SignupCard";
+
+
+
+
 
 class LandingPage extends Component {
-  state = { clicked: false };
-
-  handleClick = () => {
-    this.setState({ clicked: !this.state.clicked });
-  };
-
+ 
   componentDidMount() {
     document.body.style.backgroundImage = `url(${HomePic})`;
-    document.body.style.backgroundSize = '60%';
+    document.body.style.backgroundSize = '55%';
     document.body.style.backgroundPosition = 'center';
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundAttachment = 'fixed';
@@ -30,32 +31,9 @@ class LandingPage extends Component {
 
   render() {
     return (
-      <div
-        style={{
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className="LandingPageBackground"
-      >
-        <nav>
-          <a href="index.html">
-            <img className="NavigationImage" src={Logo} alt="Landing Page Picture" />
-          </a>
-          <div>
-            <ul id="NavBar" className={this.state.clicked ? "#NavBar active" : "#NavBar"}>
-              <li>
-                <a href="index.html">Login/SignUp</a>
-              </li>
-              <li>
-                <a href="index.html">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-
-          <div id="mobile" onClick={this.handleClick}>
-            <i id="bar" className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
-          </div>
-        </nav>
+      <div className="LandingPageBackground">
+        <LoginNavigation />
+       
       </div>
     );
   }
