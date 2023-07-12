@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Contact() {
     return (
-        <div>
+        <div className="pawprint-pattern">
             <Navigation />
             <h1 style={{ paddingTop: "100px" }}>
                 Welcome to our Contact Page!
