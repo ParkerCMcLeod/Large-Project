@@ -1,0 +1,95 @@
+
+
+
+.Profile-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Profile-inner {
+    background-image: linear-gradient(180deg, #025464, #e57c23);
+    border-radius: 20px;
+    box-shadow: 0 2px 5px #ccc;
+    padding: 80px;
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+}
+
+.Profile-inner label {
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #fff;
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+.Profile-container input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.profile-image-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 5px solid #e57c23;
+  transition: 0.3s ease-in-out;
+  margin-left: 50px;
+
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.profile-image-container:hover .profile-overlay {
+  opacity: 1;
+  
+}
+
+
+.edit-text {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}  
+  
+  
