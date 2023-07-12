@@ -1,15 +1,14 @@
 import React from "react";
 import Navigation from "../components/Navigation";
 import "./Pages.css";
-import text from "./paragraph.txt";
 import AboutText from "../components/AboutText";
 
 function AboutPage() {
     return (
-        <div>
+        <div className="pawprint-pattern">
             <Navigation />
             <div className="TitleHolder">
-                <h1>About Us</h1>
+                <h1 >About Us</h1>
             </div>
             <div className="Pics">
 
@@ -46,7 +45,7 @@ function AboutPage() {
                 </ul>
             </div>
 
-            <div className="footer"></div>
+            {/* <div className="footer"></div> */}
 
         </div>
 

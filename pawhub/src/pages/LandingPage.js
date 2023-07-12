@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import HomePic from "../images/LandingPagePic.jpg";
 import "../components/components.css";
 import LoginNavigation from "../components/LoginNavigation";
-import LoginCard from "../components/LoginCard";
-import SignUpCard from "../components/SignupCard";
-
-
-
 
 
 class LandingPage extends Component {
@@ -25,8 +20,6 @@ class LandingPage extends Component {
     document.body.style.backgroundPosition = null;
     document.body.style.backgroundRepeat = null;
     document.body.style.backgroundAttachment = null;
-
-
   }
 
   render() {
