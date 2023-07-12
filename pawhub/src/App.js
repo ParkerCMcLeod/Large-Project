@@ -16,10 +16,8 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:3001/api');
-        console.error(response);
         setApiData(response.data);
       } catch (error) {
-        console.error("RESPONSE2");
         console.error('Failed to fetch data', error);
       }
     };
