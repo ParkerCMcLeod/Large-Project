@@ -71,4 +71,6 @@ function ProfileCard({ closeProfileCard }) {
   );
 }
 
+
+
 export default ProfileCard;

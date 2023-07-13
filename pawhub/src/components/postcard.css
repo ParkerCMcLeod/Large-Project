@@ -1,0 +1,134 @@
+.PostCard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Add any other styling properties for the container */
+  }
+  
+  .PostCard-inner {
+    background-color: #025464;
+    border-radius: 10px;
+    width: 900px; /* Adjust the width as needed */
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    box-shadow: 0 5px 8px grey;
+    position: relative;
+    margin-top: 20px;
+    margin-left: 190px;
+  }
+
+  .postcard-fields {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .postcard-fields p {
+    margin: 0;
+    margin-left: 130px; /* Adjust the horizontal spacing between the paragraphs */
+    margin-top: 20px;
+    color: #fff;
+}
+  
+
+  .PostCard-text {
+    flex: 1;
+    padding: 10px;
+    color: black;
+    word-wrap: break-word;
+    background-color: #fff;
+    border-radius: 20px;
+
+  }
+
+  .PostCard-inner img {
+    width: 90px; /* Adjust the size of the image as needed */
+    height: 90px; /* Adjust the size of the image as needed */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    left: 10px; /* Adjust the left position as needed */
+    border: 10px solid #fff;
+  }
+
+  .text-container {
+    padding: 20px 20px 10px 120px;
+  }
+
+  @media screen and (max-width: 769px) {
+    .PostCard-inner {
+      width: 300px;
+    }
+  }
+  
+  @media screen and (min-width: 770px) and (max-width: 1223px) {
+    .PostCard-inner {
+      width: 500px;
+    }
+  }
+  
+
+
+
+  .like-button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .like-button i {
+    margin-right: 5px;
+    
+  }
+  
+  .like-button.liked i {
+    color: #e57c23;
+  }
+  
+  .likes-count {
+    color: #fff;
+  }
+
+  .Like-btn {
+    margin: -40px 0px 0px 100px;
+  }
+
+
+  .edit-button {
+    background-color: #e57c23;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+  .edit-button:hover {
+    background-color: #fff;
+    color: #025464;
+  }
+  
+  .save-button {
+    background-color: #e57c23;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .save-button:hover {
+    background-color: #fff;
+    color: #025464;
+  }
+  

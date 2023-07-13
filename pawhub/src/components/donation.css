@@ -6,7 +6,7 @@
     
     width: 300px;
     position: absolute;
-    top: 400px;
+    top: 450px;
     left: 100px;
     transform: translate(-50%, -50%);
     display: flex;
@@ -17,7 +17,6 @@
 @media (max-width: 769px) {
     .Donation-container {
         display: none;
-        right: -300px;
 
     }
   }
@@ -27,8 +26,9 @@
     color: #fff;
     text-align: center;
     margin-top: 0;
-    margin-right: 70px;
+    margin-right: 20px;
     margin-bottom: 20px;
+    font-size: 50px;
 
 }
 
