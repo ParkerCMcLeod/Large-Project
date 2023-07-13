@@ -4,7 +4,7 @@ import "./HomePage.css";
 import "./Pages.css";
 import Donation from "../components/Donation";
 import PostCard from "../components/PostCard";
-
+import NewPost from "../components/NewPost";
 
 
 function HomePage() {
@@ -13,7 +13,9 @@ function HomePage() {
       <div className="HomePage">
         <Navigation />
         <Donation />
+        <NewPost />
         <PostCard />
+        
 
 
       </div>

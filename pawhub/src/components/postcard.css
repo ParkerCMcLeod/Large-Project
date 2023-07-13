@@ -14,7 +14,7 @@
   align-self: stretch;
   box-shadow: 0 5px 8px grey;
   position: relative;
-  margin-top: 100px;
+  margin-top: 40px;
   margin-left: 190px;
   padding-bottom: 10px;
   position: relative; /* Add this position property */
@@ -144,3 +144,4 @@
 
   width: calc(100% - 20px);
 }
+
