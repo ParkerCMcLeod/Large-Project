@@ -25,7 +25,9 @@ function PostCard() {
   return (
     <div className='PostCard-container'>
       <div className='PostCard-inner'>
-        <img src={PostPicture} alt='profile pic' />
+        <div className='Picture'>
+          <img src={PostPicture} alt='profile pic' />
+        </div>
         
         <div className='postcard-fields'>
           <p>LiL_PuG · 10/10/2023 *EXAMPLE*</p>
@@ -35,11 +37,11 @@ function PostCard() {
           {editing ? (
             <>
               <textarea
-                className='PostCard-text'
+                className={'PostCard-text edit-textarea'}
                 value={text}
                 onChange={handleChange}
               />
-              <button className="save-button" onClick={handleSave}>
+              <button className="edit-button" onClick={handleSave}>
                 Save
               </button>
             </>
