@@ -14,9 +14,9 @@
   align-self: stretch;
   box-shadow: 0 5px 8px grey;
   position: relative;
-  margin-top: 100px;
+  margin-top: 40px;
   margin-left: 190px;
-  padding-bottom: 10px;
+  
   position: relative; /* Add this position property */
 }
 
@@ -41,7 +41,7 @@
   font-size: 1.3rem;
 }
 
-.PostCard-inner img {
+.Picture img {
   width: 110px; /* Adjust the size of the image as needed */
   height: 110px; /* Adjust the size of the image as needed */
   object-fit: cover;
@@ -68,8 +68,8 @@
 @media screen and (min-width: 810px) and (max-width: 1312px) {
   .PostCard-inner {
     width: 800px;
-    margin-left: 300px;
-    margin-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -96,43 +96,9 @@
 }
 
 .Like-btn {
-  margin: -30px 0px 0px 100px; /* Adjust the margin as needed */
+  margin: 10px 0px 0px 10px; /* Adjust the margin as needed */
 }
 
-.edit-button {
-  background-color: #e57c23;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 20px;
-  margin-left: 10px;
-}
-
-.edit-button:hover {
-  background-color: #fff;
-  color: #025464;
-}
-
-.save-button {
-  background-color: #e57c23;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 20px;
-  position: absolute;
-  top: calc(100% - 40px); /* Adjust the top position as needed */
-  right: 775px; /* Adjust the right position as needed */
-}
-
-.save-button:hover {
-  background-color: #fff;
-  color: #025464;
-}
 
 .edit-textarea {
   flex: 1;
@@ -143,4 +109,23 @@
   border-radius: 20px;
 
   width: calc(100% - 20px);
+}
+
+/* test if an image exists in the post */ */
+
+
+.image-container {
+  background-color: #e57c23;
+  display: flex;
+  flex-wrap: wrap; /* Add flex-wrap property */
+  justify-content: center; /* Adjust justify-content property */
+  align-items: center;
+  z-index: 900;
+}
+
+.image-container img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border: 10px solid white;
 }
