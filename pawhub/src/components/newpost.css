@@ -32,8 +32,8 @@
   @media screen and (min-width: 810px) and (max-width: 1312px) {
     .NewPost-inner {
       width: 800px;
-      margin-left: 300px;
-      margin-right: 20px;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 
@@ -112,4 +112,13 @@
   .buttons {
     display: flex;
     justify-content: center;
+  }
+
+
+  .NewPost-text::placeholder {
+    font-family: "Your Font Family", sans-serif;
+  }
+  
+  .NewPost-file-input::placeholder {
+    font-family: "Your Font Family", sans-serif;
   }

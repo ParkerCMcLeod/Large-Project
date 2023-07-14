@@ -4,10 +4,10 @@
     box-shadow: 0 2px 5px #ccc;
     padding: 10px 40px 20px 50px;
     
-    width: 300px;
+    width: 400px;
     position: absolute;
     top: 450px;
-    left: 100px;
+    left: 160px;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
@@ -15,12 +15,15 @@
 
 }
 
-@media (max-width: 812px) {
+@media (max-width: 1578px) {
     .Donation-container {
         display: none;
 
     }
   }
+
+
+
 
 
 .Donation-container h1 {
@@ -35,16 +38,17 @@
 
 .Donation-container a img{
     background-color: #fff;
-    width: 100%;
+    width: 300px;
     border: 10px solid #fff;
-    border-radius: 10px;
+    border-radius: 20px;
     margin-left: 10px;
     margin: 10px 10px;
-    height: 10vh;
-    transition: 0.3s ease-in-out;
+    height: 100px;
+    transition: 0.2s ease-in-out;
 
 }
 
 .Donation-container a img:hover {
-    box-shadow: 0 8px 10px #025464;
+   
+    border: 10px solid #025464;
 }

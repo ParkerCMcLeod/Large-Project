@@ -24,7 +24,8 @@
 
 .TitleHolder h1
 {
-    font-family: Sans-serif; font-size: 40px;
+    font-family: Sans-serif;
+     font-size: 40px;
     font-weight: 600;
     margin-top: 3%;
     color: #fff;
@@ -52,11 +53,13 @@
 
 .ParagraphHolder h1
 {
-    font-family: Sans-serif; font-size: px;
+    font-family: Sans-serif; 
+    font-size: 40px;
+    font-weight: 600;
     text-align: center;
     margin: auto;
     justify-content: center;
-    margin-bottom: 5%;
+    margin-bottom: 10px;
     color: #fff;
 
 }
@@ -132,4 +135,9 @@
     background-position: center;
     
 
+}
+
+.Paragraph p {
+    font-size: 10px;
+    color: white;
 }
