@@ -20,21 +20,6 @@ function App() {
       } catch (error) {
         console.error('Failed to fetch data', error);
       }
-    };
-
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('http://localhost:3001/api');
-          setApiData(response.data);
-        } catch (error) {
-          console.error('Failed to fetch data', error);
-        }
-      };
-    
-      fetchData();
-    }, []);
-    
     const addData = async () => {
       try {
         const newUser = {
@@ -67,7 +52,7 @@ function App() {
         console.error('Failed to delete data', error);
       }
     };
-    
+    };
 
     fetchData(); // Call the fetchData function when the component mounts
   }, []); // The empty dependency array ensures that the effect runs only once

@@ -15,14 +15,16 @@ app.listen(port, () => {
 });
 
 async function run() {
-  const uri = "mongodb+srv://LargeProjectMember:PASS@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   await client.connect();
 
   const database = client.db("users");
-  const collection = database.collection(collectionName);
+  const collectionName = "users_log";
 
+  const collection = database.collection(collectionName);
+  
   // API to read all documents
   app.get('/api', async (req, res) => {
     try {
