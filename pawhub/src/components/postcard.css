@@ -1,0 +1,131 @@
+.PostCard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Add any other styling properties for the container */
+}
+
+.PostCard-inner {
+  background-color: #025464;
+  border-radius: 10px;
+  width: 1000px; /* Adjust the width as needed */
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  box-shadow: 0 5px 8px grey;
+  position: relative;
+  margin-top: 40px;
+  margin-left: 190px;
+  
+  position: relative; /* Add this position property */
+}
+
+.postcard-fields {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.postcard-fields p {
+  margin-left: 130px; /* Adjust the horizontal spacing between the paragraphs */
+  margin-top: 20px;
+  color: #fff;
+}
+
+.PostCard-text {
+  flex: 1;
+  padding: 10px;
+  color: black;
+  word-wrap: break-word;
+  background-color: #fff;
+  border-radius: 20px;
+  font-size: 1.3rem;
+}
+
+.Picture img {
+  width: 110px; /* Adjust the size of the image as needed */
+  height: 110px; /* Adjust the size of the image as needed */
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px; /* Adjust the top position as needed */
+  left: 10px; /* Adjust the left position as needed */
+  border: 10px solid #fff;
+}
+
+.text-container {
+  padding: 20px 20px 10px 140px;
+}
+
+@media screen and (max-width: 809px) {
+  .PostCard-inner {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (min-width: 810px) and (max-width: 1312px) {
+  .PostCard-inner {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #fff;
+}
+
+.like-button i {
+  margin-right: 5px;
+}
+
+.like-button.liked i {
+  color: #e57c23;
+}
+
+.likes-count {
+  color: #fff;
+}
+
+.Like-btn {
+  margin: 10px 0px 0px 10px; /* Adjust the margin as needed */
+}
+
+
+.edit-textarea {
+  flex: 1;
+  padding: 10px;
+  color: black;
+  word-wrap: break-word;
+  background-color: #fff;
+  border-radius: 20px;
+
+  width: calc(100% - 20px);
+}
+
+/* test if an image exists in the post */ */
+
+
+.image-container {
+  background-color: #e57c23;
+  display: flex;
+  flex-wrap: wrap; /* Add flex-wrap property */
+  justify-content: center; /* Adjust justify-content property */
+  align-items: center;
+  z-index: 900;
+}
+
+.image-container img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border: 10px solid white;
+}

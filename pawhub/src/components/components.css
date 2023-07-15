@@ -32,7 +32,7 @@ nav h1 {
 li button {
     color: #fff;
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 600;
     transition: 0.3s ease-in-out;
     display: flex;
@@ -58,7 +58,7 @@ li button:hover {
 
 #NavBar li a {
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #fff;
     transition: 0.3s ease-in-out;
@@ -66,7 +66,7 @@ li button:hover {
 
 .Login-SignUp-btn-styles {
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #fff;
     transition: 0.3s ease-in-out;
@@ -112,7 +112,7 @@ li button:hover {
     display: none;
 }
 
-@media screen and (max-width:769px) {
+@media screen and (max-width:1045px) {
     #NavBar {
         display: flex;
         flex-direction: column;
@@ -123,9 +123,10 @@ li button:hover {
         right: -300px;
         width: 300px;
         height: 100vh;
-        background-color: #025464;
         padding: 40px 0 0 10px;
         transition: 0.3s ease-in-out;
+        z-index: 999;
+        background: linear-gradient(to bottom, #025464, #011114);
     }
 
     #NavBar li {
@@ -157,6 +158,7 @@ li button:hover {
     top: 15px;
     right: 30px;
     font-size: 30px;
+    cursor: pointer;
 }
 
 .close-btn:hover {
@@ -169,8 +171,8 @@ li button:hover {
     background-image: linear-gradient(180deg, #025464, #e57c23);
     border-radius: 20px;
     box-shadow: 0 2px 5px #ccc;
-    padding: 100px;
-    width: 400px;
+    padding: 80px;
+    width: 600px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -181,24 +183,28 @@ li button:hover {
 
   .auth-form-container label {
     text-decoration: none;
-    font-size: 1.3rem;
-    font-weight: 300;
+    font-size: 1.8rem;
+    font-weight: 600;
     color: #fff;
-    color: #fff;
+    padding-bottom: 80px;
+    
   }
 
 
   .LoginCard label {
     text-align: left;
-    padding: 0.25rem 0;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    
   }
 
   .LoginCard input {
     margin: 0.5rem 0;
-    padding: 1rem;
+    padding: 1.5rem;
     border: none;
     width: 100%;
     border-radius: 10px;
+    font-size: 1.3rem;
   }
   
   .SignUpCard input {
@@ -226,7 +232,7 @@ li button:hover {
 
  .Login-SignUp-btn-styles-background {
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #fff;
     transition: 0.3s ease-in-out;
@@ -260,7 +266,7 @@ li button:hover {
   .LoginSignUp-btn{
     border: none;
     background-color: white;
-    padding: 20px;
+    padding: 1.5rem;
     border-radius: 10px;
     margin: 0.5rem 0;
     width: 100%;
@@ -268,6 +274,15 @@ li button:hover {
     color: #e57c23;
     font-weight: 600px;
     transition: 0.3s ease-in-out;
-    font-size: 20px;
+    font-size: 1.8rem;
     
+}
+
+.LoginCard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Adjust the desired gap between elements */
+    margin-left: auto;
+    margin-right: auto; 
+    width: 400px;
 }

@@ -1,7 +1,83 @@
+.BoxHolder
+{
+    margin: auto;
+    justify-content: center;
+    /* border: 10px solid #000000; */
+    text-align: center;
+    min-height: 500px;
+    width: 80%;
+    height: 65%;
+    padding: 50px;
+    margin-top: 20px
+}
 
+.BG
+{
+    border-radius: 20px;
+    background-color: #025464;
+    width: 300px;
+    margin: auto;
+}
 
+.BG div
+{
+    width: 50%;
+    margin: auto;
+    padding: 5px;
+}
 
-.pawprint-pattern {
+.BG div h2
+{
+    font-family: Sans-serif; font-size: 25px;
+    font-weight: 500px;
+    text-decoration: none;
+    margin: auto;
+    /* padding: 3px; */
+    /* border: 1px solid #dce3e4; */
+    color: #fff
+}
+
+.BG div a
+{
+    text-decoration: none;
+
+}
+
+.IBox
+{
+    height: 50%;
+    width: 35%;
+    /* background-color: #0b0c0c; */
+    padding-block: 30px;
+    display:inline-block;
+
+}
+
+.IBox2
+{
+    height: 50%;
+    width: 33.33%;
+    /* background-color: #060809; */
+    display: inline-block;
+    padding: 20px;
+    /* border: 2px solid red; */
+    margin: auto;
+
+}
+
+.pfp 
+{
+    border: 10px solid #ffffff ;
+    border-radius: 10px;
+    height: 250px;
+    width: 175px;
+    margin-top: 15px;
+    object-fit: cover;
+    max-block-size: 300px;
+}
+
+.pawprint-pattern 
+{
     background-image: url("../images/backgroundpattern.png");
     background-position: center;
     background-size: 90%;
@@ -11,8 +87,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-  }
-
+}
 
 .TitleHolder
 {
@@ -24,7 +99,8 @@
 
 .TitleHolder h1
 {
-    font-family: Sans-serif; font-size: 40px;
+    font-family: Sans-serif;
+     font-size: 40px;
     font-weight: 600;
     margin-top: 3%;
     color: #fff;
@@ -52,11 +128,13 @@
 
 .ParagraphHolder h1
 {
-    font-family: Sans-serif; font-size: px;
+    font-family: Sans-serif; 
+    font-size: 40px;
+    font-weight: 600;
     text-align: center;
     margin: auto;
     justify-content: center;
-    margin-bottom: 5%;
+    margin-bottom: 10px;
     color: #fff;
 
 }
@@ -89,7 +167,7 @@
     float: none;
     display: inline-block;
     display: inline;
-
+    
     /* border: 2px solid red; */
 }
 
@@ -98,6 +176,7 @@
     border-radius: 50px;
 
     text-align: center;
+    
     /* border: 2px solid #0e7967 ; */
 }
 
@@ -106,6 +185,10 @@
     height: 200px; /* you can use % */
     /* border: 2px solid #353412 ; */
     width: 300px
+
+
+    
+    
 }
 
 .rightPic
@@ -132,4 +215,9 @@
     background-position: center;
     
 
+}
+
+.Paragraph p {
+    font-size: 10px;
+    color: white;
 }
