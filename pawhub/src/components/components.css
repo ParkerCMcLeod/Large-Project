@@ -286,3 +286,7 @@ li button:hover {
     margin-right: auto; 
     width: 400px;
 }
+
+nav, nav * {
+  font-family: "Your Font Family", sans-serif;
+}
