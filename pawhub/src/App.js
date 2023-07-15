@@ -22,6 +22,53 @@ function App() {
       }
     };
 
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://localhost:3001/api');
+          setApiData(response.data);
+        } catch (error) {
+          console.error('Failed to fetch data', error);
+        }
+      };
+    
+      fetchData();
+    }, []);
+    
+    const addData = async () => {
+      try {
+        const newUser = {
+          // Fill in your user data here
+        };
+        const response = await axios.post('http://localhost:3001/api', newUser);
+        setApiData([...apiData, response.data]); // Add the new user to the local state
+      } catch (error) {
+        console.error('Failed to post data', error);
+      }
+    };
+    
+    const updateData = async (id) => {
+      try {
+        const updatedUser = {
+          // Fill in the updated user data here
+        };
+        await axios.put(`http://localhost:3001/api/${id}`, updatedUser);
+        // Update the local state here if necessary
+      } catch (error) {
+        console.error('Failed to update data', error);
+      }
+    };
+    
+    const deleteData = async (id) => {
+      try {
+        await axios.delete(`http://localhost:3001/api/${id}`);
+        // Update the local state here if necessary
+      } catch (error) {
+        console.error('Failed to delete data', error);
+      }
+    };
+    
+
     fetchData(); // Call the fetchData function when the component mounts
   }, []); // The empty dependency array ensures that the effect runs only once
   
