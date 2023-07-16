@@ -14,6 +14,29 @@ app.listen(port, () => {
   console.log('Server listening on port 3001');
 });
 
+const fs = require('fs');
+
+async function incrementAndSaveInteger(filePath) {
+  try {
+    // Read the file asynchronously
+    const data = await fs.promises.readFile(filePath, 'utf8');
+    
+    // Parse the contents of the file as an integer
+    let intValue = parseInt(data, 10);
+
+    // Increment the integer value by one
+    intValue += 1;
+
+    // Save the updated integer back to the file
+    await fs.promises.writeFile(filePath, intValue.toString(), 'utf8');
+
+    return intValue;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
 async function run() {
   const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
@@ -25,7 +48,7 @@ async function run() {
 
   const collection = database.collection(collectionName);
   
-  // API to read all documents
+  // API to read ALL documents
   app.get('/api', async (req, res) => {
     try {
       const documents = await collection.find({}).toArray();
@@ -38,8 +61,17 @@ async function run() {
   // API to create new document
   app.post('/api', async (req, res) => {
     try {
-      const newUser = req.body;
-      const result = await collection.insertOne(newUser);
+      let newUserID;
+      let newUser = req.body;
+      try {
+        newUserID = await incrementAndSaveInteger('src\\data\\currentUserID.txt');
+      } catch (err) {
+        console.error('An error occurred:', err);
+      }
+      const currentDate = new Date();
+      const newDateCreated = currentDate.toISOString();
+      newUser = {"userID": newUserID, "dateCreated": newDateCreated, ...newUser};
+      await collection.insertOne(newUser);
       res.send('Data inserted successfully');
     } catch (err) {
       res.status(500).send(err);

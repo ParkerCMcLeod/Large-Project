@@ -20,22 +20,8 @@ function App() {
     }
   };
 
-  const addData = async () => {
+  const addData = async (newUser) => {
     try {
-      const newUser = {
-        "userID": 123,
-        "name": "TEST",
-        "username": "johndoe",
-        "email": "johndoe@example.com",
-        "password": "mysecretpassword",
-        "profilePicture": "https://example.com/profile.jpg",
-        "dateCreated": "2023-07-16T12:00:00Z",
-        "friendList": [
-          456,
-          789,
-          1234
-        ]      
-      };   
       const response = await axios.post('http://localhost:3001/api', newUser);
       setApiData([...apiData, response.data]); // Add the new user to the local state
     } catch (error) {
@@ -65,8 +51,20 @@ function App() {
   };
 
   useEffect(() => {
-    fetchData(); // Call the fetchData function when the component mounts
-    addData();
+    fetchData();
+    const newUserExample = {
+      "name": "Stephen Martin",
+      "username": "IPlayFootball",
+      "email": "football@ucf.edu",
+      "password": "GoKnightsIPlayFootball42",
+      "profilePicture": "https://example.com/profile.jpg",
+      "friendList": [
+        456,
+        789,
+        1234
+      ]      
+    };
+    addData(newUserExample); // example of adding a newUser
   }, []); // The empty dependency array ensures that the effect runs only once
 
   return (
