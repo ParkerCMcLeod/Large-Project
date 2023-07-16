@@ -11,52 +11,64 @@ import GroupChat from "./pages/GroupChat";
 function App() {
   const [apiData, setApiData] = useState([]);
 
-  useEffect(() => {
-    // Define an async function to fetch the data
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api');
-        setApiData(response.data);
-      } catch (error) {
-        console.error('Failed to fetch data', error);
-      }
-    const addData = async () => {
-      try {
-        const newUser = {
-          // Fill in your user data here
-        };
-        const response = await axios.post('http://localhost:3001/api', newUser);
-        setApiData([...apiData, response.data]); // Add the new user to the local state
-      } catch (error) {
-        console.error('Failed to post data', error);
-      }
-    };
-    
-    const updateData = async (id) => {
-      try {
-        const updatedUser = {
-          // Fill in the updated user data here
-        };
-        await axios.put(`http://localhost:3001/api/${id}`, updatedUser);
-        // Update the local state here if necessary
-      } catch (error) {
-        console.error('Failed to update data', error);
-      }
-    };
-    
-    const deleteData = async (id) => {
-      try {
-        await axios.delete(`http://localhost:3001/api/${id}`);
-        // Update the local state here if necessary
-      } catch (error) {
-        console.error('Failed to delete data', error);
-      }
-    };
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api');
+      setApiData(response.data);
+    } catch (error) {
+      console.error('Failed to fetch data', error);
+    }
+  };
 
+  const addData = async () => {
+    try {
+      const newUser = {
+        "userID": 123,
+        "name": "TEST",
+        "username": "johndoe",
+        "email": "johndoe@example.com",
+        "password": "mysecretpassword",
+        "profilePicture": "https://example.com/profile.jpg",
+        "dateCreated": "2023-07-16T12:00:00Z",
+        "friendList": [
+          456,
+          789,
+          1234
+        ]      
+      };   
+      const response = await axios.post('http://localhost:3001/api', newUser);
+      setApiData([...apiData, response.data]); // Add the new user to the local state
+    } catch (error) {
+      console.error('Failed to post data', error);
+    }
+  };
+
+  const updateData = async (id) => {
+    try {
+      const updatedUser = {
+        // Fill in the updated user data here
+      };
+      await axios.put(`http://localhost:3001/api/${id}`, updatedUser);
+      // Update the local state here if necessary
+    } catch (error) {
+      console.error('Failed to update data', error);
+    }
+  };
+
+  const deleteData = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/${id}`);
+      // Update the local state here if necessary
+    } catch (error) {
+      console.error('Failed to delete data', error);
+    }
+  };
+
+  useEffect(() => {
     fetchData(); // Call the fetchData function when the component mounts
+    addData();
   }, []); // The empty dependency array ensures that the effect runs only once
-  
+
   return (
     <div>
       {/* Example render of api data */}

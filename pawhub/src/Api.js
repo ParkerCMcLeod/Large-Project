@@ -21,7 +21,7 @@ async function run() {
   await client.connect();
 
   const database = client.db("users");
-  const collectionName = "users_log";
+  const collectionName = "users";
 
   const collection = database.collection(collectionName);
   
@@ -31,7 +31,7 @@ async function run() {
       const documents = await collection.find({}).toArray();
       res.json(documents);
     } catch (err) {
-      res.status(500).send("Error occurred");
+      res.status(500).send(err);
     }
   });
 
@@ -40,9 +40,9 @@ async function run() {
     try {
       const newUser = req.body;
       const result = await collection.insertOne(newUser);
-      res.json(result.ops[0]); // return created document
+      res.send('Data inserted successfully');
     } catch (err) {
-      res.status(500).send("Error occurred");
+      res.status(500).send(err);
     }
   });
 
@@ -58,7 +58,7 @@ async function run() {
         res.send('Data updated successfully');
       }
     } catch (err) {
-      res.status(500).send("Error occurred");
+      res.status(500).send(err);
     }
   });
 
@@ -73,7 +73,7 @@ async function run() {
         res.send('Data deleted successfully');
       }
     } catch (err) {
-      res.status(500).send("Error occurred");
+      res.status(500).send(err);
     }
   });
 
