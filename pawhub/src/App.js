@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
 import Contact from "./pages/Contact";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import GroupChat from "./pages/GroupChat";
 
@@ -20,6 +20,16 @@ function App() {
     }
   };
 
+  const searchData = async (query) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/api/search/${query}`);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch data', error);
+      throw error;
+    }
+  };
+
   const addData = async (newUser) => {
     try {
       const response = await axios.post('http://localhost:3001/api', newUser);
@@ -29,17 +39,18 @@ function App() {
     }
   };
 
-  const updateData = async (id) => {
+  const updateData = async (id, updatedUser) => {
     try {
-      const updatedUser = {
-        // Fill in the updated user data here
-      };
-      await axios.put(`http://localhost:3001/api/${id}`, updatedUser);
-      // Update the local state here if necessary
+      const response = await axios.put(`http://localhost:3001/api/${id}`, updatedUser);
+      
+      // Update the local state to reflect the changes on the server
+      if (response.data === 'Data updated successfully') {
+        setApiData(apiData.map(user => (user._id === id ? updatedUser : user)));
+      }
     } catch (error) {
       console.error('Failed to update data', error);
     }
-  };
+  };  
 
   const deleteData = async (id) => {
     try {
@@ -51,20 +62,32 @@ function App() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(); // example of getting all users
+
     const newUserExample = {
       "name": "Stephen Martin",
       "username": "IPlayFootball",
       "email": "football@ucf.edu",
       "password": "GoKnightsIPlayFootball42",
       "profilePicture": "https://example.com/profile.jpg",
-      "friendList": [
-        456,
-        789,
-        1234
-      ]      
+      "friendList": [100, 200, 300]      
     };
     addData(newUserExample); // example of adding a newUser
+
+    const query = { username: "IPlayFootball" };
+    searchData(query);
+
+    let x = 1;
+
+    // const updatedUserExample = {
+    //   "name": "UPDATED",
+    //   "username": "UPDATED",
+    //   "email": "UPDATED@ucf.edu",
+    //   "password": "UPDATED",
+    //   "profilePicture": "https://example.com/profile.jpg",
+    //   "friendList": [1, 2, 3]      
+    // };
+    // updateData(id, updatedUserExample) // updating an existing user
   }, []); // The empty dependency array ensures that the effect runs only once
 
   return (

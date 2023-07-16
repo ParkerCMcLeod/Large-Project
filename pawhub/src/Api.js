@@ -1,44 +1,44 @@
-const { MongoClient } = require("mongodb");
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
+// Importing required modules
+const { MongoClient, ObjectId } = require("mongodb");
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const fs = require("fs").promises;
 
+// Creating Express app
+const app = express();
+
+// Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const port = 3001
+// Setting up server port
+const port = 3001;
+
+// Error Handling Middleware
+function handleError(err, req, res, next) {
+  console.error(err);
+  res.status(500).send(err);
+}
+app.use(handleError);
 
 app.listen(port, () => {
-  console.log('Server listening on port 3001');
+  console.log("Server listening on port 3001");
 });
 
-const fs = require('fs');
-
+// File operations function
 async function incrementAndSaveInteger(filePath) {
-  try {
-    // Read the file asynchronously
-    const data = await fs.promises.readFile(filePath, 'utf8');
-    
-    // Parse the contents of the file as an integer
-    let intValue = parseInt(data, 10);
-
-    // Increment the integer value by one
-    intValue += 1;
-
-    // Save the updated integer back to the file
-    await fs.promises.writeFile(filePath, intValue.toString(), 'utf8');
-
-    return intValue;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+  const data = await fs.readFile(filePath, "utf8");
+  let intValue = parseInt(data, 10);
+  intValue += 1;
+  await fs.writeFile(filePath, intValue.toString(), "utf8");
+  return intValue;
 }
 
 async function run() {
-  const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
+  const uri =
+    "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   await client.connect();
@@ -47,9 +47,9 @@ async function run() {
   const collectionName = "users";
 
   const collection = database.collection(collectionName);
-  
+
   // API to read ALL documents
-  app.get('/api', async (req, res) => {
+  app.get("/api", async (req, res) => {
     try {
       const documents = await collection.find({}).toArray();
       res.json(documents);
@@ -58,57 +58,95 @@ async function run() {
     }
   });
 
-  // API to create new document
-  app.post('/api', async (req, res) => {
+  // API to read one document via passed ID
+  app.get("/api/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const document = await collection.findOne({ _id: ObjectId(id) });
+
+      if (document) {
+        res.json(document);
+      } else {
+        res.status(404).send("No document found");
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+
+  // API to search for document by query
+  app.post("/api/search/:query", async (req, res) => {
+    try {
+      const { query } = req.params;
+      const documents = await collection.find(query).toArray();
+
+      if (documents.length > 0) {
+        res.json(documents);
+      } else {
+        res.status(404).send("No documents found");
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+
+  // API to create a new document
+  app.post("/api", async (req, res) => {
     try {
       let newUserID;
       let newUser = req.body;
       try {
-        newUserID = await incrementAndSaveInteger('src\\data\\currentUserID.txt');
+        newUserID = await incrementAndSaveInteger("src/data/currentUserID.txt");
       } catch (err) {
-        console.error('An error occurred:', err);
+        console.error("An error occurred:", err);
       }
       const currentDate = new Date();
       const newDateCreated = currentDate.toISOString();
-      newUser = {"userID": newUserID, "dateCreated": newDateCreated, ...newUser};
+      newUser = {
+        userID: newUserID,
+        dateCreated: newDateCreated,
+        ...newUser,
+      };
       await collection.insertOne(newUser);
-      res.send('Data inserted successfully');
+      res.send("Data inserted successfully");
     } catch (err) {
       res.status(500).send(err);
     }
   });
 
-  // API to update document
-  app.put('/api/:id', async (req, res) => {
+  // API to update a document
+  app.put("/api/:id", async (req, res) => {
     try {
       const { id } = req.params;
       const newData = req.body;
-      const result = await collection.updateOne({ _id: MongoClient.ObjectId(id) }, { $set: newData });
+      const result = await collection.updateOne(
+        { _id: ObjectId(id) },
+        { $set: newData }
+      );
       if (result.modifiedCount === 0) {
         res.status(404).send("No such document exists");
       } else {
-        res.send('Data updated successfully');
+        res.send("Data updated successfully");
       }
     } catch (err) {
       res.status(500).send(err);
     }
   });
 
-  // API to delete document
-  app.delete('/api/:id', async (req, res) => {
+  // API to delete a document
+  app.delete("/api/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const result = await collection.deleteOne({ _id: MongoClient.ObjectId(id) });
+      const result = await collection.deleteOne({ _id: ObjectId(id) });
       if (result.deletedCount === 0) {
         res.status(404).send("No such document exists");
       } else {
-        res.send('Data deleted successfully');
+        res.send("Data deleted successfully");
       }
     } catch (err) {
       res.status(500).send(err);
     }
   });
-
 }
 
 run().catch(console.dir);
