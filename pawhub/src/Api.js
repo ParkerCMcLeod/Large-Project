@@ -50,34 +50,8 @@ async function run() {
 
   const collection = database.collection(collectionName);
 
-  // API to read ALL documents
-  app.get("/api", async (req, res) => {
-    try {
-      const documents = await collection.find({}).toArray();
-      res.json(documents);
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
-
-  // API to read one document via passed ID
-  app.get("/api/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-      const document = await collection.findOne({ _id: ObjectId(id) });
-
-      if (document) {
-        res.json(document);
-      } else {
-        res.status(404).send("No document found");
-      }
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
-
   // API to search for document by query
-  app.get("/search", async (req, res) => {
+  app.get("/searchUsersReturnUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -96,7 +70,7 @@ async function run() {
   });
 
   // API to search for document by query
-  app.get("/searchID", async (req, res) => {
+  app.get("/searchUsersReturnIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -118,7 +92,7 @@ async function run() {
   });
 
   // API to create a new document
-  app.post("/api", async (req, res) => {
+  app.post("/addNewUser", async (req, res) => {
     try {
       let newUserID;
       let newUser = req.body;
@@ -141,7 +115,7 @@ async function run() {
     }
   });
 
-  app.put("/update", async (req, res) => {
+  app.put("/updateMatchingUsers", async (req, res) => {
     try {
       const listIDs = req.body.listIDs;
       const updatedUser = req.body.updatedUser;
@@ -163,10 +137,12 @@ async function run() {
   });
 
   // API to delete a document
-  app.delete("/api/:id", async (req, res) => {
+  app.delete("/deleteMatchingUsers", async (req, res) => {
     try {
-      const { id } = req.params;
-      const result = await collection.deleteOne({ _id: ObjectId(id) });
+      // Extract the query parameters from the request
+      const query = req.query;
+
+      const result = await collection.deleteMany(query);
       if (result.deletedCount === 0) {
         res.status(404).send("No such document exists");
       } else {

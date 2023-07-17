@@ -11,18 +11,9 @@ import GroupChat from "./pages/GroupChat";
 function App() {
   const [apiData, setApiData] = useState([]);
 
-  const fetchAllUsers = async () => {
+  const searchUsersReturnUsers = async (query) => {
     try {
-      const response = await axios.get('http://localhost:3001/api');
-      setApiData(response.data);
-    } catch (error) {
-      console.error('Failed to fetch data', error);
-    }
-  };
-
-  const searchDataGetDocumnets = async (query) => {
-    try {
-      const response = await axios.get('http://localhost:3001/search', {
+      const response = await axios.get('http://localhost:3001/searchUsersReturnUsers', {
         params: query
       });
       setApiData(response.data);
@@ -31,13 +22,13 @@ function App() {
     }
   };
 
-  const searchDataGetIDs = async (query) => {
+  const searchUsersReturnIDs = async (query) => {
     try {
-      const response = await axios.get('http://localhost:3001/searchID', {
+      const response = await axios.get('http://localhost:3001/searchUsersReturnIDs', {
         params: query
       });
       setApiData(response.data);
-      return response.data
+      return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -45,7 +36,7 @@ function App() {
 
   const addNewUser = async (newUser) => {
     try {
-      const response = await axios.post('http://localhost:3001/api', newUser);
+      const response = await axios.post('http://localhost:3001/addNewUser', newUser);
       setApiData([...apiData, response.data]); // Add the new user to the local state
     } catch (error) {
       console.error('Failed to post data', error);
@@ -55,7 +46,7 @@ function App() {
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
-      const { data } = await axios.put("http://localhost:3001/update", {
+      const { data } = await axios.put("http://localhost:3001/updateMatchingUsers", {
         listIDs,
         updatedUser,
       });
@@ -71,10 +62,9 @@ function App() {
     }
   };
 
-
-  const deleteData = async (id) => {
+  const deleteMatchingUsers = async (query) => {
     try {
-      await axios.delete(`http://localhost:3001/api/${id}`);
+      await axios.delete(`http://localhost:3001/deleteMatchingUsers`);
       // Update the local state here if necessary
     } catch (error) {
       console.error('Failed to delete data', error);
@@ -82,34 +72,37 @@ function App() {
   };
 
   useEffect(() => {
-    fetchAllUsers();
+    const fetchData = async () => {
+      const newUserExample = {
+        "name": "Stephen Martin",
+        "username": "IPlayFootball",
+        "email": "football@ucf.edu",
+        "password": "GoKnightsIPlayFootball42",
+        "profilePicture": "https://example.com/profile.jpg",
+        "friendList": [100, 200, 300]
+      };
+      await addNewUser(newUserExample);
 
-    const newUserExample = {
-      "name": "Stephen Martin",
-      "username": "IPlayFootball",
-      "email": "football@ucf.edu",
-      "password": "GoKnightsIPlayFootball42",
-      "profilePicture": "https://example.com/profile.jpg",
-      "friendList": [100, 200, 300]
+      // Specify the search criteria
+      const query = { username: "IPlayFootball" };
+      let results = await searchUsersReturnUsers(query);
+
+      let listIDsPromise = searchUsersReturnIDs(query);
+
+      const updatedUserExample = {
+        "name": "UPDATED",
+        "username": "UPDATED",
+        "email": "UPDATED@ucf.edu",
+        "password": "UPDATED",
+        "profilePicture": "https://example.com/profile.jpg",
+        "friendList": [1, 2, 3]
+      };
+      await updateAllMatchingUsers(listIDsPromise, updatedUserExample);
+
+      await deleteMatchingUsers({ username: "UPDATED" });
     };
-    addNewUser(newUserExample);
 
-    // Specify the search criteria
-    const query = { username: "IPlayFootball" };
-    let documents = searchDataGetDocumnets(query);
-
-    let listIDsPromise = searchDataGetIDs(query);
-
-    const updatedUserExample = {
-      "name": "UPDATED",
-      "username": "UPDATED",
-      "email": "UPDATED@ucf.edu",
-      "password": "UPDATED",
-      "profilePicture": "https://example.com/profile.jpg",
-      "friendList": [1, 2, 3]
-    };
-    updateAllMatchingUsers(listIDsPromise, updatedUserExample)
-
+    fetchData();
   }, []); // The empty dependency array ensures that the effect runs only once
 
   return (
@@ -137,4 +130,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
