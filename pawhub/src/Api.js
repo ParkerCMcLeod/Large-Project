@@ -13,19 +13,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-// Setting up server port
-const port = 3001;
-
 // Error Handling Middleware
 function handleError(err, req, res, next) {
   console.error(err);
   res.status(500).send(err);
 }
-app.use(handleError);
+
+// Setting up server port
+const port = 3001;
 
 app.listen(port, () => {
   console.log("Server listening on port 3001");
 });
+
+// Registering the error handling middleware
+app.use(handleError);
 
 // File operations function
 async function incrementAndSaveInteger(filePath) {
@@ -37,7 +39,8 @@ async function incrementAndSaveInteger(filePath) {
 }
 
 async function run() {
-  const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
+  const uri =
+    "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   await client.connect();
@@ -74,10 +77,10 @@ async function run() {
   });
 
   // API to search for document by query
-  app.get("/api/search", async (req, res) => {
+  app.get("/search", async (req, res) => {
     try {
-      // Specify the search criteria
-      const query = { username: "IPlayFootball" };
+      // Extract the query parameters from the request
+      const query = req.query;
 
       // Perform the search
       const documents = await collection.find(query).toArray();
@@ -92,6 +95,27 @@ async function run() {
     }
   });
 
+  // API to search for document by query
+  app.get("/searchID", async (req, res) => {
+    try {
+      // Extract the query parameters from the request
+      const query = req.query;
+
+      // Perform the search
+      const documents = await collection.find(query).toArray();
+
+      if (documents.length > 0) {
+        // Extract the IDs from the documents
+        const documentIds = documents.map((doc) => doc._id);
+
+        res.json(documentIds);
+      } else {
+        res.status(404).send("No documents found");
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
 
   // API to create a new document
   app.post("/api", async (req, res) => {
@@ -117,16 +141,21 @@ async function run() {
     }
   });
 
-  // API to update a document
-  app.put("/api/:id", async (req, res) => {
+  app.put("/update", async (req, res) => {
     try {
-      const { id } = req.params;
-      const newData = req.body;
-      const result = await collection.updateOne(
-        { _id: ObjectId(id) },
-        { $set: newData }
-      );
-      if (result.modifiedCount === 0) {
+      const listIDs = req.body.listIDs;
+      const updatedUser = req.body.updatedUser;
+      let modifiedCount = 0;
+  
+      for (const id of listIDs) {
+        const result = await collection.updateOne(
+          { _id: ObjectId(id) },
+          { $set: updatedUser }
+        );
+        modifiedCount += result.modifiedCount;
+      }
+  
+      if (modifiedCount === 0) {
         res.status(404).send("No such document exists");
       } else {
         res.send("Data updated successfully");
@@ -134,7 +163,7 @@ async function run() {
     } catch (err) {
       res.status(500).send(err);
     }
-  });
+  });  
 
   // API to delete a document
   app.delete("/api/:id", async (req, res) => {
@@ -150,6 +179,13 @@ async function run() {
       res.status(500).send(err);
     }
   });
+
+  // Error Handling Middleware
+  app.use(function (err, req, res, next) {
+    console.error(err);
+    res.status(500).send(err);
+  });
+
 }
 
 run().catch(console.dir);

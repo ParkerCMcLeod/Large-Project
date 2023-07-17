@@ -20,10 +20,24 @@ function App() {
     }
   };
 
-  const searchData = async () => {
+  const searchDataGetDocumnets = async (query) => {
     try {
-      const response = await axios.get('http://localhost:3001/api/search');
+      const response = await axios.get('http://localhost:3001/search', {
+        params: query
+      });
       setApiData(response.data);
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
+  const searchDataGetIDs = async (query) => {
+    try {
+      const response = await axios.get('http://localhost:3001/searchID', {
+        params: query
+      });
+      setApiData(response.data);
+      return response.data
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -38,18 +52,25 @@ function App() {
     }
   };
 
-  const updateData = async (id, updatedUser) => {
+  const updateData = async (listIDsPromise, updatedUser) => {
     try {
-      const response = await axios.put(`http://localhost:3001/api/${id}`, updatedUser);
-      
+      const listIDs = await listIDsPromise;
+      const { data } = await axios.put("http://localhost:3001/update", {
+        listIDs,
+        updatedUser,
+      });
+  
       // Update the local state to reflect the changes on the server
-      if (response.data === 'Data updated successfully') {
-        setApiData(apiData.map(user => (user._id === id ? updatedUser : user)));
+      if (data.status === 200 && data.message === "Data updated successfully") {
+        setApiData((apiData) =>
+          apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
+        );
       }
     } catch (error) {
-      console.error('Failed to update data', error);
+      console.error("Failed to update data:", error.message);
     }
-  };  
+  };
+  
 
   const deleteData = async (id) => {
     try {
@@ -73,19 +94,20 @@ function App() {
     };
     addData(newUserExample); // example of adding a newUser
 
-    searchData();
+    // Specify the search criteria
+    const query = { username: "IPlayFootball" };
+    let documents = searchDataGetDocumnets(query);
+    let listIDsPromise = searchDataGetIDs(query);
 
-    let x = 1;
-
-    // const updatedUserExample = {
-    //   "name": "UPDATED",
-    //   "username": "UPDATED",
-    //   "email": "UPDATED@ucf.edu",
-    //   "password": "UPDATED",
-    //   "profilePicture": "https://example.com/profile.jpg",
-    //   "friendList": [1, 2, 3]      
-    // };
-    // updateData(id, updatedUserExample) // updating an existing user
+    const updatedUserExample = {
+      "name": "UPDATED",
+      "username": "UPDATED",
+      "email": "UPDATED@ucf.edu",
+      "password": "UPDATED",
+      "profilePicture": "https://example.com/profile.jpg",
+      "friendList": [1, 2, 3]      
+    };
+    updateData(listIDsPromise, updatedUserExample) // updating an existing user
   }, []); // The empty dependency array ensures that the effect runs only once
 
   return (
