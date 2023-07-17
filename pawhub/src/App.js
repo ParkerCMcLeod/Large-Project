@@ -11,7 +11,7 @@ import GroupChat from "./pages/GroupChat";
 function App() {
   const [apiData, setApiData] = useState([]);
 
-  const fetchData = async () => {
+  const fetchAllUsers = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api');
       setApiData(response.data);
@@ -43,7 +43,7 @@ function App() {
     }
   };
 
-  const addData = async (newUser) => {
+  const addNewUser = async (newUser) => {
     try {
       const response = await axios.post('http://localhost:3001/api', newUser);
       setApiData([...apiData, response.data]); // Add the new user to the local state
@@ -52,14 +52,14 @@ function App() {
     }
   };
 
-  const updateData = async (listIDsPromise, updatedUser) => {
+  const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
       const { data } = await axios.put("http://localhost:3001/update", {
         listIDs,
         updatedUser,
       });
-  
+
       // Update the local state to reflect the changes on the server
       if (data.status === 200 && data.message === "Data updated successfully") {
         setApiData((apiData) =>
@@ -70,7 +70,7 @@ function App() {
       console.error("Failed to update data:", error.message);
     }
   };
-  
+
 
   const deleteData = async (id) => {
     try {
@@ -82,7 +82,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchData(); // example of getting all users
+    fetchAllUsers();
 
     const newUserExample = {
       "name": "Stephen Martin",
@@ -90,13 +90,14 @@ function App() {
       "email": "football@ucf.edu",
       "password": "GoKnightsIPlayFootball42",
       "profilePicture": "https://example.com/profile.jpg",
-      "friendList": [100, 200, 300]      
+      "friendList": [100, 200, 300]
     };
-    addData(newUserExample); // example of adding a newUser
+    addNewUser(newUserExample);
 
     // Specify the search criteria
     const query = { username: "IPlayFootball" };
     let documents = searchDataGetDocumnets(query);
+
     let listIDsPromise = searchDataGetIDs(query);
 
     const updatedUserExample = {
@@ -105,9 +106,10 @@ function App() {
       "email": "UPDATED@ucf.edu",
       "password": "UPDATED",
       "profilePicture": "https://example.com/profile.jpg",
-      "friendList": [1, 2, 3]      
+      "friendList": [1, 2, 3]
     };
-    updateData(listIDsPromise, updatedUserExample) // updating an existing user
+    updateAllMatchingUsers(listIDsPromise, updatedUserExample)
+
   }, []); // The empty dependency array ensures that the effect runs only once
 
   return (

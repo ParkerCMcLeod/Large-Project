@@ -145,25 +145,22 @@ async function run() {
     try {
       const listIDs = req.body.listIDs;
       const updatedUser = req.body.updatedUser;
-      let modifiedCount = 0;
+      const objectIDs = listIDs.map(id => new ObjectId(id));
+      const filter = { _id: { $in: objectIDs } };
   
-      for (const id of listIDs) {
-        const result = await collection.updateOne(
-          { _id: ObjectId(id) },
-          { $set: updatedUser }
-        );
-        modifiedCount += result.modifiedCount;
-      }
+      const result = await collection.updateMany(filter, { $set: updatedUser });
+  
+      const modifiedCount = result.modifiedCount;
   
       if (modifiedCount === 0) {
-        res.status(404).send("No such document exists");
+        res.status(404).send('No documents were found for the provided IDs');
       } else {
-        res.send("Data updated successfully");
+        res.send('Data updated successfully');
       }
     } catch (err) {
       res.status(500).send(err);
     }
-  });  
+  });
 
   // API to delete a document
   app.delete("/api/:id", async (req, res) => {
@@ -185,7 +182,6 @@ async function run() {
     console.error(err);
     res.status(500).send(err);
   });
-
 }
 
 run().catch(console.dir);
