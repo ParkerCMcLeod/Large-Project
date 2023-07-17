@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./components.css";
-import SignUpCard from "./SignupCard";
+
 
 
 function LoginCard(props) {
