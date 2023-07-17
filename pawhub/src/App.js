@@ -20,13 +20,12 @@ function App() {
     }
   };
 
-  const searchData = async (query) => {
+  const searchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/search/${query}`);
-      return response.data;
+      const response = await axios.get('http://localhost:3001/api/search');
+      setApiData(response.data);
     } catch (error) {
-      console.error('Failed to fetch data', error);
-      throw error;
+      console.error('Failed to search data', error);
     }
   };
 
@@ -74,8 +73,7 @@ function App() {
     };
     addData(newUserExample); // example of adding a newUser
 
-    const query = { username: "IPlayFootball" };
-    searchData(query);
+    searchData();
 
     let x = 1;
 

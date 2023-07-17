@@ -37,8 +37,7 @@ async function incrementAndSaveInteger(filePath) {
 }
 
 async function run() {
-  const uri =
-    "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   await client.connect();
@@ -75,9 +74,12 @@ async function run() {
   });
 
   // API to search for document by query
-  app.post("/api/search/:query", async (req, res) => {
+  app.get("/api/search", async (req, res) => {
     try {
-      const { query } = req.params;
+      // Specify the search criteria
+      const query = { username: "IPlayFootball" };
+
+      // Perform the search
       const documents = await collection.find(query).toArray();
 
       if (documents.length > 0) {
@@ -89,6 +91,7 @@ async function run() {
       res.status(500).send(err);
     }
   });
+
 
   // API to create a new document
   app.post("/api", async (req, res) => {
