@@ -228,5 +228,9 @@
 
 a {
     color: white;
+    transition: ease-in-out 0.2s;
 }
 
+a:hover {
+    color: #e57c23;
+}

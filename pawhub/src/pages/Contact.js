@@ -11,7 +11,7 @@ import sleepy from "../images/Meow.jpg"
 
 function Contact() {
     return (
-        <div className="pawprint-pattern">
+        <div className="pawprint-pattern ">
             <Navigation />
 
             <div className="TitleHolder">
