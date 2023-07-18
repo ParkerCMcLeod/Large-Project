@@ -1,68 +1,71 @@
-import React, { Component } from "react";
+import React, { useState } from 'react';
 import logo from "../images/pawhub-logo-text.png";
 import "./components.css";
 import { Link } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
+import SearchBar from './SearchBar';
+import "./searchbar.css";
 
-class Navigation extends Component {
-  state = { clicked: false, profileCardOpen: false };
+const Navigation = () => {
+  const [clicked, setClicked] = useState(false);
+  const [profileCardOpen, setProfileCardOpen] = useState(false);
 
-  handleClick = () => {
-    this.setState({ clicked: !this.state.clicked });
+  const handleClick = () => {
+    setClicked(!clicked);
   };
 
-  handleProfileClick = () => {
-    this.setState({ profileCardOpen: true });
+  const handleProfileClick = () => {
+    setProfileCardOpen(true);
   };
 
-  closeProfileCard = () => {
-    this.setState({ profileCardOpen: false });
+  const closeProfileCard = () => {
+    setProfileCardOpen(false);
   };
 
-  render() {
-    return (
-      <div className="Navigation">
-        <nav>
+  return (
+    <div className="Navigation">
+      <nav>
+        <div className="navigation-logo-search">
           <Link to="/home">
             <img className="NavigationImage" src={logo} alt="Logo" />
           </Link>
-          <div>
-            <ul
-              id="NavBar"
-              className={this.state.clicked ? "active" : ""}
-            >
-              <li>
-                <Link to="/home">Home</Link>
-              </li>
-              <li>
-                <button onClick={this.handleProfileClick}>Profile</button>
-              </li>
-              <li>
-                <Link to="/chat">Group Chat</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/contact">Contact</Link>
-              </li>
-            </ul>
-          </div>
+          <SearchBar
+            handleProfileClick={handleProfileClick}
+            closeProfileCard={closeProfileCard}
+          />
+        </div>
+        
+        <div>
+          <ul id="NavBar" className={clicked ? "active" : ""}>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <button onClick={handleProfileClick}>Profile</button>
+            </li>
+            <li>
+              <Link to="/chat">Group Chat</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </div>
 
-          <div id="mobile" onClick={this.handleClick}>
-            <i
-              id="bar"
-              className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
-            ></i>
-          </div>
-        </nav>
+        <div id="mobile" onClick={handleClick}>
+          <i
+            id="bar"
+            className={clicked ? "fas fa-times" : "fas fa-bars"}
+          ></i>
+        </div>
+      </nav>
 
-        {this.state.profileCardOpen && (
-          <ProfileCard closeProfileCard={this.closeProfileCard} />
-        )}
-      </div>
-    );
-  }
-}
+      {profileCardOpen && <ProfileCard closeProfileCard={closeProfileCard} />}
+    </div>
+  );
+};
 
 export default Navigation;
