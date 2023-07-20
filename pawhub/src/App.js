@@ -6,7 +6,6 @@ import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
 import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
-import GroupChat from "./pages/GroupChat";
 
 function App() {
   const [apiData, setApiData] = useState([]);
@@ -122,7 +121,6 @@ function App() {
             <Route path="*" element={<NoPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/chat" element={<GroupChat />} />
           </Routes>
         </BrowserRouter>
       </div>

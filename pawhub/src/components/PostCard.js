@@ -47,9 +47,9 @@ function PostCard() {
           
           
         </div>
-        <div className="image-container">
+        <div className="image-container" style={{borderRadius: " 0 0 10px 10px"}}>
             {images.map((image, index) => (
-              <img key={index} src={image} alt={`image-${index + 1}`} />
+              <img key={index} src={image} alt={`image-${index + 1}`} style={{borderRadius: "10px", marginLeft: "10px"}}  />
             ))}
           </div>
       </div>

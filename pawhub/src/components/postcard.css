@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   /* Add any other styling properties for the container */
+  
 }
 
 .PostCard-inner {
@@ -16,7 +17,7 @@
   position: relative;
   margin-top: 40px;
   margin-left: 190px;
-  
+ 
   position: relative; /* Add this position property */
 }
 
@@ -121,7 +122,7 @@
   flex-wrap: wrap; /* Add flex-wrap property */
   justify-content: center; /* Adjust justify-content property */
   align-items: center;
-  z-index: 900;
+  z-index: 899;
 }
 
 .image-container img {

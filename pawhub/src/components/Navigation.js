@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "../images/pawhub-logo-text.png";
 import "./components.css";
 import { Link } from "react-router-dom";
@@ -22,6 +22,15 @@ const Navigation = () => {
     setProfileCardOpen(false);
   };
 
+  useEffect(() => {
+    // Add event listener to handle body scrolling and overlay
+    document.body.style.overflow = clicked ? 'hidden' : 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [clicked]);
+
   return (
     <div className="Navigation">
       <nav>
@@ -43,9 +52,7 @@ const Navigation = () => {
             <li>
               <button onClick={handleProfileClick}>Profile</button>
             </li>
-            <li>
-              <Link to="/chat">Group Chat</Link>
-            </li>
+
             <li>
               <Link to="/about">About</Link>
             </li>
@@ -61,7 +68,9 @@ const Navigation = () => {
             className={clicked ? "fas fa-times" : "fas fa-bars"}
           ></i>
         </div>
-      </nav>
+
+        {/* Grey overlay that appears when the "bar" is clicked */}
+           </nav>
 
       {profileCardOpen && <ProfileCard closeProfileCard={closeProfileCard} />}
     </div>
