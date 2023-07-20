@@ -22,6 +22,21 @@ const Navigation = () => {
     setProfileCardOpen(false);
   };
 
+  const updateClickedState = () => {
+    // Check the window width and update the clicked state accordingly
+    setClicked(window.innerWidth <= 1209 ? clicked : false);
+  };
+
+  useEffect(() => {
+    // Add event listeners for the resize event
+    window.addEventListener('resize', updateClickedState);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateClickedState);
+    };
+  }, [clicked]);
+
   useEffect(() => {
     // Add event listener to handle body scrolling and overlay
     document.body.style.overflow = clicked ? 'hidden' : 'auto';
@@ -69,8 +84,8 @@ const Navigation = () => {
           ></i>
         </div>
 
-        {/* Grey overlay that appears when the "bar" is clicked */}
-           </nav>
+        {clicked && <div id="overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.6)', zIndex: 997, marginTop: "139px" }}></div>}
+      </nav>
 
       {profileCardOpen && <ProfileCard closeProfileCard={closeProfileCard} />}
     </div>
