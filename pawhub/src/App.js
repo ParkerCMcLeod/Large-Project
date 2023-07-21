@@ -8,40 +8,45 @@ import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 
 function App() {
-  const [apiData, setApiData] = useState([]);
+  // this line declare apiData as a empty array and is set by setApiData
+  // it also makes anything using apiData rerender when the value is changes
+  const [apiData, setApiData] = useState([]); 
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnUsers = async (query) => {
     try {
-      const response = await axios.get('http://localhost:3001/searchUsersReturnUsers', {
+      let response = await axios.get('http://localhost:3001/searchUsersReturnUsers', {
         params: query
       });
-      setApiData(response.data);
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to search data', error);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnIDs = async (query) => {
     try {
-      const response = await axios.get('http://localhost:3001/searchUsersReturnIDs', {
+      let response = await axios.get('http://localhost:3001/searchUsersReturnIDs', {
         params: query
       });
-      setApiData(response.data);
       return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewUser = async (newUser) => {
     try {
-      const response = await axios.post('http://localhost:3001/addNewUser', newUser);
-      setApiData([...apiData, response.data]); // Add the new user to the local state
+      let response = await axios.post('http://localhost:3001/addNewUser', newUser);
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
@@ -49,69 +54,167 @@ function App() {
         listIDs,
         updatedUser,
       });
-
-      // Update the local state to reflect the changes on the server
       if (data.status === 200 && data.message === "Data updated successfully") {
         setApiData((apiData) =>
           apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
         );
       }
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error("Failed to update data:", error.message);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const deleteMatchingUsers = async (query) => {
     try {
       await axios.delete(`http://localhost:3001/deleteMatchingUsers`);
-      // Update the local state here if necessary
+      setApiData(response.data); // uses the data and rerenders relevant changes
+    } catch (error) {
+      console.error('Failed to delete data', error);
+    }
+  };
+
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  const searchPostsReturnPosts = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/searchPostsReturnPosts', {
+        params: query
+      });
+      setApiData(response.data); // uses the data and rerenders relevant changes
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  const searchPostsReturnIDs = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/searchPostsReturnIDs', {
+        params: query
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  const addNewPost = async (newPost) => {
+    try {
+      let response = await axios.post('http://localhost:3001/addNewPost', newPost);
+      setApiData(response.data); // uses the data and rerenders relevant changes
+    } catch (error) {
+      console.error('Failed to post data', error);
+    }
+  };
+
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
+    try {
+      const listIDs = await listIDsPromise;
+      const { data } = await axios.put("http://localhost:3001/updateMatchingPosts", {
+        listIDs,
+        updatedPost,
+      });
+      if (data.status === 200 && data.message === "Data updated successfully") {
+        setApiData((apiData) =>
+          apiData.map((post) => (listIDs.includes(post._id) ? updatedPost : post))
+        );
+      }
+      setApiData(response.data); // uses the data and rerenders relevant changes
+    } catch (error) {
+      console.error("Failed to update data:", error.message);
+    }
+  };
+
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  const deleteMatchingPosts = async (query) => {
+    try {
+      await axios.delete(`http://localhost:3001/deleteMatchingPosts`);
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to delete data', error);
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    // declare function exampleUsersAPIFunctionality
+    const exampleUsersAPIFunctionality = async () => {
+      // create a new user json item
       const newUserExample = {
-        "name": "Stephen Martin",
-        "username": "IPlayFootball",
-        "email": "football@ucf.edu",
-        "password": "GoKnightsIPlayFootball42",
-        "profilePicture": "https://example.com/profile.jpg",
-        "friendList": [100, 200, 300]
+        name: "Stephen Martin",
+        username: "IPlayFootball",
+        email: "football@ucf.edu",
+        password: "GoKnightsIPlayFootball42",
+        profilePicture: "https://example.com/profile.jpg",
+        friendList: [1, 2, 3]
       };
+      // add the new user to database
       await addNewUser(newUserExample);
 
-      // Specify the search criteria
-      const query = { username: "IPlayFootball" };
-      let results = await searchUsersReturnUsers(query);
+      // search for users matching query and return them
+      let query = { username: "IPlayFootball" };
+      let userSearchResults = await searchUsersReturnUsers(query);
 
-      let listIDsPromise = searchUsersReturnIDs(query);
+      // search for users matching query and return their IDs
+      let userSearchResultsIDs = searchUsersReturnIDs(query);
 
+      // set all users maching IDs from search results above to be this new user
       const updatedUserExample = {
-        "name": "UPDATED",
-        "username": "UPDATED",
-        "email": "UPDATED@ucf.edu",
-        "password": "UPDATED",
-        "profilePicture": "https://example.com/profile.jpg",
-        "friendList": [1, 2, 3]
+        name: "Stephen MartinUPDATED",
+        username: "IPlayFootballUPDATED",
+        email: "football@ucf.eduUPDATED",
+        password: "GoKnightsIPlayFootball42UPDATED",
+        profilePicture: "https://example.com/profile.jpgUPDATED",
+        friendList: [100000, 200000, 300000]
       };
-      await updateAllMatchingUsers(listIDsPromise, updatedUserExample);
+      await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
-      await deleteMatchingUsers({ username: "UPDATED" });
+      // delete all users matching a query
+      query = { postname: "IPlayFootballUPDATED" };
+      await deleteMatchingUsers(query);
     };
 
-    fetchData();
-  }, []); // The empty dependency array ensures that the effect runs only once
+    // declare function examplePostsAPIFunctionality
+    const examplePostsAPIFunctionality = async () => {
+      // create a new post json item
+      const newPostExample = {
+        numLikes: 8,
+        text: "Hello World!",
+        photo: "https://example.com/profile.jpg",
+        userID: 42
+      };
+      // add the new post to database
+      await addNewPost(newPostExample);
+
+      // search for posts matching query and return them
+      let query = { numLikes: 8 };
+      let postSearchResults = await searchPostsReturnPosts(query);
+
+      // search for posts matching query and return their IDs
+      let postSearchResultsIDs = searchPostsReturnIDs(query);
+
+      // set all posts maching IDs from search results above to be this new post
+      const updatedPostExample = {
+        numLikes: 10000,
+        text: "Hello World!UPDATED",
+        photo: "https://example.com/profile.jpgUPDATED",
+        userID: 42000
+      };
+      await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
+
+      // delete all posts matching a query
+      query = { numLikes: 10000 };
+      await deleteMatchingPosts(query);
+    };
+
+    exampleUsersAPIFunctionality();
+    examplePostsAPIFunctionality();
+  }, []);
 
   return (
     <div>
-      {/* Example render of api data */}
-      {/* <div>
-        {data.map((item) => (
-          <div key={item._id}>{item.name}</div>
-        ))}
-      </div> */}
       <div>
         <BrowserRouter>
           <Routes>
