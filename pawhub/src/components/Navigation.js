@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import logo from "../images/pawhub-logo-text.png";
-import "./components.css";
-import { Link } from "react-router-dom";
-import ProfileCard from "./ProfileCard";
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../images/pawhub-logo-text.png';
+import './components.css';
+import ProfileCard from './ProfileCard';
 import SearchBar from './SearchBar';
-import "./searchbar.css";
+import './searchbar.css';
+
+
 
 const Navigation = () => {
   const [clicked, setClicked] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
+
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  
+    localStorage.clear();
+    console.log("logging out");
+    navigate('/landingPage');
+  };
 
   const handleClick = () => {
     setClicked(!clicked);
@@ -74,6 +86,10 @@ const Navigation = () => {
             <li>
               <Link to="/contact">Contact</Link>
             </li>
+
+            <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
           </ul>
         </div>
 
