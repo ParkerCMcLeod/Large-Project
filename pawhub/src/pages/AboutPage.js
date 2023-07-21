@@ -6,7 +6,7 @@ function AboutPage() {
     return (
         <div className="pawprint-pattern">
             <Navigation />
-            <div className="TitleHolder">
+            <div className="TitleHolderAbout">
                 <h1 >About Us</h1>
             </div>
             <div className="Pics">

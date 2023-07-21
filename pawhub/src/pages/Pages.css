@@ -285,3 +285,23 @@ h2 a:hover {
 a:hover {
     color: #e57c23;
 }
+
+
+.TitleHolderAbout {
+    display: flex;
+    justify-content: center;
+}
+
+.TitleHolderAbout h1 {
+    font-family: Sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    margin-top: 200px;
+    color: #fff;
+    background-color: #025464;
+    border: 10px solid #025464;
+    border-radius: 10px;
+    text-align: center;
+    width: 30%;
+    margin: 200px  auto 0px auto; /* Add this line */
+}
