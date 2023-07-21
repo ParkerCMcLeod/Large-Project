@@ -16,7 +16,6 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-  
     localStorage.clear();
     console.log("logging out");
     navigate('/landingPage');

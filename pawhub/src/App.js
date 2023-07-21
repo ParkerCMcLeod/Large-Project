@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // Import Navigate
 import HomePage from "./pages/HomePage";
 import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
@@ -10,7 +9,7 @@ import LandingPage from "./pages/LandingPage";
 function App() {
   // this line declare apiData as a empty array and is set by setApiData
   // it also makes anything using apiData rerender when the value is changes
-  const [apiData, setApiData] = useState([]); 
+  const [apiData, setApiData] = useState([]);
 
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnUsers = async (query) => {
@@ -213,13 +212,69 @@ function App() {
     examplePostsAPIFunctionality();
   }, []);
 
+  // Create a new state variable to represent user authentication status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Function to handle successful login or signup
+  const handleAuthentication = () => {
+    setIsLoggedIn(true);
+  };
+
+
+  // THIS WILL ONLY ALLOW LOGGED IN USERS TO ACCESS THE WEBSITE, USE OTHER RETURN TO EDIT
+
+  //  return (
+  //   <div>
+  //     <div>
+  //       <BrowserRouter>
+  //         <Routes>
+  //           {/* Render the Landing page */}
+  //           <Route
+  //             path="/"
+  //             element={
+  //               <LandingPage
+  //                 isLoggedIn={isLoggedIn}
+  //                 handleAuthentication={handleAuthentication}
+  //               />
+  //             }
+  //           />
+
+  //           {/* Render the Home page if isLoggedIn is true, otherwise redirect to Landing page */}
+  //           <Route
+  //             path="/home"
+  //             element={isLoggedIn ? <HomePage /> : <Navigate to="/" />}
+  //           />
+
+  //           {/* Always redirect to Landing page for other paths */}
+  //           <Route path="/landingPage" element={<Navigate to="/" />} />
+  //           <Route path="*" element={<Navigate to="/" />} />
+  //         </Routes>
+  //       </BrowserRouter>
+  //     </div>
+  //   </div>
+  // );
+
+
+
+
+  // FOR EDITING
   return (
     <div>
       <div>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/home" element={<HomePage />} />
+            <Route
+              path="/"
+              element={
+                <LandingPage
+                  isLoggedIn={isLoggedIn}
+                  handleAuthentication={handleAuthentication}
+                />
+              }
+            />
+            <Route
+              path="/home" element={<HomePage />}
+            />
             <Route path="/landingPage" element={<LandingPage />} />
             <Route path="*" element={<NoPage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -229,6 +284,8 @@ function App() {
       </div>
     </div>
   );
+
+
 }
 
 export default App
