@@ -111,6 +111,8 @@
     border-radius: 10px;
 }
 
+
+
 .TitleHolderLinks h1 {
     font-family: Sans-serif;
     font-size: 40px;
@@ -132,6 +134,10 @@
     border-radius: 10px;
     border: 4px solid #e57c23;
     transition: ease-in-out 0.2s;
+    display: block;
+    margin: 20px auto; 
+    width: 80%;
+
 }
 
 
@@ -140,6 +146,12 @@
     background-color: #025464;
     border: 4px solid #025464;
 }
+
+.TitleHolderLinks {
+    width: 700px;
+    margin: 0 auto;
+}
+
 
 .ParagraphHolder
 {
