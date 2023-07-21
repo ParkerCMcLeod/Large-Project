@@ -36,7 +36,6 @@ async function run() {
   await client.connect();
 
   const databaseUsers = client.db("users");
-
   const collectionUsers = "users";
   const users = databaseUsers.collection(collectionUsers);
 
@@ -44,7 +43,6 @@ async function run() {
   const currentUserIDIncrement = databaseUsers.collection(collectionCurrentUserIDIncrement);
 
   const databasePosts = client.db("posts");
-
   const collectionPosts = "posts";
   const posts = databasePosts.collection(collectionPosts);
 
@@ -141,42 +139,42 @@ async function run() {
   // API to delete users
   app.delete("/deleteMatchingUsers", async (req, res) => {
     try {
-      // Extract the query parameters from the request
-      const query = req.query;
+      // Extract the query parameters from the request body
+      const query = req.body;
 
       const result = await users.deleteMany(query);
       if (result.deletedCount === 0) {
         res.status(404).send("No such document exists");
       } else {
-        res.json({message: "Data deleted successfully", deletedCount: result.deletedCount});
+        res.json({ message: "Data deleted successfully", deletedCount: result.deletedCount });
       }
     } catch (err) {
       res.status(500).send(err);
     }
   });
 
-  // API to increment and return currentUserIDIncrement
-  async function incrementCurrentUserIDIncrement() {
+   // API to increment and return currentUserIDIncrement
+   async function incrementCurrentUserIDIncrement() {
     try {
       // Find the document, increment the value and return the updated document
       const result = await currentUserIDIncrement.findOneAndUpdate(
-        {},  // Filter - empty to match all documents in the collection
-        { $inc: { currentUserIDIncrement: 1 } },  // Update - increment the value by 1
-        { returnOriginal: false }  // Options - return the updated document
+        {}, // Filter - empty to match all documents in the collection
+        { $inc: { currentUserIDIncrement: 1 } }, // Update - increment the value by 1
+        { returnOriginal: false } // Options - return the updated document
       );
 
-      // If the document was not found, send a 404 response
+      // If the document was not found, throw an error
       if (!result.value) {
-        return res.status(404).send('No document found');
+        throw new Error("No document found");
       }
 
       // If the document was found and updated, send the new value
       return result.value.currentUserIDIncrement;
     } catch (err) {
-      // If an error occurred, send a 500 response
-      res.status(500).send(err);
+      // If an error occurred, throw the error
+      throw err;
     }
-  };
+  }
 
 
   // API to search for posts by query
@@ -269,49 +267,48 @@ async function run() {
   // API to delete posts
   app.delete("/deleteMatchingPosts", async (req, res) => {
     try {
-      // Extract the query parameters from the request
-      const query = req.query;
+      // Extract the query parameters from the request body
+      const query = req.body;
 
       const result = await posts.deleteMany(query);
       if (result.deletedCount === 0) {
         res.status(404).send("No such document exists");
       } else {
-        res.json({message: "Data deleted successfully", deletedCount: result.deletedCount});
+        res.json({ message: "Data deleted successfully", deletedCount: result.deletedCount });
       }
     } catch (err) {
       res.status(500).send(err);
     }
   });
-
-  // API to increment and return currentPostIDIncrement
-  async function incrementCurrentPostIDIncrement() {
-    try {
-      // Find the document, increment the value and return the updated document
-      const result = await currentPostIDIncrement.findOneAndUpdate(
-        {},  // Filter - empty to match all documents in the collection
-        { $inc: { currentPostIDIncrement: 1 } },  // Update - increment the value by 1
-        { returnOriginal: false }  // Options - return the updated document
-      );
-
-      // If the document was not found, send a 404 response
-      if (!result.value) {
-        return res.status(404).send('No document found');
+  
+    // API to increment and return currentPostIDIncrement
+    async function incrementCurrentPostIDIncrement() {
+      try {
+        // Find the document, increment the value and return the updated document
+        const result = await currentPostIDIncrement.findOneAndUpdate(
+          {}, // Filter - empty to match all documents in the collection
+          { $inc: { currentPostIDIncrement: 1 } }, // Update - increment the value by 1
+          { returnOriginal: false } // Options - return the updated document
+        );
+  
+        // If the document was not found, throw an error
+        if (!result.value) {
+          throw new Error("No document found");
+        }
+  
+        // If the document was found and updated, send the new value
+        return result.value.currentPostIDIncrement;
+      } catch (err) {
+        // If an error occurred, throw the error
+        throw err;
       }
-
-      // If the document was found and updated, send the new value
-      return result.value.currentPostIDIncrement;
-    } catch (err) {
-      // If an error occurred, send a 500 response
-      res.status(500).send(err);
     }
-  };
-
-
-  // Error handling middleware
-  app.use(function (err, req, res, next) {
-    console.error(err);
-    res.status(500).send(err);
-  });
-}
-
-run().catch(console.dir);
+  
+    // Error handling middleware
+    app.use(function (err, req, res, next) {
+      console.error(err);
+      res.status(500).send(err);
+    });
+  }
+  
+  run().catch(console.dir);
