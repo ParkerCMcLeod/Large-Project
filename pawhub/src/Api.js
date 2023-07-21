@@ -29,35 +29,29 @@ app.listen(port, () => {
 // Registering the error handling middleware
 app.use(handleError);
 
-// File operations function
-async function incrementAndSaveInteger(filePath) {
-  const data = await fs.readFile(filePath, "utf8");
-  let intValue = parseInt(data, 10);
-  intValue += 1;
-  await fs.writeFile(filePath, intValue.toString(), "utf8");
-  return intValue;
-}
-
 async function run() {
-  const uri =
-    "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   await client.connect();
 
-  const database = client.db("users");
-  const collectionName = "users";
+  const databaseUsers = client.db("users");
+  const collectionUsers = "users";
 
-  const collection = database.collection(collectionName);
+  const users = databaseUsers.collection(collectionUsers);
 
-  // API to search for document by query
+  const collectionCurrentUserIDIncrement = "currentUserIDIncrement";
+
+  const currentUserIDIncrement = databaseUsers.collection(collectionCurrentUserIDIncrement);
+
+  // API to search for users by query
   app.get("/searchUsersReturnUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
 
       // Perform the search
-      const documents = await collection.find(query).toArray();
+      const documents = await users.find(query).toArray();
 
       if (documents.length > 0) {
         res.json(documents);
@@ -69,14 +63,14 @@ async function run() {
     }
   });
 
-  // API to search for document by query
+  // API to search for users IDs by query
   app.get("/searchUsersReturnIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
 
       // Perform the search
-      const documents = await collection.find(query).toArray();
+      const documents = await users.find(query).toArray();
 
       if (documents.length > 0) {
         // Extract the IDs from the documents
@@ -91,13 +85,13 @@ async function run() {
     }
   });
 
-  // API to create a new document
+  // API to create a new user
   app.post("/addNewUser", async (req, res) => {
     try {
       let newUserID;
       let newUser = req.body;
       try {
-        newUserID = await incrementAndSaveInteger("src/data/currentUserID.txt");
+        newUserID = await incrementCurrentUserIDIncrement();
       } catch (err) {
         console.error("An error occurred:", err);
       }
@@ -108,52 +102,77 @@ async function run() {
         dateCreated: newDateCreated,
         ...newUser,
       };
-      await collection.insertOne(newUser);
-      res.send("Data inserted successfully");
+      const result = await users.insertOne(newUser);
+      res.json({message: "Data inserted successfully", result});
     } catch (err) {
       res.status(500).send(err);
     }
   });
 
+  // API to update users
   app.put("/updateMatchingUsers", async (req, res) => {
     try {
       const listIDs = req.body.listIDs;
       const updatedUser = req.body.updatedUser;
       const objectIDs = listIDs.map(id => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
-  
-      const result = await collection.updateMany(filter, { $set: updatedUser });
-  
+
+      const result = await users.updateMany(filter, { $set: updatedUser });
+
       const modifiedCount = result.modifiedCount;
-  
+
       if (modifiedCount === 0) {
         res.status(404).send('No documents were found for the provided IDs');
       } else {
-        res.send('Data updated successfully');
+        res.json({message: 'Data updated successfully', modifiedCount: modifiedCount});
       }
     } catch (err) {
       res.status(500).send(err);
     }
   });
 
-  // API to delete a document
+  // API to delete users
   app.delete("/deleteMatchingUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
 
-      const result = await collection.deleteMany(query);
+      const result = await users.deleteMany(query);
       if (result.deletedCount === 0) {
         res.status(404).send("No such document exists");
       } else {
-        res.send("Data deleted successfully");
+        res.json({message: "Data deleted successfully", deletedCount: result.deletedCount});
       }
     } catch (err) {
       res.status(500).send(err);
     }
   });
 
-  // Error Handling Middleware
+  // API to increment and return currentUserIDIncrement
+  async function incrementCurrentUserIDIncrement() {
+    try {
+      // Find the document, increment the value and return the updated document
+      const result = await currentUserIDIncrement.findOneAndUpdate(
+        {},  // Filter - empty to match all documents in the collection
+        { $inc: { currentUserIDIncrement: 1 } },  // Update - increment the value by 1
+        { returnOriginal: false }  // Options - return the updated document
+      );
+
+      // If the document was not found, send a 404 response
+      if (!result.value) {
+        return res.status(404).send('No document found');
+      }
+
+      // If the document was found and updated, send the new value
+      return result.value.currentUserIDIncrement;
+    } catch (err) {
+      // If an error occurred, send a 500 response
+      res.status(500).send(err);
+    }
+  };
+
+
+  // Error handling middleware
   app.use(function (err, req, res, next) {
     console.error(err);
     res.status(500).send(err);
