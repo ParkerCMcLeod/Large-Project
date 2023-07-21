@@ -9,40 +9,45 @@ import LandingPage from "./pages/LandingPage";
 import GroupChat from "./pages/GroupChat";
 
 function App() {
-  const [apiData, setApiData] = useState([]);
+  // this line declare apiData as a empty array and is set by setApiData
+  // it also makes anything using apiData rerender when the value is changes
+  const [apiData, setApiData] = useState([]); 
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnUsers = async (query) => {
     try {
       const response = await axios.get('http://localhost:3001/searchUsersReturnUsers', {
         params: query
       });
-      setApiData(response.data);
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to search data', error);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnIDs = async (query) => {
     try {
       const response = await axios.get('http://localhost:3001/searchUsersReturnIDs', {
         params: query
       });
-      setApiData(response.data);
       return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewUser = async (newUser) => {
     try {
       const response = await axios.post('http://localhost:3001/addNewUser', newUser);
-      setApiData([...apiData, response.data]); // Add the new user to the local state
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
@@ -50,69 +55,70 @@ function App() {
         listIDs,
         updatedUser,
       });
-
-      // Update the local state to reflect the changes on the server
       if (data.status === 200 && data.message === "Data updated successfully") {
         setApiData((apiData) =>
           apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
         );
       }
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error("Failed to update data:", error.message);
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const deleteMatchingUsers = async (query) => {
     try {
       await axios.delete(`http://localhost:3001/deleteMatchingUsers`);
-      // Update the local state here if necessary
+      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to delete data', error);
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    // declare function exampleUsersAPIFunctionality
+    const exampleUsersAPIFunctionality = async () => {
+      // create a new user json item
       const newUserExample = {
-        "name": "Stephen Martin",
-        "username": "IPlayFootball",
-        "email": "football@ucf.edu",
-        "password": "GoKnightsIPlayFootball42",
-        "profilePicture": "https://example.com/profile.jpg",
-        "friendList": [100, 200, 300]
+        name: "Stephen Martin",
+        username: "IPlayFootball",
+        email: "football@ucf.edu",
+        password: "GoKnightsIPlayFootball42",
+        profilePicture: "https://example.com/profile.jpg",
+        friendList: [1, 2, 3]
       };
+      // add the new user to database
       await addNewUser(newUserExample);
 
-      // Specify the search criteria
-      const query = { username: "IPlayFootball" };
-      let results = await searchUsersReturnUsers(query);
+      // search for users matching query and return them
+      let query = { username: "IPlayFootball" };
+      let userSearchResults = await searchUsersReturnUsers(query);
 
-      let listIDsPromise = searchUsersReturnIDs(query);
+      // search for users matching query and return their IDs
+      let userSearchResultsIDs = searchUsersReturnIDs(query);
 
+      // set all users maching IDs from search results above to be this new user
       const updatedUserExample = {
-        "name": "UPDATED",
-        "username": "UPDATED",
-        "email": "UPDATED@ucf.edu",
-        "password": "UPDATED",
-        "profilePicture": "https://example.com/profile.jpg",
-        "friendList": [1, 2, 3]
+        name: "Stephen MartinUPDATED",
+        username: "IPlayFootballUPDATED",
+        email: "football@ucf.eduUPDATED",
+        password: "GoKnightsIPlayFootball42UPDATED",
+        profilePicture: "https://example.com/profile.jpgUPDATED",
+        friendList: [100000, 200000, 300000]
       };
-      await updateAllMatchingUsers(listIDsPromise, updatedUserExample);
+      await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
-      await deleteMatchingUsers({ username: "UPDATED" });
+      // delete all users matching a query
+      query = { username: "IPlayFootball" };
+      await deleteMatchingUsers({ username: "IPlayFootballUPDATED" });
     };
 
-    fetchData();
-  }, []); // The empty dependency array ensures that the effect runs only once
+    exampleUsersAPIFunctionality();
+  }, []);
 
   return (
     <div>
-      {/* Example render of api data */}
-      {/* <div>
-        {data.map((item) => (
-          <div key={item._id}>{item.name}</div>
-        ))}
-      </div> */}
       <div>
         <BrowserRouter>
           <Routes>
