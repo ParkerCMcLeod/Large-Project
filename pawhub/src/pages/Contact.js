@@ -16,20 +16,14 @@ function Contact() {
         <div className="pawprint-pattern">
             <Navigation />
 
-            <div className="TitleHolderLinks">
-                <h1><a href = "https://github.com/ParkerCMcLeod/Large-Project" >Website GitHub</a> 
-                <a href="https://github.com/rundex0/Large-Project-App" >App GitHub</a>
-                </h1>
-            </div>
-
+            
             <div className="TitleHolder">
-                <h1> Meet Our Devs
-                </h1>
-            </div>
-
+                        <h1> Meet Our Devs
+                        </h1>
+                    </div>
 
             <div className="BoxHolder">
-                <div className= "IBox2">
+            
                         <div className= "BG">
                             <img className = "pfp" src = {jesus}></img>
                             <div>
@@ -39,12 +33,12 @@ function Contact() {
                                 <h2><a href = "https://www.linkedin.com/in/jesus-carballosaa-925729283/"> LinkedIn</a>
                                 </h2>
                             </div>    
-                        </div>   
+                       
                 </div>
 
 
 
-                <div className= "IBox2">
+                
                     <div className= "BG">
                         <img className = "pfp" src = {brandon}></img>
                         <div>
@@ -53,11 +47,10 @@ function Contact() {
                             
                             <h2><a href = "https://www.linkedin.com/in/brandon-holtzman-22155b1b7/"> LinkedIn</a>
                             </h2>
-                        </div>    
-                    </div>   
+                        </div>     
                 </div>
 
-                <div className= "IBox2">
+               
                     <div className= "BG">
                         <img className = "pfp" src = {nathan}></img>
                         <div>
@@ -67,10 +60,10 @@ function Contact() {
                             <h2><a href = "https://www.linkedin.com/in/nathan-carney-0633b2220/"> LinkedIn</a>
                             </h2>
                         </div>    
-                    </div>   
+                    
                 </div>
 
-                <div className= "IBox">
+               
                     <div className= "BG">
                         <img className = "pfp" src = {parker}></img>
                         <div>
@@ -80,10 +73,10 @@ function Contact() {
                             <h2><a href = "https://www.linkedin.com/in/parker-mcleod"> LinkedIn</a>
                             </h2>
                         </div>    
-                    </div>   
+                    
                 </div>
                 
-                <div className= "IBox">
+              
                     <div className= "BG">
                         <img className = "pfp" src = {stephen}></img>
                         <div>
@@ -94,7 +87,7 @@ function Contact() {
                             </h2>
                         </div>    
                     </div>   
-                </div>
+               
                 
             </div>
             
