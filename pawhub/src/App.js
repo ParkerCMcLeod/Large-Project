@@ -55,8 +55,9 @@ function App() {
         setApiData((apiData) =>
           apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
         );
+      } else {
+        setApiData(response.data); // uses the data and rerenders relevant changes
       }
-      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error("Failed to update data:", error.message);
     }
@@ -119,10 +120,11 @@ function App() {
       });
       if (response.status === 200 && response.message === "Data updated successfully") {
         setApiData((apiData) =>
-          apiData.map((post) => (listIDs.includes(post._id) ? updatedPost : post))
+          apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
         );
+      } else {
+        setApiData(response.data); // uses the data and rerenders relevant changes
       }
-      setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error("Failed to update data:", error.message);
     }
