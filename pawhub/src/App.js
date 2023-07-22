@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // Import Navigate
+import axios from 'axios';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
@@ -7,17 +8,14 @@ import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 
 function App() {
-  // this line declare apiData as a empty array and is set by setApiData
-  // it also makes anything using apiData rerender when the value is changes
   const [apiData, setApiData] = useState([]);
 
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/searchUsersReturnUsers', {
+      let response = await axios.get('/api/searchUsersReturnUsers', {
         params: query
       });
-      setApiData(response.data); // uses the data and rerenders relevant changes
+      setApiData(response.data);
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -26,7 +24,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/searchUsersReturnIDs', {
+      let response = await axios.get('/api/searchUsersReturnIDs', {
         params: query
       });
       return response.data;
@@ -38,7 +36,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewUser = async (newUser) => {
     try {
-      let response = await axios.post('http://localhost:3001/addNewUser', newUser);
+      let response = await axios.post('/api/addNewUser', newUser);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
@@ -49,11 +47,11 @@ function App() {
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
-      const { data } = await axios.put("http://localhost:3001/updateMatchingUsers", {
+      let response = await axios.put("/api/updateMatchingUsers", {
         listIDs,
         updatedUser,
       });
-      if (data.status === 200 && data.message === "Data updated successfully") {
+      if (response.status === 200 && response.message === "Data updated successfully") {
         setApiData((apiData) =>
           apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
         );
@@ -67,7 +65,10 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const deleteMatchingUsers = async (query) => {
     try {
-      await axios.delete(`http://localhost:3001/deleteMatchingUsers`);
+      // Pass the query parameters using 'params'
+      let response = await axios.delete('/api/deleteMatchingUsers', { params: query });
+  
+      // Assuming setApiData is a function in a React component to update state
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to delete data', error);
@@ -77,7 +78,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchPostsReturnPosts = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/searchPostsReturnPosts', {
+      let response = await axios.get('/api/searchPostsReturnPosts', {
         params: query
       });
       setApiData(response.data); // uses the data and rerenders relevant changes
@@ -89,7 +90,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchPostsReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/searchPostsReturnIDs', {
+      let response = await axios.get('/api/searchPostsReturnIDs', {
         params: query
       });
       return response.data;
@@ -101,7 +102,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewPost = async (newPost) => {
     try {
-      let response = await axios.post('http://localhost:3001/addNewPost', newPost);
+      let response = await axios.post('/api/addNewPost', newPost);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
@@ -112,11 +113,11 @@ function App() {
   const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
     try {
       const listIDs = await listIDsPromise;
-      const { data } = await axios.put("http://localhost:3001/updateMatchingPosts", {
+      let response = await axios.put("/api/updateMatchingPosts", {
         listIDs,
         updatedPost,
       });
-      if (data.status === 200 && data.message === "Data updated successfully") {
+      if (response.status === 200 && response.message === "Data updated successfully") {
         setApiData((apiData) =>
           apiData.map((post) => (listIDs.includes(post._id) ? updatedPost : post))
         );
@@ -127,20 +128,17 @@ function App() {
     }
   };
 
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const deleteMatchingPosts = async (query) => {
     try {
-      await axios.delete(`http://localhost:3001/deleteMatchingPosts`);
-      setApiData(response.data); // uses the data and rerenders relevant changes
+      let response = await axios.delete('/api/deleteMatchingPosts', { data: query });
+      setApiData(response.data);
     } catch (error) {
       console.error('Failed to delete data', error);
     }
   };
 
   useEffect(() => {
-    // declare function exampleUsersAPIFunctionality
     const exampleUsersAPIFunctionality = async () => {
-      // create a new user json item
       const newUserExample = {
         name: "Stephen Martin",
         username: "IPlayFootball",
@@ -149,17 +147,12 @@ function App() {
         profilePicture: "https://example.com/profile.jpg",
         friendList: [1, 2, 3]
       };
-      // add the new user to database
       await addNewUser(newUserExample);
 
-      // search for users matching query and return them
       let query = { username: "IPlayFootball" };
       let userSearchResults = await searchUsersReturnUsers(query);
-
-      // search for users matching query and return their IDs
-      let userSearchResultsIDs = searchUsersReturnIDs(query);
-
-      // set all users maching IDs from search results above to be this new user
+      let userSearchResultsIDs = await searchUsersReturnIDs(query);
+      
       const updatedUserExample = {
         name: "Stephen MartinUPDATED",
         username: "IPlayFootballUPDATED",
@@ -171,30 +164,23 @@ function App() {
       await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
       // delete all users matching a query
-      query = { postname: "IPlayFootballUPDATED" };
+      query = { username: "IPlayFootballUPDATED" };
       await deleteMatchingUsers(query);
     };
 
-    // declare function examplePostsAPIFunctionality
     const examplePostsAPIFunctionality = async () => {
-      // create a new post json item
       const newPostExample = {
         numLikes: 8,
         text: "Hello World!",
         photo: "https://example.com/profile.jpg",
         userID: 42
       };
-      // add the new post to database
       await addNewPost(newPostExample);
-
-      // search for posts matching query and return them
-      let query = { numLikes: 8 };
+      
+      let query = { text: "Hello World!"}
       let postSearchResults = await searchPostsReturnPosts(query);
+      let postSearchResultsIDs = await searchPostsReturnIDs(query);
 
-      // search for posts matching query and return their IDs
-      let postSearchResultsIDs = searchPostsReturnIDs(query);
-
-      // set all posts maching IDs from search results above to be this new post
       const updatedPostExample = {
         numLikes: 10000,
         text: "Hello World!UPDATED",
@@ -212,80 +198,22 @@ function App() {
     examplePostsAPIFunctionality();
   }, []);
 
-  // Create a new state variable to represent user authentication status
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Function to handle successful login or signup
-  const handleAuthentication = () => {
-    setIsLoggedIn(true);
-  };
-
-
-  // THIS WILL ONLY ALLOW LOGGED IN USERS TO ACCESS THE WEBSITE, USE OTHER RETURN TO EDIT
-
-  //  return (
-  //   <div>
-  //     <div>
-  //       <BrowserRouter>
-  //         <Routes>
-  //           {/* Render the Landing page */}
-  //           <Route
-  //             path="/"
-  //             element={
-  //               <LandingPage
-  //                 isLoggedIn={isLoggedIn}
-  //                 handleAuthentication={handleAuthentication}
-  //               />
-  //             }
-  //           />
-
-  //           {/* Render the Home page if isLoggedIn is true, otherwise redirect to Landing page */}
-  //           <Route
-  //             path="/home"
-  //             element={isLoggedIn ? <HomePage /> : <Navigate to="/" />}
-  //           />
-
-  //           {/* Always redirect to Landing page for other paths */}
-  //           <Route path="/landingPage" element={<Navigate to="/" />} />
-  //           <Route path="*" element={<Navigate to="/" />} />
-  //         </Routes>
-  //       </BrowserRouter>
-  //     </div>
-  //   </div>
-  // );
-
-
-
-
-  // FOR EDITING
   return (
     <div>
       <div>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <LandingPage
-                  isLoggedIn={isLoggedIn}
-                  handleAuthentication={handleAuthentication}
-                />
-              }
-            />
-            <Route
-              path="/home" element={<HomePage />}
-            />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path="/landingPage" element={<LandingPage />} />
-            <Route path="*" element={<NoPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NoPage />} />
           </Routes>
         </BrowserRouter>
       </div>
     </div>
   );
-
-
 }
 
-export default App
+export default App;
