@@ -94,7 +94,7 @@ async function run() {
   app.post("/api/addNewUser", async (req, res) => {
     try {
       let newUserID;
-      let newUser = req.body;
+      let newUser = req.query;
       try {
         newUserID = await incrementCurrentUserIDIncrement();
       } catch (err) {
@@ -117,8 +117,8 @@ async function run() {
   // API to update users
   app.put("/api/updateMatchingUsers", async (req, res) => {
     try {
-      const listIDs = req.body.listIDs;
-      const updatedUser = req.body.updatedUser;
+      const listIDs = req.query.listIDs;
+      const updatedUser = req.query.updatedUser;
       const objectIDs = listIDs.map(id => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
 
@@ -140,7 +140,7 @@ async function run() {
   app.delete("/api/deleteMatchingUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request body
-      const query = req.body;
+      const query = req.query;
 
       const result = await users.deleteMany(query);
       if (result.deletedCount === 0) {
@@ -222,7 +222,7 @@ async function run() {
   app.post("/api/addNewPost", async (req, res) => {
     try {
       let newPostID;
-      let newPost = req.body;
+      let newPost = req.query;
       try {
         newPostID = await incrementCurrentPostIDIncrement();
       } catch (err) {
@@ -245,8 +245,8 @@ async function run() {
   // API to update posts
   app.put("/api/updateMatchingPosts", async (req, res) => {
     try {
-      const listIDs = req.body.listIDs;
-      const updatedPost = req.body.updatedPost;
+      const listIDs = req.query.listIDs;
+      const updatedPost = req.query.updatedPost;
       const objectIDs = listIDs.map(id => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
 
@@ -268,7 +268,7 @@ async function run() {
   app.delete("/api/deleteMatchingPosts", async (req, res) => {
     try {
       // Extract the query parameters from the request body
-      const query = req.body;
+      const query = req.query;
 
       const result = await posts.deleteMany(query);
       if (result.deletedCount === 0) {
