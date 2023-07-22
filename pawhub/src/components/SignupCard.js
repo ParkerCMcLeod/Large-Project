@@ -7,8 +7,11 @@ function SignUpCard(props) {
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    props.addUser(name, username, email, password);
     // Handle form submission here
   };
 

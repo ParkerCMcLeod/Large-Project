@@ -3,7 +3,7 @@ import "./profile.css";
 import "./components.css";
 import ProfilePicture from './ProfilePicture';
 
-function ProfileCard({ closeProfileCard }) {
+function ProfileCard({props,closeProfileCard }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -11,6 +11,8 @@ function ProfileCard({ closeProfileCard }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    props.editUser(name, username, email, password)
     // Handle form submission here
   }
 

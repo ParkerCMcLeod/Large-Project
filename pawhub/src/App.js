@@ -33,7 +33,7 @@ function App() {
     }
   };
 
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS... Yeah... I'm takin dat :/
   const addNewUser = async (newUser) => {
     try {
       let response = await axios.post('http://localhost:3001/api/addNewUser', newUser);
@@ -139,6 +139,15 @@ function App() {
 
   useEffect(() => {
     const exampleUsersAPIFunctionality = async () => {
+      const dontchangeme = {
+        name: "dontchangeme",
+        username: "dontchangeme",
+        email: "dontchangeme",
+        password: "dontchangeme",
+        profilePicture: "https://example.com/profile.jpgUPDATED",
+        friendList: []
+      };
+
       const newUserExample = {
         name: "Stephen Martin",
         username: "IPlayFootball",
@@ -148,6 +157,8 @@ function App() {
         friendList: [1, 2, 3]
       };
       await addNewUser(newUserExample);
+      await addNewUser(dontchangeme);
+
 
       let query = { username: "IPlayFootball" };
       let userSearchResults = await searchUsersReturnUsers(query);
@@ -161,6 +172,7 @@ function App() {
         profilePicture: "https://example.com/profile.jpgUPDATED",
         friendList: [100000, 200000, 300000]
       };
+
       await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
       // delete all users matching a query
@@ -187,6 +199,7 @@ function App() {
         photo: "https://example.com/profile.jpgUPDATED",
         userID: 42000
       };
+
       await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
 
       // delete all posts matching a query

@@ -12,7 +12,6 @@ const Navigation = () => {
   const [clicked, setClicked] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
 
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
