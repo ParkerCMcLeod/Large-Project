@@ -3,7 +3,7 @@ import Navigation from "../components/Navigation";
 import { Link } from "react-router-dom";
 import stephen from "../images/Stephen.png";
 import brandon from "../images/Brandon.png"
-import jesus from "../images/DarthDogus.PNG"
+import jesus from "../images/Jesus.jpg"
 import parker from "../images/Parker.png"
 import nathan from "../images/Nathan.png"
 
