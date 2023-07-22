@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './postcard.css';
 import PostPicture from "../images/LandingPagePic.jpg";
 import LikeButton from './LikeButton';
-import Example1 from "../images/Brandon.jpg"
+import Example1 from "../images/DarthDogus.PNG"
 import Example2 from "../images/Meow.jpg"
 import Example3 from "../images/Pug.jpg"
 

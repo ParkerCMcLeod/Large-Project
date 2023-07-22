@@ -29,7 +29,8 @@
 
 .BG div h2
 {
-    font-family: Sans-serif; font-size: 25px;
+    font-family: Sans-serif; 
+    font-size: 25px;
     font-weight: 500px;
     text-decoration: none;
     margin: auto;
@@ -132,7 +133,7 @@
     color: white;
     background-color: #e57c23;
     border-radius: 10px;
-    border: 4px solid #e57c23;
+    border: 2px solid #e57c23;
     transition: ease-in-out 0.2s;
     display: block;
     margin: 20px auto; 
@@ -142,9 +143,9 @@
 
 
 .TitleHolderLinks a:hover {
-    color: #fff;
-    background-color: #025464;
-    border: 4px solid #025464;
+    color: #025464;
+    background-color: #fff;
+    border: 2px solid #fff;
 }
 
 .TitleHolderLinks {
@@ -272,14 +273,15 @@ h2 a {
     color: white;
     background-color: #e57c23;
     border-radius: 10px;
-    border: 4px solid #e57c23;
+    border: 2px solid #e57c23;
     transition: ease-in-out 0.2s;
+    margin-top: 10px;
 }
 
 h2 a:hover {
-    color: #fff;
-    background-color: #025464;
-    border: 4px solid #025464;
+    color: #025464;
+    background-color: #fff;
+    border: 2px solid #fff;
 }
 
 a:hover {
