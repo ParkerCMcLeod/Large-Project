@@ -50,7 +50,7 @@ async function run() {
   const currentPostIDIncrement = databasePosts.collection(collectionCurrentPostIDIncrement);
 
   // API to search for users by query
-  app.get("/searchUsersReturnUsers", async (req, res) => {
+  app.get("/api/searchUsersReturnUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -69,7 +69,7 @@ async function run() {
   });
 
   // API to search for users IDs by query
-  app.get("/searchUsersReturnIDs", async (req, res) => {
+  app.get("/api/searchUsersReturnIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -91,7 +91,7 @@ async function run() {
   });
 
   // API to create a new user
-  app.post("/addNewUser", async (req, res) => {
+  app.post("/api/addNewUser", async (req, res) => {
     try {
       let newUserID;
       let newUser = req.body;
@@ -115,7 +115,7 @@ async function run() {
   });
 
   // API to update users
-  app.put("/updateMatchingUsers", async (req, res) => {
+  app.put("/api/updateMatchingUsers", async (req, res) => {
     try {
       const listIDs = req.body.listIDs;
       const updatedUser = req.body.updatedUser;
@@ -137,7 +137,7 @@ async function run() {
   });
 
   // API to delete users
-  app.delete("/deleteMatchingUsers", async (req, res) => {
+  app.delete("/api/deleteMatchingUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request body
       const query = req.body;
@@ -178,7 +178,7 @@ async function run() {
 
 
   // API to search for posts by query
-  app.get("/searchPostsReturnPosts", async (req, res) => {
+  app.get("/api/searchPostsReturnPosts", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -197,7 +197,7 @@ async function run() {
   });
 
   // API to search for posts IDs by query
-  app.get("/searchPostsReturnIDs", async (req, res) => {
+  app.get("/api/searchPostsReturnIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -219,7 +219,7 @@ async function run() {
   });
 
   // API to create a new post
-  app.post("/addNewPost", async (req, res) => {
+  app.post("/api/addNewPost", async (req, res) => {
     try {
       let newPostID;
       let newPost = req.body;
@@ -243,7 +243,7 @@ async function run() {
   });
 
   // API to update posts
-  app.put("/updateMatchingPosts", async (req, res) => {
+  app.put("/api/updateMatchingPosts", async (req, res) => {
     try {
       const listIDs = req.body.listIDs;
       const updatedPost = req.body.updatedPost;
@@ -265,7 +265,7 @@ async function run() {
   });
 
   // API to delete posts
-  app.delete("/deleteMatchingPosts", async (req, res) => {
+  app.delete("/api/deleteMatchingPosts", async (req, res) => {
     try {
       // Extract the query parameters from the request body
       const query = req.body;
