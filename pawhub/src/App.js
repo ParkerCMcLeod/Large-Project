@@ -12,7 +12,7 @@ function App() {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('/api/searchUsersReturnUsers', {
+      let response = await axios.get('http://localhost:3001/searchUsersReturnUsers', {
         params: query
       });
       setApiData(response.data);
@@ -24,7 +24,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('/api/searchUsersReturnIDs', {
+      let response = await axios.get('http://localhost:3001/searchUsersReturnIDs', {
         params: query
       });
       return response.data;
@@ -36,7 +36,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewUser = async (newUser) => {
     try {
-      let response = await axios.post('/api/addNewUser', newUser);
+      let response = await axios.post('http://localhost:3001/addNewUser', newUser);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
@@ -47,7 +47,7 @@ function App() {
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
-      let response = await axios.put("/api/updateMatchingUsers", {
+      let response = await axios.put("http://localhost:3001/updateMatchingUsers", {
         listIDs,
         updatedUser,
       });
@@ -66,7 +66,7 @@ function App() {
   const deleteMatchingUsers = async (query) => {
     try {
       // Pass the query parameters using 'params'
-      let response = await axios.delete('/api/deleteMatchingUsers', { params: query });
+      let response = await axios.delete('http://localhost:3001/deleteMatchingUsers', { params: query });
   
       // Assuming setApiData is a function in a React component to update state
       setApiData(response.data); // uses the data and rerenders relevant changes
@@ -78,7 +78,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchPostsReturnPosts = async (query) => {
     try {
-      let response = await axios.get('/api/searchPostsReturnPosts', {
+      let response = await axios.get('http://localhost:3001/searchPostsReturnPosts', {
         params: query
       });
       setApiData(response.data); // uses the data and rerenders relevant changes
@@ -90,7 +90,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchPostsReturnIDs = async (query) => {
     try {
-      let response = await axios.get('/api/searchPostsReturnIDs', {
+      let response = await axios.get('http://localhost:3001/searchPostsReturnIDs', {
         params: query
       });
       return response.data;
@@ -102,7 +102,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewPost = async (newPost) => {
     try {
-      let response = await axios.post('/api/addNewPost', newPost);
+      let response = await axios.post('http://localhost:3001/addNewPost', newPost);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
@@ -113,7 +113,7 @@ function App() {
   const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
     try {
       const listIDs = await listIDsPromise;
-      let response = await axios.put("/api/updateMatchingPosts", {
+      const response = await axios.put("http://localhost:3001/updateMatchingPosts", {
         listIDs,
         updatedPost,
       });
@@ -130,7 +130,7 @@ function App() {
 
   const deleteMatchingPosts = async (query) => {
     try {
-      let response = await axios.delete('/api/deleteMatchingPosts', { data: query });
+      let response = await axios.delete('http://localhost:3001/deleteMatchingPosts', { data: query });
       setApiData(response.data);
     } catch (error) {
       console.error('Failed to delete data', error);
