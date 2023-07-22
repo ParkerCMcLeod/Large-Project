@@ -87,7 +87,7 @@ const Navigation = () => {
             </li>
 
             <li>
-            <button onClick={handleLogout}>Logout</button>
+            <button  className='Logout-btn' onClick={handleLogout}>Logout</button>
           </li>
           </ul>
         </div>

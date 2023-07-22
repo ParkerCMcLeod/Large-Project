@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Navigation from "../components/Navigation";
 import { Link } from "react-router-dom";
 import stephen from "../images/Stephen.png";
@@ -10,8 +10,10 @@ import nathan from "../images/Nathan.png"
 
 
 function Contact() {
+
+
     return (
-        <div className="pawprint-pattern ">
+        <div className="pawprint-pattern">
             <Navigation />
 
             <div className="TitleHolderLinks">

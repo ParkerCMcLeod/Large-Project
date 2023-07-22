@@ -1,3 +1,5 @@
+
+
 .NavigationImage {
     width: 95px;
     height: 95px;
@@ -266,6 +268,26 @@ li button:hover {
     background: #e57c23;
     cursor: pointer;
  }
+
+
+ .Logout-btn {
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+    border:  10px solid #e57c23;
+    border-radius: 5px;
+    background: #e57c23;
+    cursor: pointer;
+ }
+
+.Logout-btn:hover {
+    background: #fff;
+    border: 10px solid #fff;
+    color: #025464;
+}
+
 
  .Login-SignUp-btn-styles-background:hover {
     background: #fff;
