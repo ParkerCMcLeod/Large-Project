@@ -134,6 +134,7 @@
     color: white;
     background-color: #e57c23;
     border: 2px solid #e57c23;
+    border-radius: 10px;
     transition: ease-in-out 0.2s;
     display: block;
     margin: 20px auto; 
@@ -149,7 +150,8 @@
 
 .TitleHolderLinks {
     background-color: #025464;
-    transform: translate(-32.5%, -50%);
+
+
     border-radius: 20px;
     width: 350px;
     position: fixed;
@@ -166,9 +168,9 @@
 .TitleHolderLinks img
 {
     /* border: solid 1px #fbfbfb; */
+    margin-top: 10px;
     height: 100px;
-    height: 100px;
-    left: 50px;
+    padding: 5px;
 }
 
 /* New media query for screen width 166px or less */
@@ -326,6 +328,7 @@ a:hover {
 
 .TitleHolderAbout h1 {
     font-family: Sans-serif;
+    border-radius: 10px;
     font-size: 40px;
     font-weight: 600;
     margin-top: 200px;
