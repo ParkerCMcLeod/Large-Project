@@ -11,27 +11,27 @@
     display: flex;
     flex-direction: column;
     max-height: 100vh;
-
-}
-
-@media (max-width: 1730px) {
+    /* Add blue inverted border radius to top left and bottom left corners */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  @media (max-width: 1730px) {
     .Donation-container {
-        display: none;
-
+      display: none;
     }
   }
-
-.Donation-container h1 {
+  
+  .Donation-container h1 {
     color: #fff;
     text-align: center;
     margin-top: 0;
     margin-right: 20px;
     margin-bottom: 20px;
     font-size: 50px;
-
-}
-
-.Donation-container a img{
+  }
+  
+  .Donation-container a img {
     background-color: #fff;
     width: 100%;
     border: 10px solid #fff;
@@ -40,10 +40,15 @@
     height: 100px;
     transition: 0.2s ease-in-out;
     object-fit: contain;
-
-}
-
-.Donation-container a img:hover {
-   
+  }
+  
+  .Donation-container a img:hover {
     border: 10px solid #025464;
-}
+  }
+  
+  /* Restore blue inverted border radius on hover */
+  .Donation-container:hover {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  
