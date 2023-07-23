@@ -23,7 +23,7 @@ function NoPage() {
     <div>
       <Navigation />
 
-      <h2 style={{ paddingTop: "100px", color: "black", fontSize: "40px", textAlign: "center" }}>
+      <h2 style={{ paddingTop: "200px", color: "black", fontSize: "40px", textAlign: "center" }}>
         Error 404: Not Found
       </h2>
     </div>
