@@ -1,20 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import "./profile.css";
 import "./components.css";
 import ProfilePicture from './ProfilePicture';
 
-function ProfileCard({props,closeProfileCard }) {
+function ProfileCard({editUser, closeProfileCard }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
 
+  const [apiData, setApiData] = useState([]);
+
+  const searchUsersReturnUsers = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+        params: query
+      });
+      setApiData(response.data);
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.editUser(name, username, email, password)
+    editUser(name, email, username, password)
     // Handle form submission here
   }
+
+  // what is usersreturnusers supposed to return?
+  useEffect(() => {
+
+      const getUserInfo = async () => {
+
+      // let query = {"_id": "ObjectId('" + localStorage.getItem('currentUser') + "')"};
+      // console.log(query);
+      // let userVals = await searchUsersReturnUsers();
+      // console.log("uservals:" + userVals);
+    }
+
+    getUserInfo();
+  }, []);
 
   return (
     <div className='Profile-container'>

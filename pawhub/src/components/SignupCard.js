@@ -7,11 +7,10 @@ function SignUpCard(props) {
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     props.addUser(name, username, email, password);
+
     // Handle form submission here
   };
 
@@ -30,6 +29,7 @@ function SignUpCard(props) {
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
 
           <label htmlFor="email">Email</label>
@@ -40,6 +40,8 @@ function SignUpCard(props) {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+
           />
 
           <label htmlFor="username">Username</label>
@@ -50,6 +52,7 @@ function SignUpCard(props) {
             name="username"
             value={username}
             onChange={(e) => setUserName(e.target.value)}
+            required
           />
 
           <label htmlFor="password">Password</label>
@@ -60,6 +63,7 @@ function SignUpCard(props) {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
 
           <button className="LoginSignUp-btn" type="submit">

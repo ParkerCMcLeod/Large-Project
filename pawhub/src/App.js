@@ -141,14 +141,6 @@ function App() {
 
   useEffect(() => {
     const exampleUsersAPIFunctionality = async () => {
-      const dontchangeme = {
-        name: "dontchangeme",
-        username: "dontchangeme",
-        email: "dontchangeme",
-        password: "dontchangeme",
-        profilePicture: "https://example.com/profile.jpgUPDATED",
-        friendList: []
-      };
 
       const newUserExample = {
         name: "Stephen Martin",
@@ -158,14 +150,14 @@ function App() {
         profilePicture: "https://example.com/profile.jpg",
         friendList: [1, 2, 3]
       };
-      await addNewUser(newUserExample);
-      await addNewUser(dontchangeme);
 
+      await addNewUser(newUserExample);
 
       let query = { username: "IPlayFootball" };
       let userSearchResults = await searchUsersReturnUsers(query);
       let userSearchResultsIDs = await searchUsersReturnIDs(query);
-      
+      console.log(userSearchResults);
+
       const updatedUserExample = {
         name: "Stephen MartinUPDATED",
         username: "IPlayFootballUPDATED",
@@ -180,6 +172,7 @@ function App() {
       // delete all users matching a query
       query = { username: "IPlayFootballUPDATED" };
       await deleteMatchingUsers(query);
+
     };
 
     const examplePostsAPIFunctionality = async () => {

@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Logo from "../images/pawhub-logo-text.png";
 import LoginCard from "./LoginCard";
 import SignUpCard from "./SignupCard";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 function LoginNavigation() {
   const [clicked, setClicked] = useState(false);
   const [LoginPopup, setLoginPopup] = useState(false);
   const [SignupPopup, setSignupPopup] = useState(false);
 
+  const nav = useNavigate();
   const [apiData, setApiData] = useState([]);
-  
+
+  // API USE FUNCTIONS
+  const searchUsersReturnIDs = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+        params: query
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
   const addNewUser = async (newUser) => {
     try {
       let response = await axios.post('http://localhost:3001/api/addNewUser', newUser);
@@ -20,6 +35,7 @@ function LoginNavigation() {
     }
   };
 
+  // ADDS USER JUST LIKE PARKER EXAMPLE
   const addUser = async (name, username, email, password) => {
 
     const newUser = {
@@ -32,6 +48,28 @@ function LoginNavigation() {
     };
 
     await addNewUser(newUser);
+  };
+
+  // GOES TO HOME PAGE ON SUCCESSFUL SEARCH FROM DB 
+  // OR DISPLAYS A MESSAGE IF INVALID EMAIL/PASSWORD
+  const doLogin = async (email, password, setErrorValue) => {
+
+    let query = { "email": email, "password": password};
+    console.log(query);
+
+    let currentUser = await searchUsersReturnIDs(query);
+    if (currentUser === undefined)
+    {
+      console.log("InvalidLogin");
+      setErrorValue("Invalid Email or password");
+
+    }
+    else
+    {
+      console.log(currentUser);
+      localStorage.setItem('currentUser', currentUser);
+      nav('/homePage');
+    }
   }
 
   const handleClick = () => {
@@ -61,7 +99,6 @@ function LoginNavigation() {
               </button>
             </li>
           </ul>
-          
 
         </div>
         <div id="mobile" onClick={handleClick}>
@@ -69,7 +106,7 @@ function LoginNavigation() {
         </div>
       </nav>
 
-      <LoginCard trigger={LoginPopup} setTrigger={setLoginPopup} />
+      <LoginCard doLogin = {doLogin} trigger={LoginPopup} setTrigger={setLoginPopup} />
       <SignUpCard addUser = {addUser} trigger={SignupPopup} setTrigger={setSignupPopup} />
 
     </div>

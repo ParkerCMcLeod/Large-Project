@@ -15,6 +15,10 @@ function ProfilePicture(props) {
     setImage(file);
   }
 
+  const getImage = () => {
+    return image;
+  }
+  
   return (
     <div className="profile-image-container" onClick={handleImageClick}>
       {image ? (

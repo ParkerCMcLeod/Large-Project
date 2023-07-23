@@ -5,12 +5,66 @@ import './components.css';
 import ProfileCard from './ProfileCard';
 import SearchBar from './SearchBar';
 import './searchbar.css';
-
+import axios from 'axios';
 
 
 const Navigation = () => {
   const [clicked, setClicked] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
+
+  const [apiData, setApiData] = useState([]);
+
+  const searchUsersReturnUsers = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+        params: query
+      });
+      setApiData(response.data);
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
+  const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
+    try {
+      const listIDs = await listIDsPromise;
+      let response = await axios.put("http://localhost:3001/api/updateMatchingUsers", {
+        listIDs,
+        updatedUser,
+      });
+      if (response.status === 200 && response.message === "Data updated successfully") {
+        setApiData((apiData) =>
+          apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
+        );
+      } else {
+        setApiData(response.data); // uses the data and rerenders relevant changes
+      }
+    } catch (error) {
+      console.error("Failed to update data:", error.message);
+    }
+  };
+
+  const editUser = async (name, username, email, password) => {
+
+    let query = { _id: "ObjectId('64bc31cc232c95d234e4e5ee')" }
+    console.log(query);
+    let userSearchResultsIDs = await searchUsersReturnUsers(query);
+
+    console.log(userSearchResultsIDs);
+
+    const updatedUser = {
+      "name": name,
+      "username": username,
+      "email": email,
+      "password": password,
+    };
+
+    await updateAllMatchingUsers(userSearchResultsIDs, updatedUser);
+  }
+
+  const props = {
+
+  }
 
   const navigate = useNavigate();
 
@@ -101,7 +155,7 @@ const Navigation = () => {
         {clicked && <div id="overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.6)', zIndex: 997, marginTop: "139px" }}></div>}
       </nav>
 
-      {profileCardOpen && <ProfileCard closeProfileCard={closeProfileCard} />}
+      {profileCardOpen && <ProfileCard editUser = {editUser} closeProfileCard={closeProfileCard} />}
     </div>
   );
 };
