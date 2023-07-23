@@ -159,9 +159,22 @@
 }
 
 /* New media query for screen width 166px or less */
-@media screen and (max-width: 1359px) {
+@media screen and (max-width: 1478px) {
     .TitleHolderLinks {
       display: none;
+    }
+  }
+
+
+  @media screen and (max-width: 1730px) {
+    .TitleHolderLinks {
+      width: 500px;
+      right: -300px;
+      padding-right: 20px;
+    }
+
+    .TitleHolderLinks a {
+        width: 400px;
     }
   }
 

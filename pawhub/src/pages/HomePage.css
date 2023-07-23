@@ -1,5 +1,14 @@
 
 
+.ColumnContainer {
+  width: 1000px;
+  
+}
+
+
+
+
+
 .HomePage-header {
   background-color: #222;
   height: 150px;
@@ -33,5 +42,22 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center; /* Center the ColumnContainer horizontally */
+  align-items: center;
 }
 
+
+@media screen and (max-width: 1730px) {
+  .HomePage {
+    justify-content: left;
+   
+  }
+}
+
+
+@media screen and (max-width: 1478px) {
+  .HomePage {
+    justify-content: center;
+   
+  }
+}

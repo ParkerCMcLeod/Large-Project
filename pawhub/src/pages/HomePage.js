@@ -9,17 +9,16 @@ import Links from "../components/Links";
 
 function HomePage() {
   return (
-    <div className="pawprint-pattern">
-      <div className="HomePage">
-        <Navigation />
-        <Donation /><Links />
+    <div className="HomePage">
+      <Navigation />
+      <Donation />
+      <div className="ColumnContainer">
         <NewPost />
         <PostCard />
-        
-      
       </div>
+      <Links />
     </div>
-  )
+  );
 }
 
 export default HomePage;

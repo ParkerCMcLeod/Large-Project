@@ -1,26 +1,18 @@
-.PostCard-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  /* Add any other styling properties for the container */
-  
-}
+
 
 .PostCard-inner {
   background-color: #025464;
   border-radius: 10px;
-  width: 1000px; /* Adjust the width as needed */
+  width: 100%; /* Adjust the width as needed */
   display: flex;
   flex-direction: column;
   align-self: stretch;
   box-shadow: 0 5px 8px grey;
   position: relative;
   margin-top: 40px;
- 
   position: relative; /* Add this position property */
 }
+
 
 .postcard-fields {
   display: flex;
@@ -67,7 +59,7 @@
   }
 }
 
-@media screen and (max-width: 1359px) {
+@media screen and (max-width: 1478px) {
   .PostCard-inner {
     margin-left: auto;
     margin-right: auto;

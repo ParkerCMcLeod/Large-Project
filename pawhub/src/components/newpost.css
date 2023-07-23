@@ -1,10 +1,4 @@
 
-.NewPost-container {
-  display: flex;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 .NewPost-inner {
   background-color: #e57c23;
@@ -15,9 +9,9 @@
   align-self: stretch;
   box-shadow: 0 5px 8px grey;
   position: relative;
-  margin-top: 170px; /* Set margin to center both vertically and horizontally */
   padding-top: 20px;
   padding-bottom: 15px;
+  margin: 170px auto 0 auto;
 }
 
 @media screen and (max-width: 1730px) {
@@ -28,10 +22,11 @@
   }
 }
 
-@media screen and (max-width: 1359px) {
+@media screen and (max-width: 1478px) {
   .NewPost-inner {
     margin-left: auto;
     margin-right: auto;
+   
   }
 }
   .NewPost-text {

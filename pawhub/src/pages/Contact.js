@@ -1,6 +1,4 @@
-import React, {useEffect} from "react";
 import Navigation from "../components/Navigation";
-import { Link } from "react-router-dom";
 import stephen from "../images/Stephen.png";
 import brandon from "../images/Brandon.png"
 import jesus from "../images/Jesus.jpg"
