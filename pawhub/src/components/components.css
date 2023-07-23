@@ -134,7 +134,7 @@ li button:hover {
    
 }
 
-@media screen and (max-width:1209px) {
+@media screen and (max-width:1236px) {
     #NavBar {
         display: flex;
         flex-direction: column;

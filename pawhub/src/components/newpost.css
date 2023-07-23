@@ -1,12 +1,7 @@
 
 
-.NewPost-container {
-    display: flex;
-  justify-content: center;
-}
-
 .NewPost-inner {
-    background-color: #e57c23;
+  background-color: #e57c23;
   border-radius: 10px;
   width: 1000px; /* Adjust the width as needed */
   display: flex;
@@ -14,29 +9,26 @@
   align-self: stretch;
   box-shadow: 0 5px 8px grey;
   position: relative;
-  margin-top: 170px;
-  margin-left: 190px;
   padding-top: 20px;
   padding-bottom: 15px;
-  position: relative;
+  margin: 170px auto 0 auto;
 }
 
-@media screen and (max-width: 809px) {
-    .NewPost-inner {
-      width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+@media screen and (max-width: 1730px) {
+  .NewPost-inner {
+    /* Adjust the width to move it to the left side */
+    margin-right: 900px; /* Add a left margin to position it on the left */
+    margin-left: auto;
   }
-  
-  @media screen and (min-width: 810px) and (max-width: 1312px) {
-    .NewPost-inner {
-      width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
+}
 
+@media screen and (max-width: 1478px) {
+  .NewPost-inner {
+    margin-left: auto;
+    margin-right: auto;
+   
+  }
+}
   .NewPost-text {
     flex: 1;
   padding: 10asdfpx;

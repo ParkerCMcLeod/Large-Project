@@ -1,25 +1,18 @@
-.PostCard-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Add any other styling properties for the container */
-  
-}
+
 
 .PostCard-inner {
   background-color: #025464;
   border-radius: 10px;
-  width: 1000px; /* Adjust the width as needed */
+  width: 100%; /* Adjust the width as needed */
   display: flex;
   flex-direction: column;
   align-self: stretch;
   box-shadow: 0 5px 8px grey;
   position: relative;
   margin-top: 40px;
-  margin-left: 190px;
- 
   position: relative; /* Add this position property */
 }
+
 
 .postcard-fields {
   display: flex;
@@ -58,17 +51,16 @@
   padding: 20px 20px 10px 140px;
 }
 
-@media screen and (max-width: 809px) {
+@media screen and (max-width: 1730px) {
   .PostCard-inner {
-    width: 700px;
+    /* Adjust the width to move it to the left side */
+    margin-right: 900px; /* Add a left margin to position it on the left */
     margin-left: auto;
-    margin-right: auto;
   }
 }
 
-@media screen and (min-width: 810px) and (max-width: 1312px) {
+@media screen and (max-width: 1478px) {
   .PostCard-inner {
-    width: 800px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -117,7 +109,7 @@
 
 
 .image-container {
-  background-color: #e57c23;
+  background-color: #025464;
   display: flex;
   flex-wrap: wrap; /* Add flex-wrap property */
   justify-content: center; /* Adjust justify-content property */

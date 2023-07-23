@@ -1,28 +1,33 @@
-.BoxHolder
-{
+.BoxHolder {
     margin: auto;
     justify-content: center;
     /* border: 10px solid #000000; */
     text-align: center;
     min-height: 500px;
-    width: 80%;
+    width: 100%;
     height: 65%;
     padding: 50px;
-    margin-top: 20px
+    margin-top: 20px;
+
+    /* Flexbox styles */
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Optional: To center items vertically if needed */
+    flex-wrap: wrap; /* New property added for wrapping items */
 }
 
-.BG
-{
+.BG {
     border-radius: 20px;
     background-color: #025464;
-    width: 300px;
+    width: 250px;
     margin: auto;
     padding-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .BG div
 {
-    width: 50%;
+    width: 250px;
     margin: auto;
     padding: 5px;
 }
@@ -80,7 +85,8 @@
 /* Needs fixing. why does contact work but the others don't */
 .pawprint-pattern 
 {
-    background-image: url("../images/backgroundpattern.png");
+    /* background-image: url("../images/backgroundpattern.png"); */
+    /* background-color: ; */
     background-position: center;
     background-size: cover;
     position: absolute;
@@ -92,7 +98,7 @@
 .TitleHolder
 {
     /* border: 2px solid #f700da ; */
-    margin-top: 40px;
+    margin-top: 120px;
     display: flex;
     justify-content: center;
 }
@@ -115,14 +121,13 @@
     font-family: Sans-serif;
     font-size: 40px;
     font-weight: 600;
-    margin-top: 200px;
+    margin-top: 0px;
     color: #fff;
     background-color: #025464;
     border: 10px solid #025464;
     border-radius: 10px;
     text-align: center;
-    width: 50%;
-    margin: 200px  auto 0px auto; /* Add this line */
+   
 }
 
 .TitleHolderLinks a {
@@ -134,7 +139,7 @@
     transition: ease-in-out 0.2s;
     display: block;
     margin: 20px auto; 
-    width: 80%;
+    width: 300px;
 
 }
 
@@ -144,11 +149,34 @@
     background-color: #fff;
     border: 2px solid #fff;
 }
-
 .TitleHolderLinks {
-    width: 700px;
-    margin: 0 auto;
+    width: 350px;
+    position: fixed;
+    top: 330px; /* Adjust this value to set the vertical position */
+    right: -190px;/* Adjust this value to set the horizontal position from the right */
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Optional: You can set a higher z-index value if needed */
 }
+
+/* New media query for screen width 166px or less */
+@media screen and (max-width: 1478px) {
+    .TitleHolderLinks {
+      display: none;
+    }
+  }
+
+
+  @media screen and (max-width: 1730px) {
+    .TitleHolderLinks {
+      width: 500px;
+      right: -300px;
+      padding-right: 20px;
+    }
+
+    .TitleHolderLinks a {
+        width: 400px;
+    }
+  }
 
 
 .ParagraphHolder
