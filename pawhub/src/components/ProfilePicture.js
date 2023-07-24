@@ -2,9 +2,8 @@ import React, { useRef, useState } from 'react';
 import ProfilePic from "../images/defaultPic.jpg";
 import "./profile.css";
 
-function ProfilePicture(props) {
+function ProfilePicture({image, setImage}) {
   const inputRef = useRef(null);
-  const [image, setImage] = useState("");
 
   const handleImageClick = () => {
     inputRef.current.click();
@@ -15,9 +14,6 @@ function ProfilePicture(props) {
     setImage(file);
   }
 
-  const getImage = () => {
-    return image;
-  }
   
   return (
     <div className="profile-image-container" onClick={handleImageClick}>

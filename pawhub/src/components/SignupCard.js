@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./components.css";
 
 function SignUpCard(props) {
@@ -6,13 +6,24 @@ function SignUpCard(props) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
+  const [successMessage, setSuccessMessage]= useState();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addUser(name, username, email, password);
-
-    // Handle form submission here
+    props.addUser(name, username, email, password, setSuccessMessage);
+    
   };
+  
+  useEffect(() => {
+    // Clear the fields when the component mounts or when the card is closed
+    setEmail("");
+    setPassword("");
+    setName("");
+    setUserName("");
+    setSuccessMessage("");
+
+  }, [props.trigger]); 
 
   return props.trigger ? (
     <div className="LoginSignUp-container">
@@ -69,6 +80,7 @@ function SignUpCard(props) {
           <button className="LoginSignUp-btn" type="submit">
             Sign Up
           </button>
+          <label>{successMessage}</label>
         </form>
       </div>
     </div>

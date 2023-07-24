@@ -9,6 +9,7 @@ function ProfileCard({editUser, closeProfileCard }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
+  const [image, setImage] = useState(null);
 
   const [apiData, setApiData] = useState([]);
 
@@ -23,22 +24,47 @@ function ProfileCard({editUser, closeProfileCard }) {
     }
   };
 
+  const searchUsersReturnIDs = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+        params: query
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    editUser(name, email, username, password)
+    editUser(name, email, username, password, image)
     // Handle form submission here
   }
 
   // what is usersreturnusers supposed to return?
   useEffect(() => {
 
-      const getUserInfo = async () => {
+    // updates the profile card with the users information
+    const getUserInfo = async () => {
+      
+      let query =
+      {
+        "profilePicture": image,
+        "email": localStorage.getItem('email'),
+        "password": localStorage.getItem('password')
+      }
 
-      // let query = {"_id": "ObjectId('" + localStorage.getItem('currentUser') + "')"};
-      // console.log(query);
-      // let userVals = await searchUsersReturnUsers();
-      // console.log("uservals:" + userVals);
+      console.log(query);
+      let userVals = await searchUsersReturnIDs(query);
+      console.log("uservals:" + userVals);
+
+      if (userVals !== undefined)
+      {
+        setEmail(query.email);
+        setPassword(query.password);
+
+      }
     }
 
     getUserInfo();
@@ -50,7 +76,7 @@ function ProfileCard({editUser, closeProfileCard }) {
         <button className="close-btn" onClick={closeProfileCard}>✖</button>
 
         <form className="ProfileCard" onSubmit={handleSubmit}>
-          <ProfilePicture/>
+          <ProfilePicture image = {image} setImage={setImage}/>
 
           <label htmlFor="name">Name</label>
           <input

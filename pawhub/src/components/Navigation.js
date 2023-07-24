@@ -44,7 +44,7 @@ const Navigation = () => {
     }
   };
 
-  const editUser = async (name, username, email, password) => {
+  const editUser = async (name, username, email, password, pfp) => {
 
     let query = { _id: "ObjectId('64bc31cc232c95d234e4e5ee')" }
     console.log(query);
@@ -57,8 +57,10 @@ const Navigation = () => {
       "username": username,
       "email": email,
       "password": password,
-    };
+      "profilePicture": pfp
 
+    };
+    console.log(updatedUser);
     await updateAllMatchingUsers(userSearchResultsIDs, updatedUser);
   }
 

@@ -3,7 +3,7 @@ import Logo from "../images/pawhub-logo-text.png";
 import LoginCard from "./LoginCard";
 import SignUpCard from "./SignupCard";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function LoginNavigation() {
@@ -11,6 +11,8 @@ function LoginNavigation() {
   const [LoginPopup, setLoginPopup] = useState(false);
   const [SignupPopup, setSignupPopup] = useState(false);
 
+  // lets me wait a stet amount of ms
+  const delay = ms => new Promise(res => setTimeout(res, ms));
   const nav = useNavigate();
   const [apiData, setApiData] = useState([]);
 
@@ -36,7 +38,7 @@ function LoginNavigation() {
   };
 
   // ADDS USER JUST LIKE PARKER EXAMPLE
-  const addUser = async (name, username, email, password) => {
+  const addUser = async (name, username, email, password, setSuccessMessage) => {
 
     const newUser = {
       "name": name,
@@ -46,8 +48,23 @@ function LoginNavigation() {
       "profilePicture": "https://example.com/profile.jpg",
       "friendList": []
     };
+    let query = {"email": email}
+    let anyUsers = await searchUsersReturnIDs(query)
+    console.log(anyUsers);
+    
+    if(anyUsers === undefined)
+    {
+      await addNewUser(newUser);
+      setSuccessMessage("Welcome to Pawhub!, Please Log In");
 
-    await addNewUser(newUser);
+      await delay(5000);
+      nav('/landingPage');
+    }
+    else
+    {
+      setSuccessMessage("An account already exists with that Email Address");
+    }
+  
   };
 
   // GOES TO HOME PAGE ON SUCCESSFUL SEARCH FROM DB 
@@ -66,9 +83,13 @@ function LoginNavigation() {
     }
     else
     {
+
       console.log(currentUser);
-      localStorage.setItem('currentUser', currentUser);
-      nav('/homePage');
+      localStorage.setItem('currentUserId', currentUser);
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+
+      nav('/');
     }
   }
 
