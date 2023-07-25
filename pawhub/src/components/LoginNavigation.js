@@ -17,9 +17,9 @@ function LoginNavigation() {
   const [apiData, setApiData] = useState([]);
 
   // API USE FUNCTIONS
-  const searchUsersReturnIDs = async (query) => {
+  const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -27,6 +27,7 @@ function LoginNavigation() {
       console.error('Failed to search data', error);
     }
   };
+
 
   const addNewUser = async (newUser) => {
     try {
@@ -49,22 +50,23 @@ function LoginNavigation() {
       "friendList": []
     };
     let query = {"email": email}
-    let anyUsers = await searchUsersReturnIDs(query)
+    let anyUsers = await searchUsersReturnUsers(query)
     console.log(anyUsers);
     
     if(anyUsers === undefined)
     {
       await addNewUser(newUser);
-      setSuccessMessage("Welcome to Pawhub!, Please Log In");
+      setSuccessMessage("Welcome to Pawhub!");
 
-      await delay(5000);
-      nav('/landingPage');
+      await delay(2000);
+      doLogin(email,password, null);
+
     }
     else
     {
       setSuccessMessage("An account already exists with that Email Address");
     }
-  
+   
   };
 
   // GOES TO HOME PAGE ON SUCCESSFUL SEARCH FROM DB 
@@ -74,7 +76,7 @@ function LoginNavigation() {
     let query = { "email": email, "password": password};
     console.log(query);
 
-    let currentUser = await searchUsersReturnIDs(query);
+    let currentUser = await searchUsersReturnUsers(query);
     if (currentUser === undefined)
     {
       console.log("InvalidLogin");
@@ -85,9 +87,10 @@ function LoginNavigation() {
     {
 
       console.log(currentUser);
-      localStorage.setItem('currentUserId', currentUser);
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
+
+      nav('/home');
     }
   }
 
