@@ -88,8 +88,6 @@ function LoginNavigation() {
       localStorage.setItem('currentUserId', currentUser);
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
-
-      nav('/');
     }
   }
 
