@@ -48,9 +48,9 @@ const Navigation = () => {
 
     let query = { _id: "ObjectId('64bc31cc232c95d234e4e5ee')" }
     console.log(query);
-    let userSearchResultsIDs = await searchUsersReturnUsers(query);
+    let userSearchResults = await searchUsersReturnUsers(query);
 
-    console.log(userSearchResultsIDs);
+    console.log(userSearchResults);
 
     const updatedUser = {
       "name": name,
@@ -61,11 +61,7 @@ const Navigation = () => {
 
     };
     console.log(updatedUser);
-    await updateAllMatchingUsers(userSearchResultsIDs, updatedUser);
-  }
-
-  const props = {
-
+    await updateAllMatchingUsers(userSearchResults, updatedUser);
   }
 
   const navigate = useNavigate();

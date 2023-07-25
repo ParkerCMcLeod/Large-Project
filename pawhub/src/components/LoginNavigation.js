@@ -60,6 +60,7 @@ function LoginNavigation() {
 
       await delay(2000);
       doLogin(email,password, null);
+
     }
     else
     {
@@ -88,7 +89,7 @@ function LoginNavigation() {
       console.log(currentUser);
       localStorage.setItem('email', email);
 
-      nav('/');
+      nav('/home');
     }
   }
 
