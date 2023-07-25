@@ -8,14 +8,12 @@ import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 
 function App() {
-  const [apiData, setApiData] = useState([]);
-
   const searchUsersReturnUsers = async (query) => {
     try {
       let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
         params: query
       });
-      setApiData(response.data);
+      return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -37,7 +35,7 @@ function App() {
   const addNewUser = async (newUser) => {
     try {
       let response = await axios.post('http://localhost:3001/api/addNewUser', newUser);
-      setApiData(response.data); // uses the data and rerenders relevant changes
+      return response.data;
     } catch (error) {
       console.error('Failed to post data', error);
     }
@@ -52,11 +50,9 @@ function App() {
         updatedUser,
       });
       if (response.status === 200 && response.message === "Data updated successfully") {
-        setApiData((apiData) =>
-          apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
-        );
+        return apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user));
       } else {
-        setApiData(response.data); // uses the data and rerenders relevant changes
+        return response.data;
       }
     } catch (error) {
       console.error("Failed to update data:", error.message);
@@ -70,7 +66,7 @@ function App() {
       let response = await axios.delete('http://localhost:3001/api/deleteMatchingUsers', { params: query });
   
       // Assuming setApiData is a function in a React component to update state
-      setApiData(response.data); // uses the data and rerenders relevant changes
+      return response.data;
     } catch (error) {
       console.error('Failed to delete data', error);
     }
@@ -82,7 +78,7 @@ function App() {
       let response = await axios.get('http://localhost:3001/api/searchPostsReturnPosts', {
         params: query
       });
-      setApiData(response.data); // uses the data and rerenders relevant changes
+      return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -104,7 +100,7 @@ function App() {
   const addNewPost = async (newPost) => {
     try {
       let response = await axios.post('http://localhost:3001/api/addNewPost', newPost);
-      setApiData(response.data); // uses the data and rerenders relevant changes
+      return response.data;
     } catch (error) {
       console.error('Failed to post data', error);
     }
@@ -119,12 +115,10 @@ function App() {
         updatedPost,
       });
       if (response.status === 200 && response.message === "Data updated successfully") {
-        setApiData((apiData) =>
-          apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user))
-        );
+        return apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user));
       } else {
-        setApiData(response.data); // uses the data and rerenders relevant changes
-      }
+        return response.data;
+    }
     } catch (error) {
       console.error("Failed to update data:", error.message);
     }
@@ -133,8 +127,8 @@ function App() {
   const deleteMatchingPosts = async (query) => {
     try {
       let response = await axios.delete('http://localhost:3001/api/deleteMatchingPosts', { data: query });
-      setApiData(response.data);
-    } catch (error) {
+      return response.data;
+      } catch (error) {
       console.error('Failed to delete data', error);
     }
   };
@@ -151,12 +145,11 @@ function App() {
         friendList: [1, 2, 3]
       };
 
-      await addNewUser(newUserExample);
+      let response = await addNewUser(newUserExample);
 
       let query = { username: "IPlayFootball" };
-      let userSearchResults = await searchUsersReturnUsers(query);
+      let userSearchResultsUsers = await searchUsersReturnUsers(query);
       let userSearchResultsIDs = await searchUsersReturnIDs(query);
-      console.log(userSearchResults);
 
       const updatedUserExample = {
         name: "Stephen MartinUPDATED",
@@ -167,11 +160,11 @@ function App() {
         friendList: [100000, 200000, 300000]
       };
 
-      await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
+      response = await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
       // delete all users matching a query
       query = { username: "IPlayFootballUPDATED" };
-      await deleteMatchingUsers(query);
+      response = await deleteMatchingUsers(query);
 
     };
 
@@ -182,10 +175,10 @@ function App() {
         photo: "https://example.com/profile.jpg",
         userID: 42
       };
-      await addNewPost(newPostExample);
+      let response = await addNewPost(newPostExample);
       
       let query = { text: "Hello World!"}
-      let postSearchResults = await searchPostsReturnPosts(query);
+      let postSearchResultsPosts = await searchPostsReturnPosts(query);
       let postSearchResultsIDs = await searchPostsReturnIDs(query);
 
       const updatedPostExample = {
@@ -195,12 +188,13 @@ function App() {
         userID: 42000
       };
 
-      await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
+      response = await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
 
       // delete all posts matching a query
       query = { numLikes: 10000 };
-      await deleteMatchingPosts(query);
-    };
+      response = await deleteMatchingPosts(query);
+  };
+
 
     exampleUsersAPIFunctionality();
     examplePostsAPIFunctionality();

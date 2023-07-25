@@ -36,18 +36,12 @@ async function run() {
   await client.connect();
 
   const databaseUsers = client.db("users");
-  const collectionUsers = "users";
-  const users = databaseUsers.collection(collectionUsers);
-
-  const collectionCurrentUserIDIncrement = "currentUserIDIncrement";
-  const currentUserIDIncrement = databaseUsers.collection(collectionCurrentUserIDIncrement);
+  const users = databaseUsers.collection("users");
+  const currentUserIDIncrement = databaseUsers.collection("currentUserIDIncrement");
 
   const databasePosts = client.db("posts");
-  const collectionPosts = "posts";
-  const posts = databasePosts.collection(collectionPosts);
-
-  const collectionCurrentPostIDIncrement = "currentPostIDIncrement";
-  const currentPostIDIncrement = databasePosts.collection(collectionCurrentPostIDIncrement);
+  const posts = databasePosts.collection("posts");
+  const currentPostIDIncrement = databasePosts.collection("currentPostIDIncrement");
 
   // API to search for users by query
   app.get("/api/searchUsersReturnUsers", async (req, res) => {
