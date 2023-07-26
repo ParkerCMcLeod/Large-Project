@@ -3,7 +3,6 @@ const { MongoClient, ObjectId } = require("mongodb");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fs = require("fs").promises;
 
 // Creating Express app
 const app = express();
@@ -30,7 +29,8 @@ app.listen(port, () => {
 app.use(handleError);
 
 async function run() {
-  const uri = "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
+  const uri =
+    "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   await client.connect();
@@ -44,7 +44,7 @@ async function run() {
   const currentPostIDIncrement = databasePosts.collection("currentPostIDIncrement");
 
   // API to search for users by query
-  app.get("/api/searchUsersReturnUsers", async (req, res) => {
+  app.get("/api/searchUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -63,7 +63,7 @@ async function run() {
   });
 
   // API to search for users IDs by query
-  app.get("/api/searchUsersReturnIDs", async (req, res) => {
+  app.get("/api/searchUserIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -102,7 +102,7 @@ async function run() {
         ...newUser,
       };
       const result = await users.insertOne(newUser);
-      res.json({message: "Data inserted successfully", result});
+      res.json({ message: "Data inserted successfully", result });
     } catch (err) {
       res.status(500).send(err);
     }
@@ -113,7 +113,7 @@ async function run() {
     try {
       const listIDs = req.body.listIDs;
       const updatedUser = req.body.updatedUser;
-      const objectIDs = listIDs.map(id => new ObjectId(id));
+      const objectIDs = listIDs.map((id) => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
 
       const result = await users.updateMany(filter, { $set: updatedUser });
@@ -121,9 +121,9 @@ async function run() {
       const modifiedCount = result.modifiedCount;
 
       if (modifiedCount === 0) {
-        res.status(404).send('No documents were found for the provided IDs');
+        res.status(404).send("No documents were found for the provided IDs");
       } else {
-        res.json({message: 'Data updated successfully', modifiedCount: modifiedCount});
+        res.json({ message: "Data updated successfully", modifiedCount: modifiedCount });
       }
     } catch (err) {
       res.status(500).send(err);
@@ -147,8 +147,8 @@ async function run() {
     }
   });
 
-   // API to increment and return currentUserIDIncrement
-   async function incrementCurrentUserIDIncrement() {
+  // API to increment and return currentUserIDIncrement
+  async function incrementCurrentUserIDIncrement() {
     try {
       // Find the document, increment the value and return the updated document
       const result = await currentUserIDIncrement.findOneAndUpdate(
@@ -170,9 +170,8 @@ async function run() {
     }
   }
 
-
   // API to search for posts by query
-  app.get("/api/searchPostsReturnPosts", async (req, res) => {
+  app.get("/api/searchPosts", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -191,7 +190,7 @@ async function run() {
   });
 
   // API to search for posts IDs by query
-  app.get("/api/searchPostsReturnIDs", async (req, res) => {
+  app.get("/api/searchPostIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -230,7 +229,7 @@ async function run() {
         ...newPost,
       };
       const result = await posts.insertOne(newPost);
-      res.json({message: "Data inserted successfully", result});
+      res.json({ message: "Data inserted successfully", result });
     } catch (err) {
       res.status(500).send(err);
     }
@@ -241,7 +240,7 @@ async function run() {
     try {
       const listIDs = req.body.listIDs;
       const updatedPost = req.body.updatedPost;
-      const objectIDs = listIDs.map(id => new ObjectId(id));
+      const objectIDs = listIDs.map((id) => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
 
       const result = await posts.updateMany(filter, { $set: updatedPost });
@@ -249,9 +248,9 @@ async function run() {
       const modifiedCount = result.modifiedCount;
 
       if (modifiedCount === 0) {
-        res.status(404).send('No documents were found for the provided IDs');
+        res.status(404).send("No documents were found for the provided IDs");
       } else {
-        res.json({message: 'Data updated successfully', modifiedCount: modifiedCount});
+        res.json({ message: "Data updated successfully", modifiedCount: modifiedCount });
       }
     } catch (err) {
       res.status(500).send(err);
@@ -274,35 +273,35 @@ async function run() {
       res.status(500).send(err);
     }
   });
-  
-    // API to increment and return currentPostIDIncrement
-    async function incrementCurrentPostIDIncrement() {
-      try {
-        // Find the document, increment the value and return the updated document
-        const result = await currentPostIDIncrement.findOneAndUpdate(
-          {}, // Filter - empty to match all documents in the collection
-          { $inc: { currentPostIDIncrement: 1 } }, // Update - increment the value by 1
-          { returnOriginal: false } // Options - return the updated document
-        );
-  
-        // If the document was not found, throw an error
-        if (!result.value) {
-          throw new Error("No document found");
-        }
-  
-        // If the document was found and updated, send the new value
-        return result.value.currentPostIDIncrement;
-      } catch (err) {
-        // If an error occurred, throw the error
-        throw err;
+
+  // API to increment and return currentPostIDIncrement
+  async function incrementCurrentPostIDIncrement() {
+    try {
+      // Find the document, increment the value and return the updated document
+      const result = await currentPostIDIncrement.findOneAndUpdate(
+        {}, // Filter - empty to match all documents in the collection
+        { $inc: { currentPostIDIncrement: 1 } }, // Update - increment the value by 1
+        { returnOriginal: false } // Options - return the updated document
+      );
+
+      // If the document was not found, throw an error
+      if (!result.value) {
+        throw new Error("No document found");
       }
+
+      // If the document was found and updated, send the new value
+      return result.value.currentPostIDIncrement;
+    } catch (err) {
+      // If an error occurred, throw the error
+      throw err;
     }
-  
-    // Error handling middleware
-    app.use(function (err, req, res, next) {
-      console.error(err);
-      res.status(500).send(err);
-    });
   }
-  
-  run().catch(console.dir);
+
+  // Error handling middleware
+  app.use(function (err, req, res, next) {
+    console.error(err);
+    res.status(500).send(err);
+  });
+}
+
+run().catch(console.dir);
