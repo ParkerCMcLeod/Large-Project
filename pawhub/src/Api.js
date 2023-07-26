@@ -44,7 +44,7 @@ async function run() {
   const currentPostIDIncrement = databasePosts.collection("currentPostIDIncrement");
 
   // API to search for users by query
-  app.get("/api/searchUsers", async (req, res) => {
+  app.get("/api/searchUsersReturnUsers", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -63,7 +63,7 @@ async function run() {
   });
 
   // API to search for users IDs by query
-  app.get("/api/searchUserIDs", async (req, res) => {
+  app.get("/api/searchUsersReturnIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -171,7 +171,7 @@ async function run() {
   }
 
   // API to search for posts by query
-  app.get("/api/searchPosts", async (req, res) => {
+  app.get("/api/searchPostsReturnPosts", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
@@ -190,7 +190,7 @@ async function run() {
   });
 
   // API to search for posts IDs by query
-  app.get("/api/searchPostIDs", async (req, res) => {
+  app.get("/api/searchPostsReturnIDs", async (req, res) => {
     try {
       // Extract the query parameters from the request
       const query = req.query;
