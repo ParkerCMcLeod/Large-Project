@@ -135,70 +135,70 @@ function App() {
   };
 
   useEffect(() => {
-  //   const exampleUsersAPIFunctionality = async () => {
+    const exampleUsersAPIFunctionality = async () => {
 
-  //     const newUserExample = {
-  //       name: "Stephen Martin",
-  //       username: "IPlayFootball",
-  //       email: "football@ucf.edu",
-  //       password: "GoKnightsIPlayFootball42",
-  //       profilePicture: "https://example.com/profile.jpg",
-  //       friendList: [1, 2, 3]
-  //     };
+      const newUserExample = {
+        name: "Stephen Martin",
+        username: "IPlayFootball",
+        email: "football@ucf.edu",
+        password: "GoKnightsIPlayFootball42",
+        profilePicture: "https://example.com/profile.jpg",
+        friendList: [1, 2, 3]
+      };
 
-  //     let response = await addNewUser(newUserExample);
+      let response = await addNewUser(newUserExample);
 
-  //     let query = { username: "IPlayFootball" };
-  //     let userSearchResultsUsers = await searchUsersReturnUsers(query);
-  //     let userSearchResultsIDs = await searchUsersReturnIDs(query);
+      let query = { username: "IPlayFootball" };
+      let userSearchResultsUsers = await searchUsersReturnUsers(query);
+      let userSearchResultsIDs = await searchUsersReturnIDs(query);
 
-  //     const updatedUserExample = {
-  //       name: "Stephen MartinUPDATED",
-  //       username: "IPlayFootballUPDATED",
-  //       email: "football@ucf.eduUPDATED",
-  //       password: "GoKnightsIPlayFootball42UPDATED",
-  //       profilePicture: "https://example.com/profile.jpgUPDATED",
-  //       friendList: [100000, 200000, 300000]
-  //     };
+      const updatedUserExample = {
+        name: "Stephen MartinUPDATED",
+        username: "IPlayFootballUPDATED",
+        email: "football@ucf.eduUPDATED",
+        password: "GoKnightsIPlayFootball42UPDATED",
+        profilePicture: "https://example.com/profile.jpgUPDATED",
+        friendList: [100000, 200000, 300000]
+      };
 
-  //     response = await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
+      response = await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
-  //     // delete all users matching a query
-  //     query = { username: "IPlayFootballUPDATED" };
-  //     response = await deleteMatchingUsers(query);
+      // delete all users matching a query
+      query = { username: "IPlayFootballUPDATED" };
+      response = await deleteMatchingUsers(query);
 
-  //   };
+    };
 
-  //   const examplePostsAPIFunctionality = async () => {
-  //     const newPostExample = {
-  //       numLikes: 8,
-  //       text: "Hello World!",
-  //       photo: "https://example.com/profile.jpg",
-  //       userID: 42
-  //     };
-  //     let response = await addNewPost(newPostExample);
+    const examplePostsAPIFunctionality = async () => {
+      const newPostExample = {
+        numLikes: 8,
+        text: "Hello World!",
+        photo: "https://example.com/profile.jpg",
+        userID: 42
+      };
+      let response = await addNewPost(newPostExample);
       
-  //     let query = { text: "Hello World!"}
-  //     let postSearchResultsPosts = await searchPostsReturnPosts(query);
-  //     let postSearchResultsIDs = await searchPostsReturnIDs(query);
+      let query = { text: "Hello World!"}
+      let postSearchResultsPosts = await searchPostsReturnPosts(query);
+      let postSearchResultsIDs = await searchPostsReturnIDs(query);
 
-  //     const updatedPostExample = {
-  //       numLikes: 10000,
-  //       text: "Hello World!UPDATED",
-  //       photo: "https://example.com/profile.jpgUPDATED",
-  //       userID: 42000
-  //     };
+      const updatedPostExample = {
+        numLikes: 10000,
+        text: "Hello World!UPDATED",
+        photo: "https://example.com/profile.jpgUPDATED",
+        userID: 42000
+      };
 
-  //     response = await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
+      response = await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
 
-  //     // delete all posts matching a query
-  //     query = { numLikes: 10000 };
-  //     response = await deleteMatchingPosts(query);
-  // };
+      // delete all posts matching a query
+      query = { numLikes: 10000 };
+      response = await deleteMatchingPosts(query);
+  };
 
 
-  //   exampleUsersAPIFunctionality();
-  //   examplePostsAPIFunctionality();
+    exampleUsersAPIFunctionality();
+    examplePostsAPIFunctionality();
   }, []);
 
   return (

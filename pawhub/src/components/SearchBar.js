@@ -141,17 +141,56 @@ const SearchBar = () => {
     }
 
     try {
-      const query = { name: { $regex: "(?i)" + term }};
+      let query = { name: { $regex: "(?i)" + term }};
       const users = await searchUsersReturnUsers(query);
       setSearchResults(users.slice(0, 5)); // Limit results to 5
+      
+      let selfEmail = localStorage.getItem('email');
+      query = { email: selfEmail };
+      const selfUser = await searchUsersReturnUsers(query);
+
+      let updatedResults = users.slice(0, 5);
+
+      for (let i = 0; i < updatedResults.length; i++) {
+        if(selfUser[0].friendList.includes(updatedResults[i].userID)) {
+            updatedResults[i].following = true;
+        } else {
+          updatedResults[i].following = false;
+        }
+      }
+      setSearchResults(updatedResults);
     } catch (error) {
       console.error('Failed to fetch search results:', error);
     }
   };
 
-  const handleFollowToggle = (index) => {
+  const handleFollowToggle = async (index) => {
     const updatedResults = [...searchResults];
     updatedResults[index].following = !updatedResults[index].following;
+    let followedUserID = updatedResults[index].userID;
+    let selfEmail = localStorage.getItem('email');
+    const query = { email: selfEmail };
+    const selfUser = await searchUsersReturnUsers(query);
+    if (updatedResults[index].following === true) {
+      let already_following = false;
+      for (let i = 0; i < updatedResults.length; i++) {
+        if(selfUser[0].friendList.includes(updatedResults[i].userID)) {
+          already_following = true;
+        }
+      }
+      if (already_following === false) {
+        selfUser[0].friendList.push(followedUserID);
+      }
+    } else {
+      selfUser[0].friendList = selfUser[0].friendList.filter(item => item !== followedUserID);
+    }
+
+    let selUserObjIDArray = [selfUser[0]._id];
+    delete selfUser[0]._id;
+    delete selfUser[0].userID;
+    delete selfUser[0].dateCreated;
+    
+    let status = await updateAllMatchingUsers(selUserObjIDArray, selfUser[0]);
     setSearchResults(updatedResults);
   };
 
