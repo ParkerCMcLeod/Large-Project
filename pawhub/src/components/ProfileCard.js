@@ -10,6 +10,7 @@ function ProfileCard({editUser, closeProfileCard }) {
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
   const [image, setImage] = useState(null);
+  const [SuccessMessage, setSuccessMessage]= useState();
 
   const [apiData, setApiData] = useState([]);
 
@@ -18,7 +19,7 @@ function ProfileCard({editUser, closeProfileCard }) {
       let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
         params: query
       });
-      setApiData(response.data);
+      return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -38,7 +39,7 @@ function ProfileCard({editUser, closeProfileCard }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    editUser(name, email, username, password, image)
+    editUser(name, username, email, password, image, setSuccessMessage)
     // Handle form submission here
   }
 
@@ -50,19 +51,24 @@ function ProfileCard({editUser, closeProfileCard }) {
       
       let query =
       {
-        "profilePicture": image,
         "email": localStorage.getItem('email'),
-        "password": localStorage.getItem('password')
       }
 
-      console.log(query);
-      let userVals = await searchUsersReturnIDs(query);
-      console.log("uservals:" + userVals);
+      let userVals = await searchUsersReturnUsers(query);
 
       if (userVals !== undefined)
       {
-        setEmail(query.email);
-        setPassword(query.password);
+        setEmail(userVals[0].email);
+        setPassword(userVals[0].password);
+        setName(userVals[0].name);
+        setUserName(userVals[0].username);
+
+        const data = userVals[0].profilePicture
+        
+        if(data !== undefined)
+        {
+          setImage(data);
+        }
 
       }
     }
@@ -121,6 +127,9 @@ function ProfileCard({editUser, closeProfileCard }) {
           <button className="LoginSignUp-btn" type="submit">
             Edit
           </button>
+          <label> 
+          {SuccessMessage}
+          </label>
         </form>
       </div>
     </div>

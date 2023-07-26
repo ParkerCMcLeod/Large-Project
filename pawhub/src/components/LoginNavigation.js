@@ -4,6 +4,8 @@ import LoginCard from "./LoginCard";
 import SignUpCard from "./SignupCard";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import ProfilePic from "../images/defaultPic.jpg";
+
 
 
 function LoginNavigation() {
@@ -46,12 +48,12 @@ function LoginNavigation() {
       "username": username,
       "email": email,
       "password": password,
-      "profilePicture": "https://example.com/profile.jpg",
+      "profilePicture": ProfilePic,
       "friendList": []
     };
     let query = {"email": email}
     let anyUsers = await searchUsersReturnUsers(query)
-    console.log(anyUsers);
+    // console.log(anyUsers);
     
     if(anyUsers === undefined)
     {
@@ -74,7 +76,6 @@ function LoginNavigation() {
   const doLogin = async (email, password, setErrorValue) => {
 
     let query = { "email": email, "password": password};
-    console.log(query);
 
     let currentUser = await searchUsersReturnUsers(query);
     if (currentUser === undefined)

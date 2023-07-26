@@ -6,11 +6,13 @@ import ProfileCard from './ProfileCard';
 import SearchBar from './SearchBar';
 import './searchbar.css';
 import axios from 'axios';
-
+import pako from 'pako';
 
 const Navigation = () => {
   const [clicked, setClicked] = useState(false);
   const [profileCardOpen, setProfileCardOpen] = useState(false);
+
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
   const [apiData, setApiData] = useState([]);
 
@@ -20,6 +22,17 @@ const Navigation = () => {
         params: query
       });
       setApiData(response.data);
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
+  const searchUsersReturnIDs = async (query) => {
+    try {
+      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+        params: query
+      });
+      return response.data;
     } catch (error) {
       console.error('Failed to search data', error);
     }
@@ -44,24 +57,68 @@ const Navigation = () => {
     }
   };
 
-  const editUser = async (name, username, email, password, pfp) => {
+  const editUser = async (name, username, email, password, pfp, setSuccessMessage) => {
 
-    let query = { _id: "ObjectId('64bc31cc232c95d234e4e5ee')" }
-    console.log(query);
-    let userSearchResults = await searchUsersReturnUsers(query);
+    let query =
+    {
+      "email": localStorage.getItem('email'),
+    }
 
-    console.log(userSearchResults);
+    let userSearchResults = await searchUsersReturnIDs(query);
 
-    const updatedUser = {
-      "name": name,
-      "username": username,
-      "email": email,
-      "password": password,
-      "profilePicture": pfp
+    // const readFile = async(file) => {
 
-    };
-    console.log(updatedUser);
-    await updateAllMatchingUsers(userSearchResults, updatedUser);
+    //   const reader = new FileReader();
+
+    //   return new Promise((resolve, reject) => {
+    //     reader.onloadend = () => {
+    //       const fileData = reader.result; // The data read from the file
+    //       resolve(fileData);
+    //     };
+    //     reader.onerror = reject; // In case of an error, reject the promise
+    
+    //     reader.readAsDataURL(file); // Start reading the file and convert it to a data URL
+    //   });
+      
+    // }
+    
+    if (pfp === undefined)
+    {
+      const updatedUser = {
+        "name": name,
+        "username": username,
+        "email": email,
+        "password": password,
+        "profilePicture": undefined,
+        "friendList": []
+      };
+      console.log(updatedUser);
+      let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
+      localStorage.setItem('email', email);
+      console.log(response);
+      setSuccessMessage('Profile Updated');
+      await delay(2000);
+      setSuccessMessage('');
+    }
+    else
+    {
+      const updatedUser = {
+        "name": name,
+        "username": username,
+        "email": email,
+        "password": password,
+        "profilePicture": pfp,
+        "friendList": []
+      };
+      
+      console.log(updatedUser);
+      let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
+      localStorage.setItem('email', email);
+      setSuccessMessage('Profile Updated');
+      await delay(2000);
+      setSuccessMessage('');
+    }
+
   }
 
   const navigate = useNavigate();
