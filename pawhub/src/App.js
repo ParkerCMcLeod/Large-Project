@@ -1,142 +1,15 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
 import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
-import SearchBar from "./components/SearchBar";
+import * as Api from "./ApiMiddleware"; // Import the API functions from a separate module
 
 function App() {
-  const searchUsersReturnUsers = async (query) => {
-    try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
-        params: query
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Failed to search data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const searchUsersReturnIDs = async (query) => {
-    try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
-        params: query
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Failed to search data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS... Yeah... I'm takin dat :/
-  const addNewUser = async (newUser) => {
-    try {
-      let response = await axios.post('http://localhost:3001/api/addNewUser', newUser);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to post data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
-    try {
-      const listIDs = await listIDsPromise;
-      let response = await axios.put("http://localhost:3001/api/updateMatchingUsers", {
-        listIDs,
-        updatedUser,
-      });
-      if (response.status === 200 && response.message === "Data updated successfully") {
-        return apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user));
-      } else {
-        return response.data;
-      }
-    } catch (error) {
-      console.error("Failed to update data:", error.message);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const deleteMatchingUsers = async (query) => {
-    try {
-      // Pass the query parameters using 'params'
-      let response = await axios.delete('http://localhost:3001/api/deleteMatchingUsers', { params: query });
-  
-      // Assuming setApiData is a function in a React component to update state
-      return response.data;
-    } catch (error) {
-      console.error('Failed to delete data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const searchPostsReturnPosts = async (query) => {
-    try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnPosts', {
-        params: query
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Failed to search data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const searchPostsReturnIDs = async (query) => {
-    try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnIDs', {
-        params: query
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Failed to search data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const addNewPost = async (newPost) => {
-    try {
-      let response = await axios.post('http://localhost:3001/api/addNewPost', newPost);
-      return response.data;
-    } catch (error) {
-      console.error('Failed to post data', error);
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
-    try {
-      const listIDs = await listIDsPromise;
-      const response = await axios.put("http://localhost:3001/api/updateMatchingPosts", {
-        listIDs,
-        updatedPost,
-      });
-      if (response.status === 200 && response.message === "Data updated successfully") {
-        return apiData.map((user) => (listIDs.includes(user._id) ? updatedUser : user));
-      } else {
-        return response.data;
-    }
-    } catch (error) {
-      console.error("Failed to update data:", error.message);
-    }
-  };
-
-  const deleteMatchingPosts = async (query) => {
-    try {
-      let response = await axios.delete('http://localhost:3001/api/deleteMatchingPosts', { data: query });
-      return response.data;
-      } catch (error) {
-      console.error('Failed to delete data', error);
-    }
-  };
-
   useEffect(() => {
     const exampleUsersAPIFunctionality = async () => {
-
       const newUserExample = {
         name: "Stephen Martin",
         username: "IPlayFootball",
@@ -146,11 +19,11 @@ function App() {
         friendList: [1, 2, 3]
       };
 
-      let response = await addNewUser(newUserExample);
+      let response = await Api.addNewUser(newUserExample);
 
-      let query = { username: "IPlayFootball" };
-      let userSearchResultsUsers = await searchUsersReturnUsers(query);
-      let userSearchResultsIDs = await searchUsersReturnIDs(query);
+      const query = { username: "IPlayFootball" };
+      const userSearchResultsUsers = await Api.searchUsersReturnUsers(query);
+      const userSearchResultsIDs = await Api.searchUsersReturnIDs(query);
 
       const updatedUserExample = {
         name: "Stephen MartinUPDATED",
@@ -161,12 +34,11 @@ function App() {
         friendList: [100000, 200000, 300000]
       };
 
-      response = await updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
+      response = await Api.updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
       // delete all users matching a query
-      query = { username: "IPlayFootballUPDATED" };
-      response = await deleteMatchingUsers(query);
-
+      const deleteUserQuery = { username: "IPlayFootballUPDATED" };
+      response = await Api.deleteMatchingUsers(deleteUserQuery);
     };
 
     const examplePostsAPIFunctionality = async () => {
@@ -176,11 +48,11 @@ function App() {
         photo: "https://example.com/profile.jpg",
         userID: 42
       };
-      let response = await addNewPost(newPostExample);
-      
-      let query = { text: "Hello World!"}
-      let postSearchResultsPosts = await searchPostsReturnPosts(query);
-      let postSearchResultsIDs = await searchPostsReturnIDs(query);
+      let response = await Api.addNewPost(newPostExample);
+
+      const query = { text: "Hello World!" };
+      const postSearchResultsPosts = await Api.searchPostsReturnPosts(query);
+      const postSearchResultsIDs = await Api.searchPostsReturnIDs(query);
 
       const updatedPostExample = {
         numLikes: 10000,
@@ -189,13 +61,12 @@ function App() {
         userID: 42000
       };
 
-      response = await updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
+      response = await Api.updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
 
       // delete all posts matching a query
-      query = { numLikes: 10000 };
-      response = await deleteMatchingPosts(query);
-  };
-
+      const deletePostQuery = { numLikes: 10000 };
+      response = await Api.deleteMatchingPosts(deletePostQuery);
+    };
 
     exampleUsersAPIFunctionality();
     examplePostsAPIFunctionality();
@@ -203,25 +74,18 @@ function App() {
 
   return (
     <div>
-      <div>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/landingPage" element={<LandingPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/landingPage" element={<LandingPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
 
 export default App;
-
-
-
-
-

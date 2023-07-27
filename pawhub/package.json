@@ -20,7 +20,7 @@
     "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "start-api": "node src/Api.js",
+    "start-api": "node src/ApiBackend.js",
     "start": "concurrently \"react-scripts start\" \"npm run start-api\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
