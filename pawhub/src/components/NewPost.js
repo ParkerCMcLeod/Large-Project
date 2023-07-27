@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './newpost.css';
 import axios from 'axios';
-// const { MongoClient, ObjectId } = require("mongodb");
 
 function NewPost() {
   const [text, setText] = useState("");
@@ -96,23 +95,17 @@ function NewPost() {
     }
 
     let response = await addNewPost(newPost);    
+    console.log(response);
 
-    // getting postID by seearching the objectID
-    // const string = 'ObjectId(' + response.result.insertedId + ')';
-    newObjec
-    const getPostQuery =
-    {
-      "_id": {
-        "$oid": ObjectId(response.result.insertedId)
-      },
-    }
-    console.log("postQuery:", getPostQuery);
-    const finalPost = await searchPostsReturnPosts(getPostQuery);
+    // let getPostQuery = { numLikes: 0 };
 
-    console.log("final:", finalPost);
+
+    // console.log(getPostQuery);
+
+    // let finalPost = await searchPostsReturnPosts(getPostQuery);
+    // console.log("finalpost",finalPost);
 
     // saving image link with USERID and POSTID
-
     // console.log(images.length);
     // if (images.length >= 0)
     // {

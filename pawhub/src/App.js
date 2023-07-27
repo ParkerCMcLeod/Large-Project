@@ -182,7 +182,7 @@ function App() {
         userID: 42
       };
       let response = await addNewPost(newPostExample);
-      
+      console.log(response);
       let query = { text: "Hello World!"}
       let postSearchResultsPosts = await searchPostsReturnPosts(query);
       let postSearchResultsIDs = await searchPostsReturnIDs(query);
@@ -225,8 +225,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-

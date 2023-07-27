@@ -4,7 +4,7 @@ import "./HomePage.css";
 import "./Pages.css";
 import Donation from "../components/Donation";
 import PostCard from "../components/PostCard";
-import NewPost from "../components/NewPost";
+import PostList from "../components/PostList";
 import Links from "../components/Links";
 
 function HomePage() {
@@ -13,8 +13,7 @@ function HomePage() {
       <Navigation />
       <Donation />
       <div className="ColumnContainer">
-        <NewPost />
-        <PostCard />
+        <PostList />
       </div>
       <Links />
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './postcard.css';
 import PostPicture from "../images/LandingPagePic.jpg";
 import LikeButton from './LikeButton';
@@ -6,7 +6,7 @@ import Example1 from "../images/DarthDogus.PNG"
 import Example2 from "../images/Meow.jpg"
 import Example3 from "../images/Pug.jpg"
 
-function PostCard() {
+function PostCard({postData}) {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState("With My best Friend Shaggy! 🐶  🐶#bff");
   const [images, setImages] = useState([
@@ -14,6 +14,14 @@ function PostCard() {
     Example2,
     Example3
   ]);
+
+  useEffect(() => {
+
+      setText(postData.text);
+      setImages(postData.images);
+
+  }, []);
+
 
   return (
     <div className='PostCard-container'>
