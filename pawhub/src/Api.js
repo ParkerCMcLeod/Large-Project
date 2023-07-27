@@ -57,6 +57,10 @@ async function run() {
       // Extract the query parameters from the request
       const query = req.query;
 
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
+
       // Perform the search
       const documents = await users.find(query).toArray();
 
@@ -75,6 +79,10 @@ async function run() {
     try {
       // Extract the query parameters from the request
       const query = req.query;
+
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
 
       // Perform the search
       const documents = await users.find(query).toArray();
@@ -184,6 +192,16 @@ async function run() {
       // Extract the query parameters from the request
       const query = req.query;
 
+      if (query.hasOwnProperty("postID")) {
+        query.postID = parseInt(query.postID);
+      }
+      if (query.hasOwnProperty("numLikes")) {
+        query.numLikes = parseInt(query.numLikes);
+      }
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
+
       // Perform the search
       const documents = await posts.find(query).toArray();
 
@@ -202,6 +220,16 @@ async function run() {
     try {
       // Extract the query parameters from the request
       const query = req.query;
+
+      if (query.hasOwnProperty("postID")) {
+        query.postID = parseInt(query.postID);
+      }
+      if (query.hasOwnProperty("numLikes")) {
+        query.numLikes = parseInt(query.numLikes);
+      }
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
 
       // Perform the search
       const documents = await posts.find(query).toArray();

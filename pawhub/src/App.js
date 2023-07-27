@@ -177,7 +177,7 @@ function App() {
       };
       let response = await addNewPost(newPostExample);
       
-      let query = { text: "Hello World!"}
+      let query = { userID: 1778 }
       let postSearchResultsPosts = await searchPostsReturnPosts(query);
       let postSearchResultsIDs = await searchPostsReturnIDs(query);
 
