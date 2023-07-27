@@ -2,7 +2,7 @@
 const { MongoClient, ObjectId } = require("mongodb");
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+const cors = require("cors"); // Import the cors module
 
 // Creating Express app
 const app = express();
@@ -10,7 +10,15 @@ const app = express();
 // Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+
+// Set up CORS middleware with appropriate options
+app.use(
+  cors({
+    origin: "*", // Replace "*" with the allowed origin of your client application
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Include the OPTIONS method for preflight requests
+    allowedHeaders: ["Content-Type", "Authorization"], // Add any additional headers that your client needs
+  })
+);
 
 // Error Handling Middleware
 function handleError(err, req, res, next) {
