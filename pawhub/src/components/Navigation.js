@@ -6,7 +6,6 @@ import ProfileCard from './ProfileCard';
 import SearchBar from './SearchBar';
 import './searchbar.css';
 import axios from 'axios';
-import pako from 'pako';
 
 const Navigation = () => {
   const [clicked, setClicked] = useState(false);
@@ -66,42 +65,6 @@ const Navigation = () => {
 
     let userSearchResults = await searchUsersReturnIDs(query);
 
-    // const readFile = async(file) => {
-
-    //   const reader = new FileReader();
-
-    //   return new Promise((resolve, reject) => {
-    //     reader.onloadend = () => {
-    //       const fileData = reader.result; // The data read from the file
-    //       resolve(fileData);
-    //     };
-    //     reader.onerror = reject; // In case of an error, reject the promise
-    
-    //     reader.readAsDataURL(file); // Start reading the file and convert it to a data URL
-    //   });
-      
-    // }
-    
-    if (pfp === undefined)
-    {
-      const updatedUser = {
-        "name": name,
-        "username": username,
-        "email": email,
-        "password": password,
-        "profilePicture": undefined,
-        "friendList": []
-      };
-      console.log(updatedUser);
-      let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
-      localStorage.setItem('email', email);
-      console.log(response);
-      setSuccessMessage('Profile Updated');
-      await delay(2000);
-      setSuccessMessage('');
-    }
-    else
-    {
       const updatedUser = {
         "name": name,
         "username": username,
@@ -110,7 +73,7 @@ const Navigation = () => {
         "profilePicture": pfp,
         "friendList": []
       };
-      
+
       console.log(updatedUser);
       let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
       localStorage.setItem('email', email);
@@ -118,8 +81,6 @@ const Navigation = () => {
       await delay(2000);
       setSuccessMessage('');
     }
-
-  }
 
   const navigate = useNavigate();
 

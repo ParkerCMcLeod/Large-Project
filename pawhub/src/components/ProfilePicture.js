@@ -26,11 +26,6 @@ function ProfilePicture({image, setImage}) {
     
   }
 
-  const fixDefault = async(event) =>
-  {
-    
-  }
-
 
   const handleImageChange = async(event) => {
     const file = event.target.files[0];
@@ -61,6 +56,7 @@ function ProfilePicture({image, setImage}) {
 
       <input
         type='file'
+        accept='image/*'
         ref={inputRef}
         onChange={handleImageChange}
         style={{ display: "none" }}
