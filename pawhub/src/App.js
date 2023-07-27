@@ -6,7 +6,6 @@ import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
 import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
-import SearchBar from "./components/SearchBar";
 
 function App() {
   const searchUsersReturnUsers = async (query) => {
