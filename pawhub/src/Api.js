@@ -229,7 +229,7 @@ async function run() {
         ...newPost,
       };
       const result = await posts.insertOne(newPost);
-      res.json({ message: "Data inserted successfully", result });
+      res.json({ message: "Data inserted successfully", newPostID });
     } catch (err) {
       res.status(500).send(err);
     }
