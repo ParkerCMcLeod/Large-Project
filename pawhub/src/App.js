@@ -5,7 +5,7 @@ import NoPage from "./pages/NoPage";
 import AboutPage from "./pages/AboutPage";
 import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
-import * as Api from "./ApiMiddleware"; // Import the API functions from a separate module
+import * as api from "./api"; // Import the API functions from a separate module
 
 function App() {
   useEffect(() => {
@@ -19,11 +19,11 @@ function App() {
         friendList: [1, 2, 3]
       };
 
-      let response = await Api.addNewUser(newUserExample);
+      let response = await api.addNewUser(newUserExample);
 
       const query = { username: "IPlayFootball" };
-      const userSearchResultsUsers = await Api.searchUsersReturnUsers(query);
-      const userSearchResultsIDs = await Api.searchUsersReturnIDs(query);
+      const userSearchResultsUsers = await api.searchUsersReturnUsers(query);
+      const userSearchResultsIDs = await api.searchUsersReturnIDs(query);
 
       const updatedUserExample = {
         name: "Stephen MartinUPDATED",
@@ -34,11 +34,11 @@ function App() {
         friendList: [100000, 200000, 300000]
       };
 
-      response = await Api.updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
+      response = await api.updateAllMatchingUsers(userSearchResultsIDs, updatedUserExample);
 
       // delete all users matching a query
       const deleteUserQuery = { username: "IPlayFootballUPDATED" };
-      response = await Api.deleteMatchingUsers(deleteUserQuery);
+      response = await api.deleteMatchingUsers(deleteUserQuery);
     };
 
     const examplePostsAPIFunctionality = async () => {
@@ -48,11 +48,11 @@ function App() {
         photo: "https://example.com/profile.jpg",
         userID: 42
       };
-      let response = await Api.addNewPost(newPostExample);
+      let response = await api.addNewPost(newPostExample);
 
       const query = { text: "Hello World!" };
-      const postSearchResultsPosts = await Api.searchPostsReturnPosts(query);
-      const postSearchResultsIDs = await Api.searchPostsReturnIDs(query);
+      const postSearchResultsPosts = await api.searchPostsReturnPosts(query);
+      const postSearchResultsIDs = await api.searchPostsReturnIDs(query);
 
       const updatedPostExample = {
         numLikes: 10000,
@@ -61,11 +61,11 @@ function App() {
         userID: 42000
       };
 
-      response = await Api.updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
+      response = await api.updateAllMatchingPosts(postSearchResultsIDs, updatedPostExample);
 
       // delete all posts matching a query
       const deletePostQuery = { numLikes: 10000 };
-      response = await Api.deleteMatchingPosts(deletePostQuery);
+      response = await api.deleteMatchingPosts(deletePostQuery);
     };
 
     exampleUsersAPIFunctionality();
