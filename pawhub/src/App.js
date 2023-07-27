@@ -11,6 +11,11 @@ import SearchBar from "./components/SearchBar";
 function App() {
   const searchUsersReturnUsers = async (query) => {
     try {
+      // Ensure the 'userID' property is sent as a number
+      if (query.userID) {
+        query.userID = parseInt(query.userID);
+      }
+
       let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
         params: query
       });
