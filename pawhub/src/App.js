@@ -11,7 +11,7 @@ function App() {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -23,7 +23,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnIDs', {
         params: query
       });
       return response.data;
@@ -35,7 +35,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS... Yeah... I'm takin dat :/
   const addNewUser = async (newUser) => {
     try {
-      let response = await axios.post('http://localhost:3001/api/addNewUser', newUser);
+      let response = await axios.post('https://pawhub.space/api/addNewUser', newUser);
       return response.data;
     } catch (error) {
       console.error('Failed to post data', error);
@@ -46,7 +46,7 @@ function App() {
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
-      let response = await axios.put("http://localhost:3001/api/updateMatchingUsers", {
+      let response = await axios.put("https://pawhub.space/api/updateMatchingUsers", {
         listIDs,
         updatedUser,
       });
@@ -64,7 +64,7 @@ function App() {
   const deleteMatchingUsers = async (query) => {
     try {
       // Pass the query parameters using 'params'
-      let response = await axios.delete('http://localhost:3001/api/deleteMatchingUsers', { params: query });
+      let response = await axios.delete('https://pawhub.space/api/deleteMatchingUsers', { params: query });
   
       // Assuming setApiData is a function in a React component to update state
       return response.data;
@@ -76,7 +76,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchPostsReturnPosts = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnPosts', {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnPosts', {
         params: query
       });
       return response.data;
@@ -88,7 +88,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const searchPostsReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnIDs', {
         params: query
       });
       return response.data;
@@ -100,7 +100,7 @@ function App() {
   // API IMPLEMENTATION, NOT FOR NATE OR JESUS
   const addNewPost = async (newPost) => {
     try {
-      let response = await axios.post('http://localhost:3001/api/addNewPost', newPost);
+      let response = await axios.post('https://pawhub.space/api/addNewPost', newPost);
       return response.data;
     } catch (error) {
       console.error('Failed to post data', error);
@@ -111,7 +111,7 @@ function App() {
   const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
     try {
       const listIDs = await listIDsPromise;
-      const response = await axios.put("http://localhost:3001/api/updateMatchingPosts", {
+      const response = await axios.put("https://pawhub.space/api/updateMatchingPosts", {
         listIDs,
         updatedPost,
       });
@@ -127,7 +127,7 @@ function App() {
 
   const deleteMatchingPosts = async (query) => {
     try {
-      let response = await axios.delete('http://localhost:3001/api/deleteMatchingPosts', { data: query });
+      let response = await axios.delete('https://pawhub.space/api/deleteMatchingPosts', { data: query });
       return response.data;
       } catch (error) {
       console.error('Failed to delete data', error);
