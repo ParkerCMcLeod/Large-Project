@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 
 function App() {
+
   const searchUsersReturnUsers = async (query) => {
     try {
       let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
