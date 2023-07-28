@@ -17,7 +17,7 @@ const Navigation = () => {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       setApiData(response.data);
@@ -28,7 +28,7 @@ const Navigation = () => {
 
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnIDs', {
         params: query
       });
       return response.data;
@@ -40,7 +40,7 @@ const Navigation = () => {
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
-      let response = await axios.put("http://localhost:3001/api/updateMatchingUsers", {
+      let response = await axios.put("https://pawhub.space/api/updateMatchingUsers", {
         listIDs,
         updatedUser,
       });

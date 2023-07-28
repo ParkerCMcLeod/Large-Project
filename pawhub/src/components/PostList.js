@@ -44,7 +44,7 @@ const readFile = async(file) => {
 
     const searchUsersReturnUsers = async (query) => {
     try {
-        let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+        let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
         });
         return response.data;
@@ -55,7 +55,7 @@ const readFile = async(file) => {
 
     const searchPostsReturnPosts = async (query) => {
         try {
-          let response = await axios.get('http://localhost:3001/api/searchPostsReturnPosts', {
+          let response = await axios.get('https://pawhub.space/api/searchPostsReturnPosts', {
             params: query
           });
           return response.data;

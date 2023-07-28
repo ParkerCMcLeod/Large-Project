@@ -197,8 +197,8 @@ function App() {
   };
 
 
-    exampleUsersAPIFunctionality();
-    examplePostsAPIFunctionality();
+    // exampleUsersAPIFunctionality();
+    // examplePostsAPIFunctionality();
   }, []);
 
   return (
