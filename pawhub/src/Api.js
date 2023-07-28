@@ -36,48 +36,6 @@ app.listen(port, () => {
 // Registering the error handling middleware
 app.use(handleError);
 
-const fs = require('fs');
-
-// Function to convert an image to a Base64 string
-function imageToBase64String(imagePath) {
-  try {
-    // Read the image file as a buffer
-    const imageBuffer = fs.readFileSync(imagePath);
-
-    // Encode the image buffer to Base64
-    const base64String = imageBuffer.toString('base64');
-
-    return base64String;
-  } catch (err) {
-    console.error('Error converting image to Base64:', err.message);
-    return null;
-  }
-}
-
-// Function to convert a Base64 string back to binary image data
-function base64StringToImage(base64String, outputPath) {
-  try {
-    // Create a Buffer from the Base64 string
-    const imageBuffer = Buffer.from(base64String, 'base64');
-
-    // Write the buffer to a new image file
-    fs.writeFileSync(outputPath, imageBuffer);
-
-    console.log('Image successfully converted back from Base64!');
-  } catch (err) {
-    console.error('Error converting Base64 string to image:', err.message);
-  }
-}
-
-// given a client's local image path, convert it to string
-const imagePath = 'src\\images\\Angery.PNG';
-const base64String = imageToBase64String(imagePath);
-
-// Assuming you want to convert it back to an image and save it
-// needs to be unique file name that you save
-const outputPath = 'src\\images\\AngeryCONVERTEDBACK.PNG';
-base64StringToImage(base64String, outputPath);
-
 async function run() {
   const uri =
     "mongodb+srv://LargeProjectMember:b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn@cluster0.usxyfaf.mongodb.net/?retryWrites=true&w=majority";
@@ -109,7 +67,7 @@ async function run() {
       if (documents.length > 0) {
         res.json(documents);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -135,7 +93,7 @@ async function run() {
 
         res.json(documentIds);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -179,7 +137,7 @@ async function run() {
       const modifiedCount = result.modifiedCount;
 
       if (modifiedCount === 0) {
-        res.status(404).send("No documents were found for the provided IDs");
+        res.status(204).send("No documents were found for the provided IDs");
       } else {
         res.json({ message: "Data updated successfully", modifiedCount: modifiedCount });
       }
@@ -196,7 +154,7 @@ async function run() {
 
       const result = await users.deleteMany(query);
       if (result.deletedCount === 0) {
-        res.status(404).send("No such document exists");
+        res.status(204).send("No such document exists");
       } else {
         res.json({ message: "Data deleted successfully", deletedCount: result.deletedCount });
       }
@@ -250,7 +208,7 @@ async function run() {
       if (documents.length > 0) {
         res.json(documents);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -282,7 +240,7 @@ async function run() {
 
         res.json(documentIds);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -317,6 +275,9 @@ async function run() {
   app.put("/api/updateMatchingPosts", async (req, res) => {
     try {
       const listIDs = req.body.listIDs;
+      if(listIDs === '') {
+        res.status(204).send("No IDs were passed");
+      }
       const updatedPost = req.body.updatedPost;
       const objectIDs = listIDs.map((id) => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
@@ -326,7 +287,7 @@ async function run() {
       const modifiedCount = result.modifiedCount;
 
       if (modifiedCount === 0) {
-        res.status(404).send("No documents were found for the provided IDs");
+        res.status(204).send("No documents were found for the provided IDs");
       } else {
         res.json({ message: "Data updated successfully", modifiedCount: modifiedCount });
       }
@@ -343,7 +304,7 @@ async function run() {
 
       const result = await posts.deleteMany(query);
       if (result.deletedCount === 0) {
-        res.status(404).send("No such document exists");
+        res.status(204).send("No such document exists");
       } else {
         res.json({ message: "Data deleted successfully", deletedCount: result.deletedCount });
       }
