@@ -68,18 +68,17 @@ const readFile = async(file) => {
     const getPosts = async () => {
         let query = {};
         let posts = await searchPostsReturnPosts(query);
+
         console.log("postlist", posts);
         let numPosts = posts.length;
         let postsData = [];
         console.log(Example1);
 
 
-       
-
         if (numPosts > 0) {
           for (let i = 0; i < numPosts; i++) {
 
-            
+            console.log(posts[i]);
                 // Replace 'T' with a space
             const stringWithoutT = posts[i].dateCreated.replace('T', ' ');
 
