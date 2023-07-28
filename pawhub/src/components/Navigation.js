@@ -121,14 +121,18 @@ const Navigation = () => {
     };
   }, [clicked]);
 
+
+
   useEffect(() => {
     // Add event listener to handle body scrolling and overlay
-    document.body.style.overflow = clicked ? 'hidden' : 'auto';
+    document.body.style.overflow = profileCardOpen ? 'hidden' : 'auto';
 
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [clicked]);
+  }, [profileCardOpen]);
+
+
 
   return (
     <div className="Navigation">
