@@ -18,7 +18,7 @@ function NewPost() {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -29,7 +29,7 @@ function NewPost() {
 
   const searchPostsReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnIDs', {
         params: query
       });
       return response.data;
@@ -40,7 +40,7 @@ function NewPost() {
   
   const addNewPost = async (newPost) => {
     try {
-      let response = await axios.post('http://localhost:3001/api/addNewPost', newPost);
+      let response = await axios.post('https://pawhub.space/api/addNewPost', newPost);
       return response.data;
     } catch (error) {
       console.error('Failed to post data', error);
@@ -50,7 +50,7 @@ function NewPost() {
   const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
     try {
       const listIDs = await listIDsPromise;
-      const response = await axios.put("http://localhost:3001/api/updateMatchingPosts", {
+      const response = await axios.put("https://pawhub.space/api/updateMatchingPosts", {
         listIDs,
         updatedPost,
       });
@@ -66,7 +66,7 @@ function NewPost() {
 
   const searchPostsReturnPosts = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnPosts', {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnPosts', {
         params: query
       });
       return response.data;

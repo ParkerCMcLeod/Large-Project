@@ -16,7 +16,7 @@ function ProfileCard({editUser, closeProfileCard }) {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -27,7 +27,7 @@ function ProfileCard({editUser, closeProfileCard }) {
 
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnIDs', {
         params: query
       });
       return response.data;

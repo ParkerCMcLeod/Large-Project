@@ -21,7 +21,7 @@ function LoginNavigation() {
   // API USE FUNCTIONS
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -33,7 +33,7 @@ function LoginNavigation() {
 
   const addNewUser = async (newUser) => {
     try {
-      let response = await axios.post('http://localhost:3001/api/addNewUser', newUser);
+      let response = await axios.post('https://pawhub.space/api/addNewUser', newUser);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
