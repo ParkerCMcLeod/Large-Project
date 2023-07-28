@@ -103,6 +103,8 @@ const readFile = async(file) => {
             postsData.push(postData);
           }
         }
+
+        postsData = postsData.reverse();
         return postsData;
       };
     
