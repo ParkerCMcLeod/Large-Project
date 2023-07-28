@@ -6,6 +6,7 @@ import Donation from "../components/Donation";
 import PostCard from "../components/PostCard";
 import PostList from "../components/PostList";
 import Links from "../components/Links";
+import NewPost from "../components/NewPost";
 
 function HomePage() {
   return (
@@ -13,6 +14,7 @@ function HomePage() {
       <Navigation />
       <Donation />
       <div className="ColumnContainer">
+        <NewPost />
         <PostList />
       </div>
       <Links />

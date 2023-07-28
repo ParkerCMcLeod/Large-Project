@@ -63,12 +63,14 @@ function ProfileCard({editUser, closeProfileCard }) {
         setName(userVals[0].name);
         setUserName(userVals[0].username);
 
-        const data = userVals[0].profilePicture
+        const data = userVals[0].profilePicture;
+        console.log(data);
         
         if(data !== undefined)
         {
           setImage(data);
         }
+
 
       }
     }
