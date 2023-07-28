@@ -4,7 +4,7 @@
     box-shadow: 0 2px 5px #ccc;
     padding: 10px 40px 20px 40px;
     width: 350px;
-    position: fixed;
+    position: absolute;
     top: 450px;
     left: 160px;
     transform: translate(-50%, -50%);
