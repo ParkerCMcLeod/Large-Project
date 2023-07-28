@@ -63,24 +63,28 @@ const Navigation = () => {
       "email": localStorage.getItem('email'),
     }
 
+    // console.log(pfp);
+
     let userSearchResults = await searchUsersReturnIDs(query);
 
-      const updatedUser = {
-        "name": name,
-        "username": username,
-        "email": email,
-        "password": password,
-        "profilePicture": pfp,
-        "friendList": []
-      };
+    const updatedUser = {
+      "name": name,
+      "username": username,
+      "email": email,
+      "password": password,
+      "profilePicture": pfp,
+      "friendList": []
+    };
 
-      console.log(updatedUser);
-      let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
-      localStorage.setItem('email', email);
-      setSuccessMessage('Profile Updated');
-      await delay(2000);
-      setSuccessMessage('');
-    }
+    console.log(updatedUser);
+    let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+
+    setSuccessMessage('Profile Updated');
+    await delay(2000);
+    setSuccessMessage('');
+  }
 
   const navigate = useNavigate();
 

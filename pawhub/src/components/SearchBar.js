@@ -134,6 +134,7 @@ const SearchBar = () => {
   const handleInputChange = async (event) => {
     const term = event.target.value.trim();
     setSearchTerm(term);
+    console.log(term);
 
     if (term.length === 0) {
       setSearchResults([]);
@@ -171,6 +172,7 @@ const SearchBar = () => {
     let selfEmail = localStorage.getItem('email');
     const query = { email: selfEmail };
     const selfUser = await searchUsersReturnUsers(query);
+
     if (updatedResults[index].following === true) {
       let already_following = false;
       for (let i = 0; i < updatedResults.length; i++) {

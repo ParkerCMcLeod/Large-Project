@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './newpost.css';
 import axios from 'axios';
-const fs = require('fs');
 
 function NewPost() {
   const [text, setText] = useState("");
@@ -9,36 +8,6 @@ function NewPost() {
   const [postMessage, setPostMessage] = useState([]);
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
-
-  function imageToBase64String(imageFile) {
-    try {
-      // Read the image file as a buffer
-      const imageBuffer = fs.readFileSync(imageFile.path);
-  
-      // Encode the image buffer to Base64
-      const base64String = imageBuffer.toString('base64');
-  
-      return base64String;
-    } catch (err) {
-      console.error('Error converting image to Base64:', err.message);
-      return null;
-    }
-  }
-  
-  // Function to convert a Base64 string back to binary image data and save it to a file
-  function base64StringToImage(base64String, outputFile) {
-    try {
-      // Create a Buffer from the Base64 string
-      const imageBuffer = Buffer.from(base64String, 'base64');
-  
-      // Write the buffer to a new image file
-      fs.writeFileSync(outputFile.path, imageBuffer);
-  
-      console.log('Image successfully converted back from Base64 and saved!');
-    } catch (err) {
-      console.error('Error converting Base64 string to image:', err.message);
-    }
-  }
 
   useEffect(() => {
 
@@ -106,43 +75,70 @@ function NewPost() {
     }
   };
 
+  const readFile = async(file) => {
+
+    const reader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+      reader.onloadend = () => {
+        const fileData = reader.result; // The data read from the file
+        resolve(fileData);
+      };
+  
+      reader.onerror = reject; //  In case of an error, reject the promise
+  
+      reader.readAsDataURL(file); // Start reading the file and convert it to a data URL
+    });
+    
+  }
+
   const handleAddPost = async() => {
     // Perform any necessary actions with the entered text and images
-    console.log("New post added:", text);
-    console.log("Images:", images);
-
-    const imageString = imageToBase64String(images);
-    console.log(imageString);
+    
+    console.log(images[0]);
     const query = {"email": localStorage.getItem('email')}
     const currentUser = await searchUsersReturnUsers(query);
     const uID = currentUser[0].userID;
+    let newPost;
+    
+
+    console.log("length " + images.length);
+    if(images.length === 0)
+    {
+      newPost =
+      {
+        "numLikes": 0,
+        "text": text,
+        "photo": "",
+        userID: uID
+      }
+    }
+    else{
+      newPost =
+      {
+        "numLikes": 0,
+        "text": text,
+        "photo": images,
+        userID: uID
+      }
+    }
+    let response = await addNewPost(newPost);
+    console.log(newPost);
 
     // adding a post
-    const newPost =
-    {
-      "numLikes": 0,
-      "text": text,
-      "photo": null,
-      userID: uID
-    }
-
-    // let response = await addNewPost(newPost);    
-    // // console.log("response", response);
-    // let getPostQuery = { postID: response.newPostID };
-    // // console.log(getPostQuery);
-    // let finalPost = await searchPostsReturnPosts(getPostQuery);
-    // console.log("finalpost",finalPost);
-
     setPostMessage("Posted");
     await delay(2000);
     setPostMessage("Add New Post");
-
+    setImages("");
+    setText("");
   };
 
-  const handleImageChange = (e) => {
-    const fileList = e.target.files;
-    console.log(fileList)
-  
+  const handleImageChange = async(e) => {
+    const file = e.target.files[0];
+    const newfile = await readFile(file);
+    console.log(newfile);
+    setImages(newfile);
+
   };
 
   const handleButtonClick = () => {
@@ -165,7 +161,6 @@ function NewPost() {
           accept="image/*"
           onChange={handleImageChange}
           className='NewPost-file-input'
-          multiple
         />
 
         {images.length > 0 && (

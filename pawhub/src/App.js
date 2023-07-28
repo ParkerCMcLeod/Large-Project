@@ -180,7 +180,6 @@ function App() {
       
       let query = { "text": "Hello World!" }
       let postSearchResultsPosts = await searchPostsReturnPosts(query);
-      console.log(postSearchResultsPosts);
       let postSearchResultsIDs = await searchPostsReturnIDs(query);
 
       const updatedPostExample = {

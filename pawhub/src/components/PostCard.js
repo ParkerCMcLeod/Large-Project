@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './postcard.css';
-import PostPicture from "../images/LandingPagePic.jpg";
 import LikeButton from './LikeButton';
-import Example1 from "../images/DarthDogus.PNG"
-import Example2 from "../images/Meow.jpg"
-import Example3 from "../images/Pug.jpg"
 
 function PostCard({postData}) {
   const [editing, setEditing] = useState(false);
+  const [date, setDate] = useState([]);
+  const [username, setUserName] = useState([]);
+  const [pfp, setpfp] = useState([]);
   const [text, setText] = useState("With My best Friend Shaggy! 🐶  🐶#bff");
-  const [images, setImages] = useState([
-    Example1,
-    Example2,
-    Example3
-  ]);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
 
       setText(postData.text);
       setImages(postData.images);
-
+      setUserName(postData.username);
+      setDate(postData.date);
+      setpfp(postData.pfp);
   }, []);
 
 
@@ -27,11 +24,12 @@ function PostCard({postData}) {
     <div className='PostCard-container'>
       <div className='PostCard-inner'>
         <div className='Picture'>
-          <img src={PostPicture} alt='profile pic' />
+          <img src={pfp} alt='profile pic' />
         </div>
         
         <div className='postcard-fields'>
-          <p>LiL_PuG · 10/10/2023 *EXAMPLE*</p>
+          <p>{username}</p>
+          <p>{date}</p>
         </div>
 
         <div className='text-container'>
@@ -50,16 +48,20 @@ function PostCard({postData}) {
           )}
           
           <div className="Like-btn">
-            <LikeButton />
+            <LikeButton l={postData.numLikes}/>
           </div>
           
           
         </div>
-        <div className="image-container" style={{borderRadius: " 0 0 10px 10px"}}>
-            {images.map((image, index) => (
-              <img key={index} src={image} alt={`image-${index + 1}`} style={{borderRadius: "10px", marginLeft: "10px"}}  />
-            ))}
+        {images.length > 0 && (
+          <div className='NewPost-image-container'>
+              <img
+                src={images}
+                alt='Selected'
+                className='NewPost-image'
+              />
           </div>
+        )}
       </div>
     </div>
   );
