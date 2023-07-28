@@ -55,7 +55,7 @@ function LoginNavigation() {
     let anyUsers = await searchUsersReturnUsers(query)
     // console.log(anyUsers);
     
-    if(anyUsers === undefined)
+    if(anyUsers === undefined || anyUsers === "")
     {
       await addNewUser(newUser);
       setSuccessMessage("Welcome to Pawhub!");
