@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import LandingPage from "./pages/LandingPage";
 
 function App() {
-  // camment
+
   const searchUsersReturnUsers = async (query) => {
     try {
       let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
@@ -197,8 +197,8 @@ function App() {
   };
 
 
-    exampleUsersAPIFunctionality();
-    examplePostsAPIFunctionality();
+    // exampleUsersAPIFunctionality();
+    // examplePostsAPIFunctionality();
   }, []);
 
   return (
