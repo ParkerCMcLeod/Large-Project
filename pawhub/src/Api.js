@@ -277,6 +277,7 @@ async function run() {
       const listIDs = req.body.listIDs;
       if(listIDs === '') {
         res.status(204).send("No IDs were passed");
+        return;
       }
       const updatedPost = req.body.updatedPost;
       const objectIDs = listIDs.map((id) => new ObjectId(id));
