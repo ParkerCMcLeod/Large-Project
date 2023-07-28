@@ -8,8 +8,11 @@ const cors = require("cors"); // Import the cors module
 const app = express();
 
 // Middleware setup
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 
 // Set up CORS middleware with appropriate options
 app.use(
@@ -57,13 +60,17 @@ async function run() {
       // Extract the query parameters from the request
       const query = req.query;
 
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
+
       // Perform the search
       const documents = await users.find(query).toArray();
 
       if (documents.length > 0) {
         res.json(documents);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -76,6 +83,10 @@ async function run() {
       // Extract the query parameters from the request
       const query = req.query;
 
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
+
       // Perform the search
       const documents = await users.find(query).toArray();
 
@@ -85,7 +96,7 @@ async function run() {
 
         res.json(documentIds);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -129,7 +140,7 @@ async function run() {
       const modifiedCount = result.modifiedCount;
 
       if (modifiedCount === 0) {
-        res.status(404).send("No documents were found for the provided IDs");
+        res.status(204).send("No documents were found for the provided IDs");
       } else {
         res.json({ message: "Data updated successfully", modifiedCount: modifiedCount });
       }
@@ -146,7 +157,7 @@ async function run() {
 
       const result = await users.deleteMany(query);
       if (result.deletedCount === 0) {
-        res.status(404).send("No such document exists");
+        res.status(204).send("No such document exists");
       } else {
         res.json({ message: "Data deleted successfully", deletedCount: result.deletedCount });
       }
@@ -184,13 +195,23 @@ async function run() {
       // Extract the query parameters from the request
       const query = req.query;
 
+      if (query.hasOwnProperty("postID")) {
+        query.postID = parseInt(query.postID);
+      }
+      if (query.hasOwnProperty("numLikes")) {
+        query.numLikes = parseInt(query.numLikes);
+      }
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
+
       // Perform the search
       const documents = await posts.find(query).toArray();
 
       if (documents.length > 0) {
         res.json(documents);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -203,6 +224,16 @@ async function run() {
       // Extract the query parameters from the request
       const query = req.query;
 
+      if (query.hasOwnProperty("postID")) {
+        query.postID = parseInt(query.postID);
+      }
+      if (query.hasOwnProperty("numLikes")) {
+        query.numLikes = parseInt(query.numLikes);
+      }
+      if (query.hasOwnProperty("userID")) {
+        query.userID = parseInt(query.userID);
+      }
+
       // Perform the search
       const documents = await posts.find(query).toArray();
 
@@ -212,7 +243,7 @@ async function run() {
 
         res.json(documentIds);
       } else {
-        res.status(404).send("No documents found");
+        res.status(204).send("No documents found");
       }
     } catch (err) {
       res.status(500).send(err);
@@ -247,6 +278,10 @@ async function run() {
   app.put("/api/updateMatchingPosts", async (req, res) => {
     try {
       const listIDs = req.body.listIDs;
+      if(listIDs === '') {
+        res.status(204).send("No IDs were passed");
+        return;
+      }
       const updatedPost = req.body.updatedPost;
       const objectIDs = listIDs.map((id) => new ObjectId(id));
       const filter = { _id: { $in: objectIDs } };
@@ -256,7 +291,7 @@ async function run() {
       const modifiedCount = result.modifiedCount;
 
       if (modifiedCount === 0) {
-        res.status(404).send("No documents were found for the provided IDs");
+        res.status(204).send("No documents were found for the provided IDs");
       } else {
         res.json({ message: "Data updated successfully", modifiedCount: modifiedCount });
       }
@@ -273,7 +308,7 @@ async function run() {
 
       const result = await posts.deleteMany(query);
       if (result.deletedCount === 0) {
-        res.status(404).send("No such document exists");
+        res.status(204).send("No such document exists");
       } else {
         res.json({ message: "Data deleted successfully", deletedCount: result.deletedCount });
       }

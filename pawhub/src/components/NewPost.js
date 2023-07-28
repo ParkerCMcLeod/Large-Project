@@ -18,7 +18,7 @@ function NewPost() {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -29,7 +29,7 @@ function NewPost() {
 
   const searchPostsReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnIDs', {
         params: query
       });
       return response.data;
@@ -40,7 +40,7 @@ function NewPost() {
   
   const addNewPost = async (newPost) => {
     try {
-      let response = await axios.post('http://localhost:3001/api/addNewPost', newPost);
+      let response = await axios.post('https://pawhub.space/api/addNewPost', newPost);
       return response.data;
     } catch (error) {
       console.error('Failed to post data', error);
@@ -50,7 +50,7 @@ function NewPost() {
   const updateAllMatchingPosts = async (listIDsPromise, updatedPost) => {
     try {
       const listIDs = await listIDsPromise;
-      const response = await axios.put("http://localhost:3001/api/updateMatchingPosts", {
+      const response = await axios.put("https://pawhub.space/api/updateMatchingPosts", {
         listIDs,
         updatedPost,
       });
@@ -66,7 +66,7 @@ function NewPost() {
 
   const searchPostsReturnPosts = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchPostsReturnPosts', {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnPosts', {
         params: query
       });
       return response.data;
@@ -75,69 +75,70 @@ function NewPost() {
     }
   };
 
+  const readFile = async(file) => {
+
+    const reader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+      reader.onloadend = () => {
+        const fileData = reader.result; // The data read from the file
+        resolve(fileData);
+      };
+  
+      reader.onerror = reject; //  In case of an error, reject the promise
+  
+      reader.readAsDataURL(file); // Start reading the file and convert it to a data URL
+    });
+    
+  }
+
   const handleAddPost = async() => {
     // Perform any necessary actions with the entered text and images
-    console.log("New post added:", text);
-    console.log("Images:", images);
-
+    
+    console.log(images[0]);
     const query = {"email": localStorage.getItem('email')}
     const currentUser = await searchUsersReturnUsers(query);
     const uID = currentUser[0].userID;
+    let newPost;
+    
+
+    console.log("length " + images.length);
+    if(images.length === 0)
+    {
+      newPost =
+      {
+        "numLikes": 0,
+        "text": text,
+        "photo": "",
+        userID: uID
+      }
+    }
+    else{
+      newPost =
+      {
+        "numLikes": 0,
+        "text": text,
+        "photo": images,
+        userID: uID
+      }
+    }
+    let response = await addNewPost(newPost);
+    console.log(newPost);
 
     // adding a post
-    const newPost =
-    {
-      "numLikes": 0,
-      "text": text,
-      "photo": null,
-      userID: uID
-
-    }
-
-    let response = await addNewPost(newPost);    
-    console.log(response);
-
-    // let getPostQuery = { numLikes: 0 };
-
-
-    // console.log(getPostQuery);
-
-    // let finalPost = await searchPostsReturnPosts(getPostQuery);
-    // console.log("finalpost",finalPost);
-
-    // saving image link with USERID and POSTID
-    // console.log(images.length);
-    // if (images.length >= 0)
-    // {
-    //   // const arrayOfStrings = [];
-    //   // searchPostsReturnIDs{}
-      
-    //   for (let i = 0; i < images.length; i++)
-    //   {
-    //     arrayOfStrings = './images/${uID}${'
-    //   }
-    //     const picPost =
-    //   {
-    //     "numLikes": 0,
-    //     "text": text,
-    //     "photo": null,
-    //     userID: uID
-
-    //   }
-    // }
-
     setPostMessage("Posted");
     await delay(2000);
     setPostMessage("Add New Post");
-
+    setImages("");
+    setText("");
   };
 
-  const handleImageChange = (e) => {
-    const fileList = e.target.files;
-    const selectedImages = Array.from(fileList).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setImages(selectedImages);
+  const handleImageChange = async(e) => {
+    const file = e.target.files[0];
+    const newfile = await readFile(file);
+    console.log(newfile);
+    setImages(newfile);
+
   };
 
   const handleButtonClick = () => {
@@ -160,19 +161,15 @@ function NewPost() {
           accept="image/*"
           onChange={handleImageChange}
           className='NewPost-file-input'
-          multiple
         />
 
         {images.length > 0 && (
           <div className='NewPost-image-container'>
-            {images.map((image, index) => (
               <img
-                key={index}
-                src={image}
+                src={images}
                 alt='Selected'
                 className='NewPost-image'
               />
-            ))}
           </div>
         )}
 

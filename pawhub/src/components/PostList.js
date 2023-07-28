@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import PostCard from './PostCard'
+import axios from 'axios';
+
 import Example1 from "../images/DarthDogus.PNG";
 import Example2 from "../images/Meow.jpg";
 import Example3 from "../images/Pug.jpg";
@@ -23,24 +25,97 @@ function generateRandomText() {
 
 function PostList() {
 
-    const numPosts = 10; // Set the number of posts you want to generate
-    const postsData = [];
-    
-    // Generate i number of posts and add them to the postsData array
-    for (let i = 1; i <= numPosts; i++) {
-        // still need a datefield and num likes
-        const postData = {
+const readFile = async(file) => {
 
-            id: i,
-            text: i,
-            numLikes: i,
-            // if there is are no images this takes an empty array
-            images: generateRandomImages()
+    const reader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+        const fileData = reader.result; // The data read from the file
+        resolve(fileData);
         };
-        postsData.push(postData);
+    
+        reader.onerror = reject; //  In case of an error, reject the promise
+    
+        reader.readAsDataURL(file); // Start reading the file and convert it to a data URL
+    });
+    
     }
 
-    console.log(postsData);
+    const searchUsersReturnUsers = async (query) => {
+    try {
+        let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
+        params: query
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to search data', error);
+    }
+    };
+
+    const searchPostsReturnPosts = async (query) => {
+        try {
+          let response = await axios.get('https://pawhub.space/api/searchPostsReturnPosts', {
+            params: query
+          });
+          return response.data;
+        } catch (error) {
+          console.error('Failed to search data', error);
+        }
+      };
+    // first we must have an array with all the posts  
+    
+    const getPosts = async () => {
+        let query = {};
+        let posts = await searchPostsReturnPosts(query);
+        console.log("postlist", posts);
+        let numPosts = posts.length;
+        let postsData = [];
+        console.log(Example1);
+
+
+       
+
+        if (numPosts > 0) {
+          for (let i = 0; i < numPosts; i++) {
+
+            
+                // Replace 'T' with a space
+            const stringWithoutT = posts[i].dateCreated.replace('T', ' ');
+
+            // Remove the last 5 characters
+            const simpleDate = stringWithoutT.slice(0, -5);
+
+            let user = await searchUsersReturnUsers({userID: posts[i].userID})
+
+            const postData = {
+                id: i,
+                text: posts[i].text,
+                numLikes: posts[i].numLikes,
+                date: simpleDate,
+                postID: posts[i].postID,
+                images: posts[i].photo,
+
+                username: user[0].username,
+                pfp: user[0].profilePicture
+            };
+            console.log("postdata", postData);
+            postsData.push(postData);
+          }
+        }
+        return postsData;
+      };
+    
+      const [postsData, setPostsData] = useState([]);
+    
+      useEffect(() => {
+        const fetchPosts = async () => {
+          const data = await getPosts();
+          setPostsData(data);
+        };
+    
+        fetchPosts();
+      }, []);
 
 
     return (

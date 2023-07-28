@@ -16,7 +16,7 @@ function ProfileCard({editUser, closeProfileCard }) {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       return response.data;
@@ -27,7 +27,7 @@ function ProfileCard({editUser, closeProfileCard }) {
 
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnIDs', {
         params: query
       });
       return response.data;
@@ -63,12 +63,15 @@ function ProfileCard({editUser, closeProfileCard }) {
         setName(userVals[0].name);
         setUserName(userVals[0].username);
 
-        const data = userVals[0].profilePicture
+        
+        const data = userVals[0].profilePicture;
+        console.log(data);
         
         if(data !== undefined)
         {
           setImage(data);
         }
+
 
       }
     }

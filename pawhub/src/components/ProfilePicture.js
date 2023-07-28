@@ -26,15 +26,13 @@ function ProfilePicture({image, setImage}) {
     
   }
 
-
   const handleImageChange = async(event) => {
     const file = event.target.files[0];
     const newfile = await readFile(file);
-
+    console.log(newfile);
     setImage(newfile);
   }
 
-  
   return (
     <div className="profile-image-container" onClick={handleImageClick}>
       {image ? (

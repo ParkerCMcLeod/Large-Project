@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './postcard.css';
 
-function LikeButton() {
+function LikeButton({l}){
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState(l);  
 
   const handleLikeClick = () => {
     if (liked) {

@@ -17,7 +17,7 @@ const Navigation = () => {
 
   const searchUsersReturnUsers = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnUsers', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
         params: query
       });
       setApiData(response.data);
@@ -28,7 +28,7 @@ const Navigation = () => {
 
   const searchUsersReturnIDs = async (query) => {
     try {
-      let response = await axios.get('http://localhost:3001/api/searchUsersReturnIDs', {
+      let response = await axios.get('https://pawhub.space/api/searchUsersReturnIDs', {
         params: query
       });
       return response.data;
@@ -40,7 +40,7 @@ const Navigation = () => {
   const updateAllMatchingUsers = async (listIDsPromise, updatedUser) => {
     try {
       const listIDs = await listIDsPromise;
-      let response = await axios.put("http://localhost:3001/api/updateMatchingUsers", {
+      let response = await axios.put("https://pawhub.space/api/updateMatchingUsers", {
         listIDs,
         updatedUser,
       });
@@ -63,24 +63,28 @@ const Navigation = () => {
       "email": localStorage.getItem('email'),
     }
 
+    // console.log(pfp);
+
     let userSearchResults = await searchUsersReturnIDs(query);
 
-      const updatedUser = {
-        "name": name,
-        "username": username,
-        "email": email,
-        "password": password,
-        "profilePicture": pfp,
-        "friendList": []
-      };
+    const updatedUser = {
+      "name": name,
+      "username": username,
+      "email": email,
+      "password": password,
+      "profilePicture": pfp,
+      "friendList": []
+    };
 
-      console.log(updatedUser);
-      let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
-      localStorage.setItem('email', email);
-      setSuccessMessage('Profile Updated');
-      await delay(2000);
-      setSuccessMessage('');
-    }
+    console.log(updatedUser);
+    let response = await updateAllMatchingUsers(userSearchResults, updatedUser);
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+
+    setSuccessMessage('Profile Updated');
+    await delay(2000);
+    setSuccessMessage('');
+  }
 
   const navigate = useNavigate();
 
@@ -117,14 +121,18 @@ const Navigation = () => {
     };
   }, [clicked]);
 
+
+
   useEffect(() => {
     // Add event listener to handle body scrolling and overlay
-    document.body.style.overflow = clicked ? 'hidden' : 'auto';
+    document.body.style.overflow = profileCardOpen ? 'hidden' : 'auto';
 
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [clicked]);
+  }, [profileCardOpen]);
+
+
 
   return (
     <div className="Navigation">
