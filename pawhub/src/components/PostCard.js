@@ -48,7 +48,7 @@ function PostCard({postData}) {
           )}
           
           <div className="Like-btn">
-            <LikeButton l={postData.numLikes}/>
+            <LikeButton l={postData.numLikes} postID = {postData.postID}/>
           </div>
           
           

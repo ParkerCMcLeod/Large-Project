@@ -69,7 +69,7 @@ const readFile = async(file) => {
         let query = {};
         let posts = await searchPostsReturnPosts(query);
 
-        console.log("postlist", posts);
+        // console.log("postlist", posts);
         let numPosts = posts.length;
         let postsData = [];
         console.log(Example1);
@@ -78,7 +78,7 @@ const readFile = async(file) => {
         if (numPosts > 0) {
           for (let i = 0; i < numPosts; i++) {
 
-            console.log(posts[i]);
+            // console.log(posts[i]);
                 // Replace 'T' with a space
             const stringWithoutT = posts[i].dateCreated.replace('T', ' ');
 
@@ -98,7 +98,7 @@ const readFile = async(file) => {
                 username: user[0].username,
                 pfp: user[0].profilePicture
             };
-            console.log("postdata", postData);
+            // console.log("postdata", postData);
             postsData.push(postData);
           }
         }

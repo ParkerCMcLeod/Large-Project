@@ -42,7 +42,7 @@
   object-position: center;
   border-radius: 50%;
   position: absolute;
-  top: 30px; /* Adjust the top position as needed */
+  top: 7.5px; /* Adjust the top position as needed */
   left: 10px; /* Adjust the left position as needed */
   border: 10px solid #fff;
 }

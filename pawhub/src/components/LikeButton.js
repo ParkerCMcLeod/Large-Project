@@ -17,11 +17,13 @@ function LikeButton({l}){
 
   return (
     <div>
-      <button className={liked ? 'like-button liked' : 'like-button'} onClick={handleLikeClick}>
+      {/* <button className={liked ? 'like-button liked' : 'like-button'} onClick={handleLikeClick}>
         <i className={liked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'}></i>
         {liked ? 'Liked' : 'Like'}
-      </button>
-      <span className="likes-count">{likes} {likes === 1 ? 'Like' : 'Likes'}</span>
+      </button> */}
+      {/* <span className="likes-count">{likes} {likes === 1 ? 'Like' : 'Likes'}</span> */}
+      <span className="likes-count"></span>
+
     </div>
   );
 }

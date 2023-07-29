@@ -53,7 +53,6 @@ function LoginNavigation() {
     };
     let query = {"email": email}
     let anyUsers = await searchUsersReturnUsers(query)
-    // console.log(anyUsers);
     
     if(anyUsers === undefined || anyUsers === "")
     {
@@ -78,7 +77,9 @@ function LoginNavigation() {
     let query = { "email": email, "password": password};
 
     let currentUser = await searchUsersReturnUsers(query);
-    if (currentUser === undefined)
+    console.log("current", currentUser);
+
+    if (currentUser === undefined || currentUser === "")
     {
       console.log("InvalidLogin");
       setErrorValue("Invalid Email or password");

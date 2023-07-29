@@ -131,6 +131,7 @@ function NewPost() {
     setPostMessage("Add New Post");
     setImages("");
     setText("");
+    window.location.reload();
   };
 
   const handleImageChange = async(e) => {
