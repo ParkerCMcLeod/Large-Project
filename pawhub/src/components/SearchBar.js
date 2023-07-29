@@ -144,13 +144,18 @@ const SearchBar = () => {
     try {
       let query = { name: { $regex: "(?i)" + term }};
       const users = await searchUsersReturnUsers(query);
-      setSearchResults(users.slice(0, 5)); // Limit results to 5
+      console.log("users", users);
+      setSearchResults(users); // Limit results to 5
       
+      setSearchResults(users.slice(0, 5)); // Limit results to 5
+      console.log("searchResults", searchResults);
+
       let selfEmail = localStorage.getItem('email');
       query = { email: selfEmail };
       const selfUser = await searchUsersReturnUsers(query);
-
+      
       let updatedResults = users.slice(0, 5);
+
 
       for (let i = 0; i < updatedResults.length; i++) {
         if(selfUser[0].friendList.includes(updatedResults[i].userID)) {
@@ -159,7 +164,9 @@ const SearchBar = () => {
           updatedResults[i].following = false;
         }
       }
+      
       setSearchResults(updatedResults);
+      console.log("updatedresutls", updatedResults);
     } catch (error) {
       console.error('Failed to fetch search results:', error);
     }
@@ -193,6 +200,7 @@ const SearchBar = () => {
     delete selfUser[0].dateCreated;
     
     let status = await updateAllMatchingUsers(selUserObjIDArray, selfUser[0]);
+    console.log(searchResults);
     setSearchResults(updatedResults);
   };
 
@@ -206,7 +214,7 @@ const SearchBar = () => {
           onChange={handleInputChange}
           className="search-input"
         />
-        {searchTerm && (
+         {searchTerm && searchResults.length > 0 && (
           <div className="search-overlay">
             <div className="search-results">
               {searchResults.map((result, index) => (
