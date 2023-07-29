@@ -4,6 +4,22 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors"); // Import the cors module
 
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+
+// Replace these values with your actual SMTP credentials
+const smtpConfig = {
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'pawhubverify@gmail.com',
+    pass: '@R00tyT00ty69!',
+  },
+};
+
+const transporter = nodemailer.createTransport(smtpConfig);
+
 // Creating Express app
 const app = express();
 
@@ -17,9 +33,9 @@ app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000
 // Set up CORS middleware with appropriate options
 app.use(
   cors({
-    origin: "*", // Replace "*" with the allowed origin of your client application
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Include the OPTIONS method for preflight requests
-    allowedHeaders: ["Content-Type", "Authorization"], // Add any additional headers that your client needs
+    origin: "*", 
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -53,6 +69,55 @@ async function run() {
   const databasePosts = client.db("posts");
   const posts = databasePosts.collection("posts");
   const currentPostIDIncrement = databasePosts.collection("currentPostIDIncrement");
+
+  // API to send user verification email
+  app.post("/api/sendUserVerification", async (req, res) => {
+    const email = req.body.email;
+    const token = crypto.randomBytes(32).toString('hex');
+
+    // Assume you have a user model named 'User'
+    // Replace 'User' with your actual user model name and 'your-database' with your database instance
+    const result = await user.updateOne({ email: email }, { token: token });
+
+    const verificationLink = `https://your-website.com/verify?token=${token}`;
+    const mailOptions = {
+      from: 'pawhubverify@gmail.com',
+      to: email,
+      subject: 'Verify Your Email Address',
+      html: `<p>Hello ${email},</p><p>Click the following link to verify your email address:</p><p><a href="${verificationLink}">${verificationLink}</a></p>`,
+    };
+
+    transporter.sendMail(mailOptions, async (error, info) => {
+      if (error) {
+        console.log('Error sending email:', error);
+        res.status(500).send('Failed to send verification email.');
+      } else {
+        res.status(200).send('Verification email sent.');
+      }
+    });
+  });
+
+  // API to update user verification status
+  app.put("/api/updateUserVerification", async (req, res) => {
+    const token = req.query.token;
+
+    // Assume you have a user model named 'User'
+    // Replace 'User' with your actual user model name and 'your-database' with your database instance
+    const user = await User.findOne({ token: token });
+
+    if (!user) {
+      return res.status(404).send('Invalid or expired verification token.');
+    }
+
+    const filter = { userID: user.UserID };
+
+    // Assume you have a verified field in your User model to mark the user's email verification status
+    // Replace 'verified' with your actual field name representing the email verification status
+    const result = await user.updateOne(filter, { verified: true });
+
+    // Redirect to a success page or send a response indicating successful verification
+    return res.status(200).send('Email successfully verified!');
+  });
 
   // API to search for users by query
   app.get("/api/searchUsersReturnUsers", async (req, res) => {
@@ -115,10 +180,14 @@ async function run() {
       }
       const currentDate = new Date();
       const newDateCreated = currentDate.toISOString();
+      const verified = false;
+      const token = "";
       newUser = {
         userID: newUserID,
         dateCreated: newDateCreated,
         ...newUser,
+        verified: verified,
+        token: token
       };
       const result = await users.insertOne(newUser);
       res.json({ message: "Data inserted successfully", result });
