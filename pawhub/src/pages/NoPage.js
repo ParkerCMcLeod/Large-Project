@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Navigation from "../components/Navigation";
-import NotFoundPic from "../images/maxresdefault.jpg"; // Import the image you want to use for the background
+import NotFoundPic from "../images/notFound.jpg"; // Import the image you want to use for the background
 
 function NoPage() {
   useEffect(() => {
@@ -23,7 +23,7 @@ function NoPage() {
     <div>
       <Navigation />
 
-      <h2 style={{ paddingTop: "200px", color: "black", fontSize: "40px", textAlign: "center" }}>
+      <h2 style={{ color: "black", fontSize: "40px", textAlign: "center", marginLeft: "50%", marginTop: "300px" }}>
         Error 404: Not Found
       </h2>
     </div>
