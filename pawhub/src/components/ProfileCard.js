@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./profile.css";
 import "./components.css";
 import ProfilePicture from './ProfilePicture';
+import Modal from './Modal';
 
 function ProfileCard({editUser, closeProfileCard }) {
   const [email, setEmail] = useState("");
@@ -12,8 +13,9 @@ function ProfileCard({editUser, closeProfileCard }) {
   const [image, setImage] = useState(null);
   const [SuccessMessage, setSuccessMessage]= useState();
 
-  const [apiData, setApiData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
+  const [apiData, setApiData] = useState([]);
   const searchUsersReturnUsers = async (query) => {
     try {
       let response = await axios.get('https://pawhub.space/api/searchUsersReturnUsers', {
@@ -43,6 +45,25 @@ function ProfileCard({editUser, closeProfileCard }) {
     // Handle form submission here
   }
 
+  const searchPostsReturnPosts = async (query) => {
+    try {
+      let response = await axios.get('https://pawhub.space/api/searchPostsReturnPosts', {
+        params: query
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to search data', error);
+    }
+  };
+
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   // what is usersreturnusers supposed to return?
   useEffect(() => {
 
@@ -65,7 +86,6 @@ function ProfileCard({editUser, closeProfileCard }) {
 
         
         const data = userVals[0].profilePicture;
-        console.log(data);
         
         if(data !== undefined)
         {
@@ -82,6 +102,7 @@ function ProfileCard({editUser, closeProfileCard }) {
   return (
     <div className='Profile-container'>
       <div className='Profile-inner'>
+        <button className="delete-account" onClick={handleShowModal}> Delete Account</button>
         <button className="close-btn" onClick={closeProfileCard}>✖</button>
 
         <form className="ProfileCard" onSubmit={handleSubmit}>
@@ -130,12 +151,17 @@ function ProfileCard({editUser, closeProfileCard }) {
           <button className="LoginSignUp-btn" type="submit">
             Edit
           </button>
+          {showModal && <Modal onClose={handleCloseModal} />}
           <label> 
           {SuccessMessage}
           </label>
         </form>
+
       </div>
+     
+
     </div>
+    
   );
 }
 
