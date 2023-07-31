@@ -75,9 +75,8 @@ async function run() {
     const email = req.body.email;
     const token = crypto.randomBytes(32).toString('hex');
 
-    // Assume you have a user model named 'User'
-    // Replace 'User' with your actual user model name and 'your-database' with your database instance
-    const result = await user.updateOne({ email: email }, { token: token });
+    // Update the user with the new token
+    const result = await users.updateOne({ email: email }, { $set: { token: token } });
 
     const verificationLink = `https://your-website.com/verify?token=${token}`;
     const mailOptions = {
@@ -101,19 +100,17 @@ async function run() {
   app.put("/api/updateUserVerification", async (req, res) => {
     const token = req.query.token;
 
-    // Assume you have a user model named 'User'
-    // Replace 'User' with your actual user model name and 'your-database' with your database instance
-    const user = await User.findOne({ token: token });
+    // Find the user using the token
+    const user = await users.findOne({ token: token });
 
     if (!user) {
       return res.status(404).send('Invalid or expired verification token.');
     }
 
-    const filter = { userID: user.UserID };
+    const filter = { userID: user.userID };
 
-    // Assume you have a verified field in your User model to mark the user's email verification status
-    // Replace 'verified' with your actual field name representing the email verification status
-    const result = await user.updateOne(filter, { verified: true });
+    // Update the user's verified status
+    const result = await users.updateOne(filter, { $set: { verified: true } });
 
     // Redirect to a success page or send a response indicating successful verification
     return res.status(200).send('Email successfully verified!');
