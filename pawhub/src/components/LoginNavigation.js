@@ -39,6 +39,17 @@ function LoginNavigation() {
     }
   };
 
+  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
+  const updateUserVerification = async (user) => {
+    try {
+      let response = await axios.put("https://pawhub.space/api/updateMatchingUsers", {
+        user,
+      });
+    } catch (error) {
+      console.error("Failed to update data:", error.message);
+    }
+  };
+
   const addNewUser = async (newUser) => {
     try {
       let response = await axios.post('https://pawhub.space/api/addNewUser', newUser);
@@ -94,10 +105,12 @@ function LoginNavigation() {
     {
 
       console.log(currentUser);
-      localStorage.setItem('email', email);
-      localStorage.setItem('password', password);
+      if(currentUser.verified) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+        nav('/home');
+      }
 
-      nav('/home');
     }
   }
 
