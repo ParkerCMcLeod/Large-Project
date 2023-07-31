@@ -9,12 +9,12 @@ const crypto = require('crypto');
 
 // Replace these values with your actual SMTP credentials
 const smtpConfig = {
-  host: 'smtp.gmail.com',
+  host: 'smtp.mailgun.org',
   port: 587,
   secure: false,
   auth: {
-    user: 'pawhubverify@gmail.com',
-    pass: '@R00tyT00ty69!',
+    user: 'parkercmcleod@gmail.com',  
+    pass: 'Hjmp=K-??pPdF@6',
   },
 };
 
