@@ -30,6 +30,14 @@ function LoginNavigation() {
     }
   };
 
+  const sendUserVerification = async (email) => {
+    try {
+      let response = await axios.post('https://pawhub.space/api/sendUserVerification', email);
+      setApiData(response.data); // uses the data and rerenders relevant changes
+    } catch (error) {
+      console.error('Failed to post data', error);
+    }
+  };
 
   const addNewUser = async (newUser) => {
     try {
@@ -57,11 +65,8 @@ function LoginNavigation() {
     if(anyUsers === undefined || anyUsers === "")
     {
       await addNewUser(newUser);
-      setSuccessMessage("Welcome to Pawhub!");
-
-      await delay(2000);
-      doLogin(email,password, null);
-
+      await sendUserVerification(query);
+      setSuccessMessage("Please verify you acccount to login.");
     }
     else
     {

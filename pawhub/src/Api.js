@@ -27,9 +27,6 @@ const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
-
 // Set up CORS middleware with appropriate options
 app.use(
   cors({
@@ -70,50 +67,56 @@ async function run() {
   const posts = databasePosts.collection("posts");
   const currentPostIDIncrement = databasePosts.collection("currentPostIDIncrement");
 
-  // API to send user verification email
+ // API to send user verification email
   app.post("/api/sendUserVerification", async (req, res) => {
-    const email = req.body.email;
-    const token = crypto.randomBytes(32).toString('hex');
+    try {
+      const email = req.body.email; // Corrected to extract email from the request body.
+      const token = crypto.randomBytes(32).toString('hex');
+      const filter = { email: email }; // Assuming the email field is named 'email'.
+      const update = { $set: { token: token } };
 
-    // Update the user with the new token
-    const result = await users.updateOne({ email: email }, { $set: { token: token } });
+      const result = await users.updateOne(filter, update);
 
-    const verificationLink = `https://your-website.com/verify?token=${token}`;
-    const mailOptions = {
-      from: 'pawhubverify@gmail.com',
-      to: email,
-      subject: 'Verify Your Email Address',
-      html: `<p>Hello ${email},</p><p>Click the following link to verify your email address:</p><p><a href="${verificationLink}">${verificationLink}</a></p>`,
-    };
+      const verificationLink = `https://pawhub.space/verify?token=${token}`;
 
-    transporter.sendMail(mailOptions, async (error, info) => {
-      if (error) {
-        console.log('Error sending email:', error);
-        res.status(500).send('Failed to send verification email.');
-      } else {
-        res.status(200).send('Verification email sent.');
-      }
-    });
+      const mailOptions = {
+        from: 'pawhubverify@gmail.com',
+        to: email,
+        subject: 'Verify Your Email Address',
+        html: `<p>Hello ${email},</p><p>Click the following link to verify your email address:</p><p><a href="${verificationLink}">${verificationLink}</a></p>`,
+      };
+
+      const info = await transporter.sendMail(mailOptions);
+      console.log('Email sent:', info.response);
+
+      res.status(200).json({ message: "Verification email sent successfully" });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      res.status(500).json({ error: "Error sending verification email" });
+    }
   });
 
   // API to update user verification status
   app.put("/api/updateUserVerification", async (req, res) => {
-    const token = req.query.token;
+    try {
+      const token = req.query.token;
 
-    // Find the user using the token
-    const user = await users.findOne({ token: token });
+      const user = await users.findOne({ token: token });
 
-    if (!user) {
-      return res.status(404).send('Invalid or expired verification token.');
+      if (!user) {
+        return res.status(404).json({ error: 'Invalid or expired verification token.' });
+      }
+
+      const filter = { _id: user._id };
+
+      const result = await users.updateOne(filter, { $set: { verified: true } });
+
+      // Redirect to a success page or send a response indicating successful verification
+      return res.status(200).json({ message: 'Email successfully verified!' });
+    } catch (error) {
+      console.error('Error updating user verification status:', error);
+      res.status(500).json({ error: "Error updating user verification status" });
     }
-
-    const filter = { userID: user.userID };
-
-    // Update the user's verified status
-    const result = await users.updateOne(filter, { $set: { verified: true } });
-
-    // Redirect to a success page or send a response indicating successful verification
-    return res.status(200).send('Email successfully verified!');
   });
 
   // API to search for users by query
