@@ -66,11 +66,11 @@ function LoginNavigation() {
     {
       await addNewUser(newUser);
       await sendUserVerification(query);
-      setSuccessMessage("Please verify you acccount to login.");
+      setSuccessMessage("Please verify your account before logging in.");
     }
     else
     {
-      setSuccessMessage("An account already exists with that Email Address");
+      setSuccessMessage("An account already exists with that Email Address.");
     }
    
   };
@@ -88,18 +88,18 @@ function LoginNavigation() {
     {
       console.log("InvalidLogin");
       setErrorValue("Invalid Email or password");
-
     }
     else
     {
-
       console.log(currentUser);
-      if(currentUser.verified) {
+      if(currentUser[0].verified) {
         localStorage.setItem('email', email);
         localStorage.setItem('password', password);
         nav('/home');
       }
-
+      else {
+        setErrorValue("Email verification required.");
+      }
     }
   }
 
