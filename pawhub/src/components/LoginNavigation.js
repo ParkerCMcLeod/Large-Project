@@ -92,6 +92,7 @@ function LoginNavigation() {
     else
     {
       console.log(currentUser);
+      // only nate and parker can use email verification
       if(currentUser[0].verified) {
         localStorage.setItem('email', email);
         localStorage.setItem('password', password);
