@@ -30,9 +30,9 @@ function LoginNavigation() {
     }
   };
 
-  const sendUserVerification = async (email) => {
+  const sendUserVerification = async (user) => {
     try {
-      let response = await axios.post('https://pawhub.space/api/sendUserVerification', email);
+      let response = await axios.post('https://pawhub.space/api/sendUserVerification', user);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
@@ -77,7 +77,7 @@ function LoginNavigation() {
     if(anyUsers === undefined || anyUsers === "")
     {
       await addNewUser(newUser);
-      await sendUserVerification(query);
+      await sendUserVerification(anyUsers);
       setSuccessMessage("Please verify you acccount to login.");
     }
     else
