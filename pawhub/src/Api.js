@@ -97,10 +97,10 @@ async function run() {
   });
 
   // API to update user verification status
-  app.put("/api/updateUserVerification", async (req, res) => {
+  app.get("/api/updateUserVerification", async (req, res) => {
     try {
-      const token = req.headers.authorization;
-
+      // Extract the query parameters from the request
+      const token = req.query.token;
       if (!token) {
         return res.status(401).json({ error: 'Authorization token missing.' });
       }
