@@ -70,7 +70,7 @@ async function run() {
  // API to send user verification email
   app.post("/api/sendUserVerification", async (req, res) => {
     try {
-      const email = req.body.email; // Corrected to extract email from the request body.
+      const email = req.body.user.email; // Corrected to extract email from the request body.
       const token = crypto.randomBytes(32).toString('hex');
       const filter = { email: email }; // Assuming the email field is named 'email'.
       const update = { $set: { token: token } };

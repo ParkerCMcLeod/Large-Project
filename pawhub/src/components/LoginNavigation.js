@@ -36,6 +36,7 @@ function LoginNavigation() {
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
+      // Handle the error here, e.g., show an error message to the user.
     }
   };
 
