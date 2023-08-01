@@ -13,8 +13,8 @@ const smtpConfig = {
   port: 587,
   secure: false,
   auth: {
-    user: 'parkercmcleod@gmail.com',  
-    pass: 'Hjmp=K-??pPdF@6',
+    user: 'postmaster@sandboxac7bef2a7798412ba37de01e57b7a5fe.mailgun.org',  
+    pass: '5ea5457a7b96a5cc4944171a526d8c5f-4e034d9e-fb9044a6',
   },
 };
 
