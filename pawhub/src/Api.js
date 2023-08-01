@@ -99,7 +99,11 @@ async function run() {
   // API to update user verification status
   app.put("/api/updateUserVerification", async (req, res) => {
     try {
-      const token = req.query.token;
+      const token = req.headers.authorization;
+
+      if (!token) {
+        return res.status(401).json({ error: 'Authorization token missing.' });
+      }
 
       const user = await users.findOne({ token: token });
 
@@ -118,6 +122,7 @@ async function run() {
       res.status(500).json({ error: "Error updating user verification status" });
     }
   });
+
 
   // API to search for users by query
   app.get("/api/searchUsersReturnUsers", async (req, res) => {

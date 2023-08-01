@@ -30,24 +30,12 @@ function LoginNavigation() {
     }
   };
 
-  const sendUserVerification = async (user) => {
+  const sendUserVerification = async (email) => {
     try {
-      let response = await axios.post('https://pawhub.space/api/sendUserVerification', user);
+      let response = await axios.post('https://pawhub.space/api/sendUserVerification', email);
       setApiData(response.data); // uses the data and rerenders relevant changes
     } catch (error) {
       console.error('Failed to post data', error);
-      // Handle the error here, e.g., show an error message to the user.
-    }
-  };
-
-  // API IMPLEMENTATION, NOT FOR NATE OR JESUS
-  const updateUserVerification = async (user) => {
-    try {
-      let response = await axios.put("https://pawhub.space/api/updateMatchingUsers", {
-        user,
-      });
-    } catch (error) {
-      console.error("Failed to update data:", error.message);
     }
   };
 
@@ -77,7 +65,7 @@ function LoginNavigation() {
     if(anyUsers === undefined || anyUsers === "")
     {
       await addNewUser(newUser);
-      await sendUserVerification(anyUsers);
+      await sendUserVerification(query);
       setSuccessMessage("Please verify you acccount to login.");
     }
     else
