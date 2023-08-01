@@ -1,3 +1,15 @@
+.ForgotPassword-btn {
+    color: white;
+    background: none;
+    text-decoration: underline;
+    border: none; /* Remove any border, so there is no background box color */
+    cursor: pointer;
+    font-size: 20px;
+}
+
+
+
+
 .delete-account{
 
     width: 110px;
