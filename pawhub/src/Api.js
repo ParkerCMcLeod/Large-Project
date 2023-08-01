@@ -77,7 +77,7 @@ async function run() {
 
       const result = await users.updateOne(filter, update);
 
-      const verificationLink = `https://pawhub.space/verify?token=${token}`;
+      const verificationLink = `https://pawhub.space/searchUsersReturnUsers?token=${token}`;
 
       const mailOptions = {
         from: 'pawhubverify@gmail.com',
